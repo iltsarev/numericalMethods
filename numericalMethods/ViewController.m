@@ -14,6 +14,17 @@
 
 @implementation ViewController
 
+//tridiagonal algo usage
+//    double x[5] = {-14, -55, 49, 86,8};
+//    double a[5] = {0, 7, -4, 7, 4};
+//    double b[5] = {8, -19, 21, -23, -7};
+//    double c[5] = {-2, 9, -8, 9, 0};
+//    size_t N = 5;
+//    solve_tridiagonal_in_place_destructive(x, N, a, b, c);
+//    //should be -1.0000	3.0000	1.0000	-5.0000	-4.0000
+//    NSLog(@"answer: %f %f %f %f %f", x[0], x[1], x[2], x[3], x[4]);
+
+
 void solve_tridiagonal_in_place_destructive(double x[], const size_t N, const double a[], const double b[], double c[]) {
     /* unsigned integer of same size as pointer */
     size_t i;
@@ -43,18 +54,45 @@ void solve_tridiagonal_in_place_destructive(double x[], const size_t N, const do
         x[i] = x[i] - c[i] * x[i + 1];
 }
 
+double phi(double x){
+    return x+sin(2*M_PI*x);
+}
+
+double f(double x, double t){
+    return 0;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    double x[5] = {-14, -55, 49, 86,8};
-    double a[5] = {0, 7, -4, 7, 4};
-    double b[5] = {8, -19, 21, -23, -7};
-    double c[5] = {-2, 9, -8, 9, 0};
-    size_t N = 5;
-    solve_tridiagonal_in_place_destructive(x, N, a, b, c);
-    //should be -1.0000	3.0000	1.0000	-5.0000	-4.0000
-    NSLog(@"answer: %f %f %f %f %f", x[0], x[1], x[2], x[3], x[4]);
 
+    int K = 10;
+    int N = 10;
+    double a = 1, b = 0,c = 0, tau = 1,h = 1;
+    double phi_0 = 0;
+    double phi_l = 1;
+    
+    double **U = (double **)malloc(K * sizeof(double *));
+    
+    for (int i = 0; i < K; i++)
+        U[i] = (double *)malloc(N * sizeof(double));
+    
+    
+    for (int i = 0; i < N; ++i) {
+        U[0][i] = phi(i*h);
+        printf("%f ",U[0][i]);
+    }
+    
+    for (int k = 0; k < K - 1; ++k) {
+        U[k+1][0] = phi_0;
+        printf("\n%f ", U[k][0]);
+        for (int i = 1; i < N-1; ++i) {
+            U[k+1][i] = U[k][i] + a*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau/2/h*(U[k][i+1] - U[k][i-1]) + c*tau*U[k][i] + tau*f(i * h, k * tau); //f[k][i] ?
+            printf("%f ",U[k+1][i]);
+        }
+        U[k+1][N-1] = phi_l;
+        printf("%f ",U[k+1][N-1]);
+    }
 }
 
 - (void)didReceiveMemoryWarning
