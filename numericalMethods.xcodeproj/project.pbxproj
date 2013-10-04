@@ -476,6 +476,7 @@
 				52367CE317FC329100C1DA60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52367CE417FC329100C1DA60 /* Build configuration list for PBXNativeTarget "numericalMethodsTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +485,7 @@
 				52367CE617FC329100C1DA60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
