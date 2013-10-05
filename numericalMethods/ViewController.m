@@ -54,7 +54,7 @@ void solve_tridiagonal_in_place_destructive(double x[], const size_t N, const do
         x[i] = x[i] - c[i] * x[i + 1];
 }
 
-double **explicitScheme(int K, int N, double a, double b, double c, double tau, double h, double phi_0, double phi_l){
+double **explicitScheme(int K, int N, double a, double b, double c, double tau, double h){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -64,17 +64,24 @@ double **explicitScheme(int K, int N, double a, double b, double c, double tau, 
         U[0][i] = phi(i*h);
     
     for (int k = 0; k < K - 1; ++k) {
-        U[k+1][0] = phi_0;
+        U[k+1][0] = phi_0(k * tau);
         for (int i = 1; i < N; ++i) {
             U[k+1][i] = U[k][i] + a*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau/2/h*(U[k][i+1] - U[k][i-1]) + c*tau*U[k][i] + tau*f(i * h, k * tau);
         }
-        U[k+1][N] = phi_l;
+        U[k+1][N] = phi_l(k * tau);
     }
     return U;
 }
 
 double phi(double x){
     return x+sin(M_PI*x);
+}
+
+double phi_0(double t){
+    return 0;
+}
+double phi_l(double t){
+    return 1;
 }
 
 double f(double x, double t){
@@ -84,12 +91,15 @@ double f(double x, double t){
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    int K = 10;
-    int N = 10;
+    
+    
     double a = 1, b = 0,c = 0, tau = 0.001,h = 0.1;
-    double phi_0 = 0;
-    double phi_l = 1;
+    double l = 1;;
+    int K = 10;
+    int N = l / h;
+    double alpha = 0.0, betta = 1.0, gamma = 0.0, delta = 1.0;
+//    double phi_0 = 0;
+//    double phi_l = 1;
     
     double sigma = a*tau/h/h;
     if(sigma > 0.5){
@@ -97,7 +107,7 @@ double f(double x, double t){
         exit(0);
     }
     
-    double **U = explicitScheme(K, N, a, b, c, tau, h, phi_0, phi_l);
+    double **U = explicitScheme(K, N, a, b, c, tau, h);
     
     for (int i = 0; i < K; ++i) {
         for (int j = 0; j <= N; ++j) {
@@ -105,6 +115,25 @@ double f(double x, double t){
         }
         printf("\n");
     }
+    
+    printf("\nAproximation:\n\n");    //Двухточечная 1го порядка (вроде работает, проверял на 4ом варианте)
+    
+    double s = a*a*tau/h/h;
+    for (int k = 0; k < K - 1; ++k) {
+        for (int i = 1; i < N; ++i) {
+            U[k+1][i] = s*U[k][i+1] + (1-2*s)*U[k][i] + s*U[k][i-1];
+        }
+        U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + phi_0(k * tau)/(betta - alpha/h);
+        U[k+1][N] = gamma/h/(delta + gamma/h)*U[k+1][N-1] + phi_l(k * tau)/(delta + gamma/h);
+    }
+
+    for (int i = 0; i < K; ++i) {
+        for (int j = 0; j <= N; ++j) {
+            printf("%f ", U[i][j]);
+        }
+        printf("\n");
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
