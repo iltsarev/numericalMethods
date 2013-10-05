@@ -54,8 +54,27 @@ void solve_tridiagonal_in_place_destructive(double x[], const size_t N, const do
         x[i] = x[i] - c[i] * x[i + 1];
 }
 
+double **explicitScheme(int K, int N, double a, double b, double c, double tau, double h, double phi_0, double phi_l){
+    double **U = (double **)malloc(K * sizeof(double *));
+    
+    for (int i = 0; i < K; i++)
+        U[i] = (double *)malloc((N+1) * sizeof(double));
+    
+    for (int i = 0; i <= N; ++i)
+        U[0][i] = phi(i*h);
+    
+    for (int k = 0; k < K - 1; ++k) {
+        U[k+1][0] = phi_0;
+        for (int i = 1; i < N; ++i) {
+            U[k+1][i] = U[k][i] + a*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau/2/h*(U[k][i+1] - U[k][i-1]) + c*tau*U[k][i] + tau*f(i * h, k * tau);
+        }
+        U[k+1][N] = phi_l;
+    }
+    return U;
+}
+
 double phi(double x){
-    return x+sin(2*M_PI*x);
+    return x+sin(M_PI*x);
 }
 
 double f(double x, double t){
@@ -68,30 +87,23 @@ double f(double x, double t){
 
     int K = 10;
     int N = 10;
-    double a = 1, b = 0,c = 0, tau = 1,h = 1;
+    double a = 1, b = 0,c = 0, tau = 0.001,h = 0.1;
     double phi_0 = 0;
     double phi_l = 1;
     
-    double **U = (double **)malloc(K * sizeof(double *));
-    
-    for (int i = 0; i < K; i++)
-        U[i] = (double *)malloc(N * sizeof(double));
-    
-    
-    for (int i = 0; i < N; ++i) {
-        U[0][i] = phi(i*h);
-        printf("%f ",U[0][i]);
+    double sigma = a*tau/h/h;
+    if(sigma > 0.5){
+        printf("Sigma in not good. (< 0.5)\n");
+        exit(0);
     }
     
-    for (int k = 0; k < K - 1; ++k) {
-        U[k+1][0] = phi_0;
-        printf("\n%f ", U[k][0]);
-        for (int i = 1; i < N-1; ++i) {
-            U[k+1][i] = U[k][i] + a*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau/2/h*(U[k][i+1] - U[k][i-1]) + c*tau*U[k][i] + tau*f(i * h, k * tau); //f[k][i] ?
-            printf("%f ",U[k+1][i]);
+    double **U = explicitScheme(K, N, a, b, c, tau, h, phi_0, phi_l);
+    
+    for (int i = 0; i < K; ++i) {
+        for (int j = 0; j <= N; ++j) {
+            printf("%f ", U[i][j]);
         }
-        U[k+1][N-1] = phi_l;
-        printf("%f ",U[k+1][N-1]);
+        printf("\n");
     }
 }
 
