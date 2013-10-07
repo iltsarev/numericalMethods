@@ -34,21 +34,70 @@
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad 
+- (void)viewDidLoad
 {
 	[super viewDidLoad];
 	
-	defaultLayerHostingView.collapsesLayers = NO;
-    [defaultLayerHostingView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-#else
-    [defaultLayerHostingView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-#endif
-    [defaultLayerHostingView setAutoresizesSubviews:YES];
-    
-    [hostingView addSubview:defaultLayerHostingView];
-    [self generateData];
-    [self renderInLayer:defaultLayerHostingView withTheme:theme animated:animated];}
-
+	graph = [[CPTXYGraph alloc] initWithFrame: self.view.bounds];
+	
+	CPTGraphHostingView *hostingView = (CPTGraphHostingView *)self.view;
+	hostingView.hostedGraph = graph;
+	graph.paddingLeft = 20.0;
+	graph.paddingTop = 20.0;
+	graph.paddingRight = 20.0;
+	graph.paddingBottom = 20.0;
+	
+	CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+	plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-6 )
+												   length:CPTDecimalFromFloat(12)];
+	plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-5)
+												   length:CPTDecimalFromFloat(30)];
+	
+	CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
+	
+	CPTLineStyle *lineStyle = [CPTLineStyle lineStyle];
+	//lineStyle.lineColor = [CPTColor blackColor];
+	//lineStyle.lineWidth = 2.0f;
+	
+	axisSet.xAxis.majorIntervalLength = [[NSDecimalNumber decimalNumberWithString:@"5"] decimalValue];
+	axisSet.xAxis.minorTicksPerInterval = 4;
+	axisSet.xAxis.majorTickLineStyle = lineStyle;
+	axisSet.xAxis.minorTickLineStyle = lineStyle;
+	axisSet.xAxis.axisLineStyle = lineStyle;
+	axisSet.xAxis.minorTickLength = 5.0f;
+	axisSet.xAxis.majorTickLength = 7.0f;
+	axisSet.xAxis.labelOffset = 3.0f;
+	
+	axisSet.yAxis.majorIntervalLength = [[NSDecimalNumber decimalNumberWithString:@"5"] decimalValue];
+	axisSet.yAxis.minorTicksPerInterval = 4;
+	axisSet.yAxis.majorTickLineStyle = lineStyle;
+	axisSet.yAxis.minorTickLineStyle = lineStyle;
+	axisSet.yAxis.axisLineStyle = lineStyle;
+	axisSet.yAxis.minorTickLength = 5.0f;
+	axisSet.yAxis.majorTickLength = 7.0f;
+	axisSet.yAxis.labelOffset = 3.0f;
+	
+	CPTScatterPlot *xSquaredPlot = [[CPTScatterPlot alloc]
+									initWithFrame:self.view.bounds];
+	xSquaredPlot.identifier = @"X Squared Plot";
+	//xSquaredPlot.dataLineStyle.lineWidth = 1.0f;
+	//xSquaredPlot.dataLineStyle.lineColor = [CPColor redColor];
+	xSquaredPlot.dataSource = self;
+	[graph addPlot:xSquaredPlot];
+	
+	CPTPlotSymbol *greenCirclePlotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
+	greenCirclePlotSymbol.fill = [CPTFill fillWithColor:[CPTColor greenColor]];
+	greenCirclePlotSymbol.size = CGSizeMake(2.0, 2.0);
+	xSquaredPlot.plotSymbol = greenCirclePlotSymbol;
+	
+	CPTScatterPlot *xInversePlot = [[CPTScatterPlot alloc]
+									initWithFrame:self.view.bounds] ;
+	xInversePlot.identifier = @"X Inverse Plot";
+	//xInversePlot.dataLineStyle.lineWidth = 1.0f;
+	//xInversePlot.dataLineStyle.lineColor = [CPColor blueColor];
+	xInversePlot.dataSource = self;
+	[graph addPlot:xInversePlot];
+}
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot 
 {
