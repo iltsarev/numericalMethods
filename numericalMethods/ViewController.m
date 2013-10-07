@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "CorePlotExampleViewController.h"
+
 
 @interface ViewController ()
 
@@ -99,6 +101,12 @@ double **explicitScheme(int K, int N, double a, double b, double c, double tau, 
 }
 
 
+-(void)drawPlot:(id)sender{
+ 
+    CorePlotExampleViewController *viewControllerToPresent = [[CorePlotExampleViewController alloc] initWithNibName:@"CorePlotExampleViewController" bundle:nil];
+    [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -128,6 +136,12 @@ double **explicitScheme(int K, int N, double a, double b, double c, double tau, 
         }
         printf("\n\n\n");
     }
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, 50, 100, 20)];
+    [button setTitle:@"Draw Plot" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(drawPlot:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
+    [self.view addSubview:button];
 }
 
 - (void)didReceiveMemoryWarning

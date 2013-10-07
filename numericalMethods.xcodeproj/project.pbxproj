@@ -22,6 +22,11 @@
 		52367CD417FC329100C1DA60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52367CB317FC329100C1DA60 /* UIKit.framework */; };
 		52367CDC17FC329100C1DA60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52367CDA17FC329100C1DA60 /* InfoPlist.strings */; };
 		52367CDE17FC329100C1DA60 /* numericalMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */; };
+		A8A2238E794F49DC87207666 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6FEF4F8C84435840A6078 /* libPods.a */; };
+		FAD3DD601803778B00A1DD6D /* CorePlotExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3DD5E1803778B00A1DD6D /* CorePlotExampleViewController.m */; };
+		FAD3DD611803778B00A1DD6D /* CorePlotExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD3DD5F1803778B00A1DD6D /* CorePlotExampleViewController.xib */; };
+		FAD3DD6518037CD900A1DD6D /* PlotItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3DD6418037CD900A1DD6D /* PlotItem.m */; };
+		FAD3DD6818037CF000A1DD6D /* CurvedScatterPlot.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3DD6718037CF000A1DD6D /* CurvedScatterPlot.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2AE6FEF4F8C84435840A6078 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		52367CAC17FC329100C1DA60 /* numericalMethods.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = numericalMethods.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52367CAF17FC329100C1DA60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		52367CB117FC329100C1DA60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +61,14 @@
 		52367CD917FC329100C1DA60 /* numericalMethodsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "numericalMethodsTests-Info.plist"; sourceTree = "<group>"; };
 		52367CDB17FC329100C1DA60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = numericalMethodsTests.m; sourceTree = "<group>"; };
+		6DED4331CEF94783A0970CA1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		FAD3DD5D1803778B00A1DD6D /* CorePlotExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorePlotExampleViewController.h; sourceTree = "<group>"; };
+		FAD3DD5E1803778B00A1DD6D /* CorePlotExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CorePlotExampleViewController.m; sourceTree = "<group>"; };
+		FAD3DD5F1803778B00A1DD6D /* CorePlotExampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CorePlotExampleViewController.xib; sourceTree = "<group>"; };
+		FAD3DD6318037CD900A1DD6D /* PlotItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotItem.h; sourceTree = "<group>"; };
+		FAD3DD6418037CD900A1DD6D /* PlotItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlotItem.m; sourceTree = "<group>"; };
+		FAD3DD6618037CF000A1DD6D /* CurvedScatterPlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurvedScatterPlot.h; sourceTree = "<group>"; };
+		FAD3DD6718037CF000A1DD6D /* CurvedScatterPlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurvedScatterPlot.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +79,7 @@
 				52367CB217FC329100C1DA60 /* CoreGraphics.framework in Frameworks */,
 				52367CB417FC329100C1DA60 /* UIKit.framework in Frameworks */,
 				52367CB017FC329100C1DA60 /* Foundation.framework in Frameworks */,
+				A8A2238E794F49DC87207666 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +103,7 @@
 				52367CD717FC329100C1DA60 /* numericalMethodsTests */,
 				52367CAE17FC329100C1DA60 /* Frameworks */,
 				52367CAD17FC329100C1DA60 /* Products */,
+				6DED4331CEF94783A0970CA1 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +123,7 @@
 				52367CB117FC329100C1DA60 /* CoreGraphics.framework */,
 				52367CB317FC329100C1DA60 /* UIKit.framework */,
 				52367CD117FC329100C1DA60 /* XCTest.framework */,
+				2AE6FEF4F8C84435840A6078 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -120,6 +137,7 @@
 				52367CC417FC329100C1DA60 /* Main_iPad.storyboard */,
 				52367CC717FC329100C1DA60 /* ViewController.h */,
 				52367CC817FC329100C1DA60 /* ViewController.m */,
+				FA7CF36B1802B29E00C4E9DF /* Plot */,
 				52367CCA17FC329100C1DA60 /* Images.xcassets */,
 				52367CB617FC329100C1DA60 /* Supporting Files */,
 			);
@@ -155,6 +173,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FA7CF36B1802B29E00C4E9DF /* Plot */ = {
+			isa = PBXGroup;
+			children = (
+				FAD3DD6618037CF000A1DD6D /* CurvedScatterPlot.h */,
+				FAD3DD6718037CF000A1DD6D /* CurvedScatterPlot.m */,
+				FAD3DD6318037CD900A1DD6D /* PlotItem.h */,
+				FAD3DD6418037CD900A1DD6D /* PlotItem.m */,
+				FAD3DD5D1803778B00A1DD6D /* CorePlotExampleViewController.h */,
+				FAD3DD5E1803778B00A1DD6D /* CorePlotExampleViewController.m */,
+				FAD3DD5F1803778B00A1DD6D /* CorePlotExampleViewController.xib */,
+			);
+			name = Plot;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -162,9 +194,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52367CE117FC329100C1DA60 /* Build configuration list for PBXNativeTarget "numericalMethods" */;
 			buildPhases = (
+				46C5A4EF2EE34A4F89314283 /* Check Pods Manifest.lock */,
 				52367CA817FC329100C1DA60 /* Sources */,
 				52367CA917FC329100C1DA60 /* Frameworks */,
 				52367CAA17FC329100C1DA60 /* Resources */,
+				29958E89152B44988EE912EF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -234,6 +268,7 @@
 				52367CC617FC329100C1DA60 /* Main_iPad.storyboard in Resources */,
 				52367CCB17FC329100C1DA60 /* Images.xcassets in Resources */,
 				52367CC317FC329100C1DA60 /* Main_iPhone.storyboard in Resources */,
+				FAD3DD611803778B00A1DD6D /* CorePlotExampleViewController.xib in Resources */,
 				52367CBA17FC329100C1DA60 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,13 +283,49 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		29958E89152B44988EE912EF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		46C5A4EF2EE34A4F89314283 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		52367CA817FC329100C1DA60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				52367CC917FC329100C1DA60 /* ViewController.m in Sources */,
+				FAD3DD601803778B00A1DD6D /* CorePlotExampleViewController.m in Sources */,
 				52367CC017FC329100C1DA60 /* AppDelegate.m in Sources */,
+				FAD3DD6518037CD900A1DD6D /* PlotItem.m in Sources */,
+				FAD3DD6818037CF000A1DD6D /* CurvedScatterPlot.m in Sources */,
 				52367CBC17FC329100C1DA60 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +460,7 @@
 		};
 		52367CE217FC329100C1DA60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DED4331CEF94783A0970CA1 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -403,6 +475,7 @@
 		};
 		52367CE317FC329100C1DA60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DED4331CEF94783A0970CA1 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
