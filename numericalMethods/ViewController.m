@@ -301,13 +301,13 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     int K = [KField.text intValue];//1000;
     int N = [NField.text intValue];//10;
     
-    double l = [lField.text doubleValue];//3.14; //1
+    l = [lField.text doubleValue];//3.14; //1
     double T = [TField.text doubleValue];//10;
     
     double tau = T / K, h = l / N;
     
-    double a = [aField.text doubleValue], b = [bField.text doubleValue], c = [cField.text doubleValue];
-    double alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gamma = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];//double alpha = 0.0, betta = 1.0, gamma = 0.0, delta = 1.0;
+    a = [aField.text doubleValue], b = [bField.text doubleValue], c = [cField.text doubleValue];
+    alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gamma = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];//double alpha = 0.0, betta = 1.0, gamma = 0.0, delta = 1.0;
     
     int scheme = [schemePicker selectedRowInComponent:0]; // 0 -- явная, 1 -- неявная, 2 -- Кранка
     int order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
