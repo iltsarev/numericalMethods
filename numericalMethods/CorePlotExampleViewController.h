@@ -16,12 +16,13 @@
 #import "CPTDefinitions.h"
 #import "CPTNumericDataType.h"
 
-@interface CorePlotExampleViewController : UIViewController <CPTPlotDataSource>
+@interface CorePlotExampleViewController : UIViewController <CPTPlotDataSource,CPTAxisDelegate,CPTScatterPlotDelegate>
 {
-	CPTXYGraph *graph;
-	
-	int numberOfRecords;
+    CPTXYGraph *graph;
+    
+    NSMutableArray *dataForPlot;
 }
 
+@property (readwrite, strong, nonatomic) NSMutableArray *dataForPlot;
 @end
 
