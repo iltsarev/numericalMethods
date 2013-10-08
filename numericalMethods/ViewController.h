@@ -7,7 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
+#import "UIPickerViewScheme.h"
+#import "UIPIckerViewOrder.h"
+@interface ViewController : UIViewController<UITextFieldDelegate, UIPickerViewDelegate>{
+    IBOutlet UITextField *aField;
+    IBOutlet UITextField *bField;
+    IBOutlet UITextField *cField;
+    IBOutlet UITextField *lField;
+    IBOutlet UITextField *alphaField;
+    IBOutlet UITextField *bettaField;
+    IBOutlet UITextField *gammaField;
+    IBOutlet UITextField *deltaField;
+    IBOutlet UITextField *TField;
+    IBOutlet UITextField *KField;
+    IBOutlet UITextField *NField;
+    UIPIckerViewOrder *orderPicker;
+    UIPickerViewScheme *schemePicker;
+    UIView *bg;
+    UIView *bg2;
+    UIView *bg3;
+}
 
 @end

@@ -22,6 +22,9 @@
 		52367CD417FC329100C1DA60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52367CB317FC329100C1DA60 /* UIKit.framework */; };
 		52367CDC17FC329100C1DA60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52367CDA17FC329100C1DA60 /* InfoPlist.strings */; };
 		52367CDE17FC329100C1DA60 /* numericalMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */; };
+		52F73A5818043E4700ED8BF7 /* NM_sys1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52F73A5718043E4700ED8BF7 /* NM_sys1.png */; };
+		52F73A5B18045A0400ED8BF7 /* UIPIckerViewOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */; };
+		52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,11 @@
 		52367CD917FC329100C1DA60 /* numericalMethodsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "numericalMethodsTests-Info.plist"; sourceTree = "<group>"; };
 		52367CDB17FC329100C1DA60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = numericalMethodsTests.m; sourceTree = "<group>"; };
+		52F73A5718043E4700ED8BF7 /* NM_sys1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys1.png; sourceTree = "<group>"; };
+		52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPIckerViewOrder.h; sourceTree = "<group>"; };
+		52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPIckerViewOrder.m; sourceTree = "<group>"; };
+		52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPickerViewScheme.h; sourceTree = "<group>"; };
+		52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewScheme.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +128,10 @@
 				52367CC417FC329100C1DA60 /* Main_iPad.storyboard */,
 				52367CC717FC329100C1DA60 /* ViewController.h */,
 				52367CC817FC329100C1DA60 /* ViewController.m */,
+				52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */,
+				52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */,
+				52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */,
+				52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */,
 				52367CCA17FC329100C1DA60 /* Images.xcassets */,
 				52367CB617FC329100C1DA60 /* Supporting Files */,
 			);
@@ -129,6 +141,7 @@
 		52367CB617FC329100C1DA60 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				52F73A5718043E4700ED8BF7 /* NM_sys1.png */,
 				52367CB717FC329100C1DA60 /* numericalMethods-Info.plist */,
 				52367CB817FC329100C1DA60 /* InfoPlist.strings */,
 				52367CBB17FC329100C1DA60 /* main.m */,
@@ -233,6 +246,7 @@
 			files = (
 				52367CC617FC329100C1DA60 /* Main_iPad.storyboard in Resources */,
 				52367CCB17FC329100C1DA60 /* Images.xcassets in Resources */,
+				52F73A5818043E4700ED8BF7 /* NM_sys1.png in Resources */,
 				52367CC317FC329100C1DA60 /* Main_iPhone.storyboard in Resources */,
 				52367CBA17FC329100C1DA60 /* InfoPlist.strings in Resources */,
 			);
@@ -254,7 +268,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				52367CC917FC329100C1DA60 /* ViewController.m in Sources */,
+				52F73A5B18045A0400ED8BF7 /* UIPIckerViewOrder.m in Sources */,
 				52367CC017FC329100C1DA60 /* AppDelegate.m in Sources */,
+				52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */,
 				52367CBC17FC329100C1DA60 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
