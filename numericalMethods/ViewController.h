@@ -31,6 +31,6 @@
     double a,b,c,alpha,betta,gamma,delta,l;
     
 }
-@property (nonatomic,retain)MBProgressHUD *HUDdone;
+@property (nonatomic,retain)MBProgressHUD *HUDError;
 
 @end
