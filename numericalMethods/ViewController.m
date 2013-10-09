@@ -564,10 +564,19 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     
     [self.view addSubview:bg2];
 
+    UILabel *order = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 320, 15)];
+    order.text = @"Аппроксимация:";
+    order.textAlignment = NSTextAlignmentCenter;
     
-    orderPicker = [[UIPIckerViewOrder alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
-    schemePicker = [[UIPickerViewScheme alloc] initWithFrame:CGRectMake(0, 140, 320, 100)];
+    UILabel *scheme = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, 320, 15)];
+    scheme.text = @"Схема:";
+    scheme.textAlignment = NSTextAlignmentCenter;
+    
+    orderPicker = [[UIPIckerViewOrder alloc] initWithFrame:CGRectMake(0, 10, 320, 60)];
+    schemePicker = [[UIPickerViewScheme alloc] initWithFrame:CGRectMake(0, 160, 320, 60)];
    
+    [bg2 addSubview:order];
+    [bg2 addSubview:scheme];
     [bg2 addSubview:orderPicker];
     [bg2 addSubview:schemePicker];
 
