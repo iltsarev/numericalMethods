@@ -3,6 +3,7 @@
 @implementation CorePlotViewController
 
 @synthesize dataForPlot;
+@synthesize dictForPlot;
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
@@ -11,6 +12,66 @@
 
 #pragma mark -
 #pragma mark Initialization and teardown
+
+-(void)scatterPlot:(CPTScatterPlot *)plot plotSymbolWasSelectedAtRecordIndex:(NSUInteger)index
+{
+    //CPTXYGraph *graph = [graphs objectAtIndex:0];
+    
+    if ( symbolTextAnnotation ) {
+        [graph.plotAreaFrame.plotArea removeAnnotation:symbolTextAnnotation];
+        symbolTextAnnotation = nil;
+    }
+    
+    // Setup a style for the annotation
+    CPTMutableTextStyle *hitAnnotationTextStyle = [CPTMutableTextStyle textStyle];
+    hitAnnotationTextStyle.color    = [CPTColor whiteColor];
+    hitAnnotationTextStyle.fontSize = 16.0f;
+    hitAnnotationTextStyle.fontName = @"Helvetica-Bold";
+    
+    // Determine point of symbol in plot coordinates
+    NSNumber *x          = [[dataForPlot objectAtIndex:index] valueForKey:@"x"];
+    NSNumber *y          = [[dataForPlot objectAtIndex:index] valueForKey:@"y"];
+    NSArray *anchorPoint = [NSArray arrayWithObjects:x, y, nil];
+    
+    // Add annotation
+    // First make a string for the y value
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init] ;
+    [formatter setMaximumFractionDigits:2];
+    NSString *yString = [formatter stringFromNumber:y];
+    
+    // Now add the annotation to the plot area
+    CPTTextLayer *textLayer = [[CPTTextLayer alloc] initWithText:yString style:hitAnnotationTextStyle];
+    symbolTextAnnotation              = [[CPTPlotSpaceAnnotation alloc] initWithPlotSpace:graph.defaultPlotSpace anchorPlotPoint:anchorPoint];
+    symbolTextAnnotation.contentLayer = textLayer;
+    symbolTextAnnotation.displacement = CGPointMake(0.0f, 20.0f);
+    [graph.plotAreaFrame.plotArea addAnnotation:symbolTextAnnotation];
+}
+
+-(CPTPlotRange *)plotSpace:(CPTPlotSpace *)space willChangePlotRangeTo:(CPTPlotRange *)newRange forCoordinate:(CPTCoordinate)coordinate
+{
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)space.graph.axisSet;
+    
+    CPTMutablePlotRange *changedRange = [newRange mutableCopy];
+    
+    switch ( coordinate ) {
+        case CPTCoordinateX:
+            [changedRange expandRangeByFactor:CPTDecimalFromDouble(1.025)];
+            changedRange.location          = newRange.location;
+            axisSet.xAxis.visibleAxisRange = changedRange;
+            break;
+            
+        case CPTCoordinateY:
+            [changedRange expandRangeByFactor:CPTDecimalFromDouble(1.05)];
+            axisSet.yAxis.visibleAxisRange = changedRange;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return newRange;
+}
+
 
 -(void)viewDidLoad
 {
@@ -50,14 +111,14 @@
     graph.paddingBottom = boundsPadding;
     
     // Add some initial data
-    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:100];
-    NSUInteger i;
-    for ( i = 0; i < 5; i++ ) {
-        id x = [NSNumber numberWithFloat:1 + i * 0.05];
-        id y = [NSNumber numberWithFloat:1.2 * rand() / (float)RAND_MAX + 1.2];
-        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
-    }
-    self.dataForPlot = contentArray;
+//    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:100];
+//    NSUInteger i;
+//    for ( i = 0; i < 5; i++ ) {
+//        id x = [NSNumber numberWithFloat:1 + i * 0.05];
+//        id y = [NSNumber numberWithFloat:1.2 * rand() / (float)RAND_MAX + 1.2];
+//        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+//    }
+    self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:0.0]];
     
     graph.plotAreaFrame.paddingLeft   += 55.0;
 //    graph.plotAreaFrame.paddingTop    += 40.0;
@@ -89,7 +150,7 @@
     // Label x axis with a fixed interval policy
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
     CPTXYAxis *x          = axisSet.xAxis;
-    x.majorIntervalLength   = CPTDecimalFromDouble(0.1);
+    x.majorIntervalLength   = CPTDecimalFromDouble(1);
     x.minorTicksPerInterval = 4;
     x.majorGridLineStyle    = majorGridLineStyle;
     x.minorGridLineStyle    = minorGridLineStyle;
@@ -128,7 +189,7 @@
     dataSourceLinePlot.identifier = @" data1";
     
     // Make the data source line use curved interpolation
-    dataSourceLinePlot.interpolation = CPTScatterPlotInterpolationCurved;
+    //dataSourceLinePlot.interpolation = CPTScatterPlotInterpolationCurved;
     
     CPTMutableLineStyle *lineStyle = [dataSourceLinePlot.dataLineStyle mutableCopy] ;
     lineStyle.lineWidth              = 3.0;
@@ -146,7 +207,7 @@
     firstPlot.dataLineStyle = lineStyle;
     firstPlot.dataSource    = self;
     
-        [graph addPlot:firstPlot];
+    //    [graph addPlot:firstPlot];
     
     // Second derivative
     CPTScatterPlot *secondPlot = [[CPTScatterPlot alloc] init] ;
@@ -155,7 +216,7 @@
     secondPlot.dataLineStyle = lineStyle;
     secondPlot.dataSource    = self;
     
-        [graph addPlot:secondPlot];
+       // [graph addPlot:secondPlot];
     
     // Auto scale the plot space to fit the plot data
     [plotSpace scaleToFitPlots:[graph allPlots]];
@@ -214,10 +275,39 @@
     //back.backgroundColor = [UIColor blackColor];
     [back  addTarget:self action:@selector(Back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
+    
+    
+    UIButton *points = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height- 40, 40, 30)];
+    [points setTitle:@"Points" forState:UIControlStateNormal];
+    points.titleLabel.textColor = [UIColor blackColor];
+    //back.backgroundColor = [UIColor blackColor];
+    [points  addTarget:self action:@selector(turnOffPoints) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:points];
+    
 }
 
 -(void)Back{
     [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+-(void)turnOffPoints{
+    CPTScatterPlot * newplot = (CPTScatterPlot *)[graph plotAtIndex:0];
+    
+    newplot.plotSymbol = nil;
+    
+//    [graph removePlot:[graph plotAtIndex:0]];
+//    
+//    CPTMutableLineStyle *symbolLineStyle = [CPTMutableLineStyle lineStyle];
+//    symbolLineStyle.lineColor = [[CPTColor blackColor] colorWithAlphaComponent:0.5];
+//    CPTPlotSymbol *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
+//    plotSymbol.fill               = [CPTFill fillWithColor:[[CPTColor blueColor] colorWithAlphaComponent:0.5]];
+//    plotSymbol.lineStyle          = symbolLineStyle;
+//    plotSymbol.size               = CGSizeMake(10.0, 10.0);
+//    
+//    newplot.
+    //dataSourceLinePlot.plotSymbol = plotSymbol;
+   //[[graph plotAtIndex:0] display];
+   // interpolation = CPTScatterPlotInterpolationCurved;
 }
 
 -(void)changePlotRange

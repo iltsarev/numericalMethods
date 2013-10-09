@@ -200,7 +200,7 @@ double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         lower[0] = 0.0;
         mid[0] = 2*a*alpha/h + h*alpha/tau - c*h*alpha - betta*(2*a - b*h);
         upper[0] = -2*a*alpha/h;
-        answer[0] = U[k][0]*h*alpha/tau - phi_0((k+1) * tau)*(2*a -b*h) + f(0, (k+1)*tau)*h*alpha;
+        answer[0] = U[k][0]*h*alpha/tau - phi_0((k+1) * tau)*(2*a -b*h) + f(0, (k+1)*tau)*h*alpha; //k
         
         lower[N] = -2*a*gamma/h;
         mid[N] = 2*a*gamma/h + h*gamma/tau - c*h*gamma + delta*(2*a + b*h);
@@ -385,23 +385,39 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
             break;
     }
     
-    [UIView animateWithDuration:0.3 animations:^{
-//        CGRect frame = bg3.frame;
-//        frame.origin.y = 0;
-//        bg3.frame = frame;
-        CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
-        [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
-        //viewControllerToPresent.view.frame = CGRectMake(0, 0, 320, 400);
-
-    }];
-    //printf for grapher
+        //printf for grapher
+    
+    NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] init];
+    NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+    
     for (int i = 0; i < K; ++i) {
-        printf("K = %f\n", i*tau);
+//        printf("K = %f\n", i*tau);
+        
         for (int j = 0; j <= N; ++j) {
-            printf("%f	%f\n", j*h, U[i][j]);
+            id x = [NSNumber numberWithDouble:j*h];
+            id y = [NSNumber numberWithDouble:U[i][j]];
+            printf("%f	%f\n", [x doubleValue], [y doubleValue]);
+            [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
         }
-        printf("\n\n\n");
+        id time = [NSNumber numberWithDouble:i*tau];
+        printf("K = %f\n", [time doubleValue]);
+        [dataDict setObject:contentArray forKey:time];
+//        printf("\n\n\n");
     }
+
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        //        CGRect frame = bg3.frame;
+        //        frame.origin.y = 0;
+        //        bg3.frame = frame;
+        CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
+        viewControllerToPresent.dictForPlot = dataDict;
+        
+        [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+        viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
+        
+    }];
+
     
 }
 
@@ -491,7 +507,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [bg addSubview:KLabel];
     KField = [[UITextField alloc] initWithFrame:CGRectMake(250, 150, 50, 20)];
     KField.delegate = self;
-    KField.text = @"1000";
+    KField.text = @"100";
     [bg addSubview:KField];
     
     UILabel *NLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 170, 230, 20)];
