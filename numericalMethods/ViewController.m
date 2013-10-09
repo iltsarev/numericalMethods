@@ -12,6 +12,9 @@
 #define NUMBERS_ONLY @"1234567890."
 #define CHARACTER_LIMIT 5
 
+double a,b,c,alpha,betta,gama,delta,l;
+
+
 @interface ViewController ()
 
 @end
@@ -19,6 +22,7 @@
 @implementation ViewController
 
 @synthesize HUDError;
+
 //tridiagonal algo usage
 //    double x[5] = {-14, -55, 49, 86,8};
 //    double a[5] = {0, 7, -4, 7, 4};
@@ -71,10 +75,10 @@ double phi(double x){
 }
 
 double phi_0(double t){
-    return exp(-t);//0;
+    return exp(-a*t);//0;
 }
 double phi_l(double t){
-    return -exp(-t);//1;
+    return -exp(-a*t);//1;
 }
 
 double f(double x, double t){
@@ -83,7 +87,7 @@ double f(double x, double t){
 
 #pragma mark - implicitScheme
 
-double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta, double tetta){
+double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     double *lower = (double *)malloc((N+1) * sizeof(double));
@@ -117,8 +121,8 @@ double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
         upper[0] = alpha/h;
         answer[0] = phi_0((k+1)*tau);
         
-        lower[N] = -gamma/h;
-        mid[N] = delta + gamma/h;
+        lower[N] = -gama/h;
+        mid[N] = delta + gama/h;
         upper[N] = 0.0;
         answer[N] = phi_l((k+1)*tau);
         
@@ -127,7 +131,7 @@ double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
     return U;
 }
 
-double **implicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta, double tetta){
+double **implicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     double *lower = (double *)malloc((N+1) * sizeof(double));
@@ -162,17 +166,17 @@ double **implicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b,
         upper[0] = 2*alpha/h + mid[1]/upper[1]*alpha/2/h;
         answer[0] = phi_0((k+1)*tau) + answer[1]/upper[1]*alpha/2/h;
         
-        lower[N] = -2*gamma/h - mid[N-1]/lower[N-1]*gamma/2/h;
-        mid[N] = delta + 3*gamma/2/h - upper[N-1]/lower[N-1]*gamma/2/h;
+        lower[N] = -2*gama/h - mid[N-1]/lower[N-1]*gama/2/h;
+        mid[N] = delta + 3*gama/2/h - upper[N-1]/lower[N-1]*gama/2/h;
         upper[N] = 0.0;
-        answer[N] = phi_l((k+1)*tau) - answer[N-1]/lower[N-1]*gamma/2/h;
+        answer[N] = phi_l((k+1)*tau) - answer[N-1]/lower[N-1]*gama/2/h;
         
         U[k+1] = solve_tridiagonal_in_place_destructive(answer, N+1, lower, mid, upper);
     }
     return U;
 }
 
-double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta, double tetta){
+double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     double *lower = (double *)malloc((N+1) * sizeof(double));
@@ -206,10 +210,10 @@ double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         upper[0] = -2*a*alpha/h;
         answer[0] = U[k][0]*h*alpha/tau - phi_0((k+1) * tau)*(2*a -b*h) + f(0, (k+1)*tau)*h*alpha; //k
         
-        lower[N] = -2*a*gamma/h;
-        mid[N] = 2*a*gamma/h + h*gamma/tau - c*h*gamma + delta*(2*a + b*h);
+        lower[N] = -2*a*gama/h;
+        mid[N] = 2*a*gama/h + h*gama/tau - c*h*gama + delta*(2*a + b*h);
         upper[N] = 0.0;
-        answer[N] = U[k][N]*h*gamma/tau + phi_l((k + 1) * tau) * (2*a + b*h) + f(N, (k+1)*tau)*h*alpha;
+        answer[N] = U[k][N]*h*gama/tau + phi_l((k + 1) * tau) * (2*a + b*h) + f(N, (k+1)*tau)*h*alpha;
         
         U[k+1] = solve_tridiagonal_in_place_destructive(answer, N+1, lower, mid, upper);
     }
@@ -217,7 +221,7 @@ double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
 }
 
 #pragma mark - explicitScheme
-double **explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta){
+double **explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -233,12 +237,12 @@ double **explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
         
       //  двухточечная первого
         U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + phi_0((k + 1) * tau)/(betta - alpha/h);
-        U[k+1][N] = gamma/h/(delta + gamma/h)*U[k+1][N-1] + phi_l((k + 1) * tau)/(delta + gamma/h);
+        U[k+1][N] = gama/h/(delta + gama/h)*U[k+1][N-1] + phi_l((k + 1) * tau)/(delta + gama/h);
     }
     return U;
 }
 
-double **explicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta){
+double **explicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -254,12 +258,12 @@ double **explicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b,
         
         //  трехточечная второго
           U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + phi_0((k+1) * tau)/(betta - 3*alpha/2/h);
-          U[k+1][N] = gamma/2/h/(delta - 3*gamma/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + phi_l((k+1) * tau)/(delta - 3*gamma/2/h);
+          U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + phi_l((k+1) * tau)/(delta - 3*gama/2/h);
     }
     return U;
 }
 
-double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta){
+double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -274,7 +278,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         }
         //  Двухточечная второго
             U[k+1][0] = 1/(2*a*alpha/h + h*alpha/tau - c*h*alpha - betta*(2*a - b*h))*(U[k+1][1]*2*a*alpha/h + U[k][0]*h*alpha/tau - phi_0((k+1) * tau)*(2*a-b*h)+f(0, (k+1)*tau)*h*alpha);
-           U[k+1][N] = 1/(2*a*gamma/h + h*gamma/tau - c*h*gamma + delta*(2*a + b*h))*(U[k+1][N-1]*2*a*gamma/h + U[k][N]*h*gamma/tau + phi_l((k+1) * tau)*(2*a+b*h)+f(N, (k+1)*tau)*h*gamma);
+           U[k+1][N] = 1/(2*a*gama/h + h*gama/tau - c*h*gama + delta*(2*a + b*h))*(U[k+1][N-1]*2*a*gama/h + U[k][N]*h*gama/tau + phi_l((k+1) * tau)*(2*a+b*h)+f(N, (k+1)*tau)*h*gama);
     }
     return U;
 }
@@ -315,7 +319,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     double tau = T / K, h = l / N;
     
     a = [aField.text doubleValue], b = [bField.text doubleValue], c = [cField.text doubleValue];
-    alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gamma = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];//double alpha = 0.0, betta = 1.0, gamma = 0.0, delta = 1.0;
+    alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gama = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];//double alpha = 0.0, betta = 1.0, gama = 0.0, delta = 1.0;
     
     int scheme = [schemePicker selectedRowInComponent:0]; // 0 -- явная, 1 -- неявная, 2 -- Кранка
     int order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
@@ -337,15 +341,15 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         case 0:{
             switch (order) {
                 case 0:{
-                    U = explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta);
+                    U = explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
                     break;
                 }
                 case 1:{
-                    U = explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta);
+                    U = explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
                     break;
                 }
                 case 2:{
-                    U = explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta);
+                    U = explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
                     break;
                 }
                     
@@ -358,15 +362,15 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
             tetta = 1.0;
             switch (order) {
                 case 0:{
-                    U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta, tetta);
+                    U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                     break;
                 }
                 case 1:{
-                    U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta, tetta);
+                    U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                     break;
                 }
                 case 2:{
-                    U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta, tetta);
+                    U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                     break;
                 }
                     
@@ -379,15 +383,15 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
             tetta = 0.5;
             switch (order) {
                 case 0:{
-                    U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta, tetta);
+                    U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                     break;
                 }
                 case 1:{
-                    U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta, tetta);
+                    U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                     break;
                 }
                 case 2:{
-                    U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gamma, delta, tetta);
+                    U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                     break;
                 }
                     
@@ -503,9 +507,9 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     bettaField.text = @"0";
     [bg addSubview:bettaField];
     
-    UILabel *gammaLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 60, 20)];
-    gammaLabel.text = @"γ =";
-    [bg addSubview:gammaLabel];
+    UILabel *gamaLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 60, 20)];
+    gamaLabel.text = @"γ =";
+    [bg addSubview:gamaLabel];
     gammaField = [[UITextField alloc] initWithFrame:CGRectMake(80, 82, 50, 20)];
     gammaField.delegate = self;
     gammaField.text = @"1";

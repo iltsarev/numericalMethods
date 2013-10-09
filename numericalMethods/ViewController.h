@@ -28,7 +28,6 @@
     UIView *bg;
     UIView *bg2;
     UIView *bg3;
-    double a,b,c,alpha,betta,gamma,delta,l;
     
 }
 @property (nonatomic,retain)MBProgressHUD *HUDError;
