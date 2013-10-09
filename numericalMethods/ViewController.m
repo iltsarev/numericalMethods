@@ -46,6 +46,10 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
 }
 
 #pragma mark - init functions
+- (double)function: (double)x withTime:(double)t  {
+    return exp(-a*t)*sin(x);
+}
+
 double phi(double x){
     return sin(x);//x+sin(M_PI*x);
 }
@@ -76,7 +80,6 @@ double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
     memset(mid, 0, (N+1) * sizeof(double));
     memset(answer, 0, (N+1) * sizeof(double));
     
-    //double tetta = 1.0;
     for (int i = 0; i < K; i++)
         U[i] = (double *)malloc((N+1) * sizeof(double));
     
@@ -85,10 +88,10 @@ double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
     
     for (int k = 0; k < K - 1; ++k) {
         for (int i = 1; i < N; ++i) {
-            lower[i] = tetta*tau*(a/h/h - b/2/h);
-            mid[i] = -1 + tetta*tau*(-2*a/h/h + c);
-            upper[i] = tetta*tau*(a/h/h + b/2/h);
-            answer[i] = -U[k][i] + (tetta - 1)*tau*(a*(U[k][i+1] - 2*U[k][i] + U[k][i-1])/h/h + b*(U[k][i+1] - U[k][i-1])/2/h + c*U[k][i]) - tau*f(i * h, k * tau);
+            lower[i] = tetta*tau*(a/(h*h) - b/(2*h));
+            mid[i] = -1 + tetta*tau*(-2*a/(h*h) + c);
+            upper[i] = tetta*tau*(a/(h*h) + b/(2*h));
+            answer[i] = -U[k][i] + (tetta - 1)*tau*(a*(U[k][i+1] - 2*U[k][i] + U[k][i-1])/(h*h) + b*(U[k][i+1] - U[k][i-1])/(2*h) + c*U[k][i]) - tau*f(i * h, k * tau);
         }
         
         //Двухточечная первого порядка
@@ -277,26 +280,17 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     }];
 }
 
--(void)backFromGraph:(id)sender{
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect frame = bg3.frame;
-        frame.origin.y = -1000;
-        bg3.frame = frame;
-    }];
-}
-
 -(void)proceedScheme:(id)sender{
-    int K = [KField.text intValue];//1000;
-    int N = [NField.text intValue];//10;
+    int K = [KField.text intValue];
+    int N = [NField.text intValue];
     
-    l = [lField.text doubleValue];//3.14; //1
-    double T = [TField.text doubleValue];//10;
+    l = [lField.text doubleValue];
+    double T = [TField.text doubleValue];
     
     double tau = T / K, h = l / N;
     
     a = [aField.text doubleValue], b = [bField.text doubleValue], c = [cField.text doubleValue];
-    alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gama = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];//double alpha = 0.0, betta = 1.0, gama = 0.0, delta = 1.0;
-    
+    alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gama = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];
     int scheme = [schemePicker selectedRowInComponent:0]; // 0 -- явная, 1 -- неявная, 2 -- Кранка
     int order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
     double tetta = 0;
@@ -380,26 +374,20 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
             break;
     }
     
-        //printf for grapher
-    
     NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
     NSMutableArray *contentArrayErr = [[NSMutableArray alloc] init];
     NSMutableDictionary *dataDictAnalytic = [[NSMutableDictionary alloc] init];
     
     for (int i = 0; i < K; ++i) {
-//        printf("K = %f\n", i*tau);
         NSMutableArray *contentArray = [[NSMutableArray alloc] init];
         NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
 
         for (int j = 0; j <= N; ++j) {
-            //for (double k = 0.0; k < 0.9; k += 0.2) {
                 id xAnalytic = [NSNumber numberWithDouble:(j)*h];
                 id yAnalytic = [NSNumber numberWithDouble:[self function:((j)*h) withTime:i*tau]];
                 [contentArrayAnalytic addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:xAnalytic, @"x", yAnalytic, @"y", nil]];
-          //  }
         }
         //epsilon[k][n] = max_i(u[k][i] - reshenie[k][i])
-        
         id err = [NSNumber numberWithDouble:0.0];
         for (int j = 0; j <= N; ++j) {
             id x = [NSNumber numberWithDouble:j*h];
@@ -408,38 +396,26 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
             err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self function:((j)*h) withTime:i*tau] - U[i][j])) ? [err doubleValue] : fabs([self function:((j)*h) withTime:i*tau] - U[i][j])];
             printf("%f	%f\n", [x doubleValue], [y doubleValue]);
             [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
-            
         }
         id time = [NSNumber numberWithDouble:i*tau];
         printf("K = %f\n", [time doubleValue]);
         [dataDict setObject:contentArray forKey:time];
         [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
         [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
-
-//        printf("\n\n\n");
     }
 
     
     [UIView animateWithDuration:0.3 animations:^{
-        //        CGRect frame = bg3.frame;
-        //        frame.origin.y = 0;
-        //        bg3.frame = frame;
         CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
-        //viewControllerToPresent.dataForPlot = contentArray;
         viewControllerToPresent.dictForPlot = dataDict;
         viewControllerToPresent.dictForPlotAnalytic = dataDictAnalytic;
         viewControllerToPresent.dictForPlotErr = contentArrayErr;
         [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
         viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
-        
     }];
+}
+    
 
-    
-}
-    
-- (double)function: (double)x withTime:(double)t  {
-    return exp(-a*t)*sin(x);
-}
     
 #pragma mark - viewController delegate
 - (void)viewDidLoad
@@ -538,7 +514,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [bg addSubview:KLabel];
     KField = [[UITextField alloc] initWithFrame:CGRectMake(250, 150, 50, 20)];
     KField.delegate = self;
-    KField.text = @"100";
+    KField.text = @"2000";
     [bg addSubview:KField];
     
     UILabel *NLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 170, 230, 20)];
@@ -546,7 +522,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [bg addSubview:NLabel];
     NField = [[UITextField alloc] initWithFrame:CGRectMake(250, 170, 50, 20)];
     NField.delegate = self;
-    NField.text = @"10";
+    NField.text = @"30";
     [bg addSubview:NField];
 
     UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
@@ -599,24 +575,11 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [backButton addSubview:blab3];
     [backButton addTarget:self action:@selector(backScreen:) forControlEvents:UIControlEventTouchUpInside];
     [bg2 addSubview:backButton];
-    
-////bg3
-//    bg3 = [[UIView alloc] initWithFrame:CGRectMake(0, -1000, 320, self.view.frame.size.height)];
-//    bg3.backgroundColor = [UIColor grayColor];
-//    
-//    UIButton *bb = [[UIButton alloc] initWithFrame:CGRectMake(40, 520, 60, 40)];
-//    UILabel *blab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-//    blab4.text = @"Назад";
-//    [bb addSubview:blab4];
-//    [bb addTarget:self action:@selector(backFromGraph:) forControlEvents:UIControlEventTouchUpInside];
-//    [bg3 addSubview:bb];
-
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - TextField delegate

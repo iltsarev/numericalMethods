@@ -13,7 +13,6 @@
 @synthesize time3;
 @synthesize time4;
 
-
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     return YES;
@@ -90,7 +89,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     // Create graph from theme
-    
     time1 = time2 = time3 = time4 = 0;
     
     CPTTheme *theme = [CPTTheme themeNamed:kCPTDarkGradientTheme];
@@ -124,13 +122,6 @@
     graph.paddingBottom = boundsPadding;
     
     // Add some initial data
-//    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:100];
-//    NSUInteger i;
-//    for ( i = 0; i < 5; i++ ) {
-//        id x = [NSNumber numberWithFloat:1 + i * 0.05];
-//        id y = [NSNumber numberWithFloat:1.2 * rand() / (float)RAND_MAX + 1.2];
-//        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
-//    }
    self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:0.0]];
     
     graph.plotAreaFrame.paddingLeft   += 55.0;
@@ -227,7 +218,7 @@
     CPTScatterPlot *firstPlot2 = [[CPTScatterPlot alloc] init] ;
     firstPlot2.identifier    = @"3nd time";
     lineStyle.lineWidth     = 2.0;
-    lineStyle.lineColor     = [CPTColor yellowColor];
+    lineStyle.lineColor     = [CPTColor greenColor];
     firstPlot2.dataLineStyle = lineStyle;
     firstPlot2.dataSource    = self;
     
@@ -236,7 +227,7 @@
     
     // Second derivative
     CPTScatterPlot *secondPlot = [[CPTScatterPlot alloc] init] ;
-    secondPlot.identifier    = @"funct";
+    secondPlot.identifier    = @"real";
     lineStyle.lineColor      = [CPTColor whiteColor];
     secondPlot.dataLineStyle = lineStyle;
     secondPlot.dataSource    = self;
@@ -271,12 +262,12 @@
     CPTPlotSymbol *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
     plotSymbol.fill               = [CPTFill fillWithColor:[[CPTColor blueColor] colorWithAlphaComponent:0.5]];
     plotSymbol.lineStyle          = symbolLineStyle;
-    plotSymbol.size               = CGSizeMake(7.0, 7.0);
+    plotSymbol.size               = CGSizeMake(4.0, 4.0);
     
-    dataSourceLinePlot.plotSymbol = plotSymbol;
+//    dataSourceLinePlot.plotSymbol = plotSymbol;
     firstPlot.plotSymbol = plotSymbol;
-    firstPlot2.plotSymbol = plotSymbol;
-    secondPlot.plotSymbol = plotSymbol;
+//    firstPlot2.plotSymbol = plotSymbol;
+//    secondPlot.plotSymbol = plotSymbol;
 
     // Set plot delegate, to know when symbols have been touched
     // We will display an annotation when a symbol is touched
@@ -328,9 +319,6 @@
     
     keys = [[NSArray alloc] initWithArray:keys_m];
     size = keys.count;
-    //UIPickerViewThreeTimes *picker = [[UIPickerViewThreeTimes alloc] initWithFrame:CGRectMake(0, 200, 320, 100) ];// andArray:[NSArray arrayWithArray:keys]];
-    //picker.timesArray = [NSArray arrayWithArray:keys];
-    //[self.view addSubview:picker];
     
     UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 25, 320, 100)];
     picker.showsSelectionIndicator = YES;
@@ -354,8 +342,6 @@
     viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
 
 }
-
-
 
 -(void)changePlotRange
 {
@@ -387,7 +373,7 @@
     else if ( [(NSString *)plot.identifier isEqualToString:@"3nd time"] ) {
         contentArray = dictForPlot[[NSNumber numberWithDouble:time3]];
     }
-    else if ( [(NSString *)plot.identifier isEqualToString:@"funct"] ) {
+    else if ( [(NSString *)plot.identifier isEqualToString:@"real"] ) {
         contentArray = dictForPlotAnalytic[[NSNumber numberWithDouble:time4]];
     }
     return [[contentArray objectAtIndex:index] valueForKey:(fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y")];
