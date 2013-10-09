@@ -64,6 +64,7 @@ double * solve_tridiagonal_in_place_destructive(double *x, const size_t N, const
     return answer;
 }
 
+#pragma mark - init functions
 double phi(double x){
     return sin(x);//x+sin(M_PI*x);
 }
@@ -78,6 +79,8 @@ double phi_l(double t){
 double f(double x, double t){
     return 0;
 }
+
+#pragma mark - implicitScheme
 
 double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta, double tetta){
     double **U = (double **)malloc(K * sizeof(double *));
@@ -211,6 +214,8 @@ double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     }
     return U;
 }
+
+#pragma mark - explicitScheme
 double **explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gamma, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
@@ -273,6 +278,8 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     return U;
 }
 
+#pragma mark - navigation functions
+
 -(void)nextScreen:(id)sender{
     [UIView animateWithDuration:0.3 animations:^{
         CGRect frame = bg2.frame;
@@ -284,7 +291,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
 -(void)backScreen:(id)sender{
     [UIView animateWithDuration:0.3 animations:^{
         CGRect frame = bg2.frame;
-        frame.origin.x = 320;
+        frame.origin.x = 330;
         bg2.frame = frame;
     }];
 }
@@ -420,14 +427,24 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
 
     
 }
-
+#pragma mark - viewController delegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    bg = [[UIView alloc] initWithFrame:CGRectMake(0, 160, 320, self.view.frame.size.height - 160)];
+    bg = [[UIView alloc] initWithFrame:CGRectMake(10, 160, 300, self.view.frame.size.height - 180)];
     bg.backgroundColor = [UIColor orangeColor];
+    
+    CALayer * imgLayer1 = bg.layer;
+    [imgLayer1 setBorderColor: [[UIColor blackColor] CGColor]];
+    [imgLayer1 setBorderWidth:0.5f];
+    [imgLayer1 setShadowColor: [[UIColor blackColor] CGColor]];
+    [imgLayer1 setShadowOpacity:0.9f];
+    [imgLayer1 setShadowOffset: CGSizeMake(0, 1)];
+    [imgLayer1 setShadowRadius:3.0];
+    imgLayer1.shouldRasterize = NO;
+    
     [self.view addSubview:bg];
     
     UILabel *aLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 30, 20)];
@@ -438,40 +455,48 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     aField.text = @"1";
     [bg addSubview:aField];
     
-    UILabel *bLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 10, 30, 20)];
+    UILabel *bLabel = [[UILabel alloc] initWithFrame:CGRectMake(130, 10, 30, 20)];
     bLabel.text = @"b =";
     [bg addSubview:bLabel];
-    bField = [[UITextField alloc] initWithFrame:CGRectMake(130, 12, 50, 20)];
+    bField = [[UITextField alloc] initWithFrame:CGRectMake(160, 12, 50, 20)];
     bField.delegate = self;
     bField.text = @"0";
     [bg addSubview:bField];
     
-    UILabel *cLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 10, 30, 20)];
+    UILabel *cLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 10, 30, 20)];
     cLabel.text = @"c =";
     [bg addSubview:cLabel];
-    cField = [[UITextField alloc] initWithFrame:CGRectMake(210, 12, 50, 20)];
+    cField = [[UITextField alloc] initWithFrame:CGRectMake(250, 12, 50, 20)];
     cField.delegate = self;
     cField.text = @"0";
     [bg addSubview:cField];
     
-    UILabel *alphaLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 40, 60, 20)];
-    alphaLabel.text = @"alpha =";
+    UILabel *lLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 30, 20)];
+    lLabel.text = @"l =";
+    [bg addSubview:lLabel];
+    lField = [[UITextField alloc] initWithFrame:CGRectMake(50, 32, 50, 20)];
+    lField.delegate = self;
+    lField.text = @"3.14";
+    [bg addSubview:lField];
+    
+    UILabel *alphaLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 60, 60, 20)];
+    alphaLabel.text = @"α =";
     [bg addSubview:alphaLabel];
-    alphaField = [[UITextField alloc] initWithFrame:CGRectMake(80, 42, 50, 20)];
+    alphaField = [[UITextField alloc] initWithFrame:CGRectMake(80, 62, 50, 20)];
     alphaField.delegate = self;
     alphaField.text = @"1";
     [bg addSubview:alphaField];
     
-    UILabel *bettaLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 40, 60, 20)];
-    bettaLabel.text = @"betta =";
+    UILabel *bettaLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 60, 60, 20)];
+    bettaLabel.text = @"β =";
     [bg addSubview:bettaLabel];
-    bettaField = [[UITextField alloc] initWithFrame:CGRectMake(210, 42, 50, 20)];
+    bettaField = [[UITextField alloc] initWithFrame:CGRectMake(210, 62, 50, 20)];
     bettaField.delegate = self;
     bettaField.text = @"0";
     [bg addSubview:bettaField];
     
     UILabel *gammaLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 60, 20)];
-    gammaLabel.text = @"gamma =";
+    gammaLabel.text = @"γ =";
     [bg addSubview:gammaLabel];
     gammaField = [[UITextField alloc] initWithFrame:CGRectMake(80, 82, 50, 20)];
     gammaField.delegate = self;
@@ -479,20 +504,12 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [bg addSubview:gammaField];
     
     UILabel *deltaLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 80, 60, 20)];
-    deltaLabel.text = @"delta =";
+    deltaLabel.text = @"δ =";
     [bg addSubview:deltaLabel];
     deltaField = [[UITextField alloc] initWithFrame:CGRectMake(210, 82, 50, 20)];
     deltaField.delegate = self;
     deltaField.text = @"0";
     [bg addSubview:deltaField];
-    
-    UILabel *lLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, 30, 20)];
-    lLabel.text = @"l =";
-    [bg addSubview:lLabel];
-    lField = [[UITextField alloc] initWithFrame:CGRectMake(50, 102, 50, 20)];
-    lField.delegate = self;
-    lField.text = @"3.14";
-    [bg addSubview:lField];
     
     UILabel *TLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 130, 200, 20)];
     TLabel.text = @"Финальное время (T):";
@@ -511,7 +528,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [bg addSubview:KField];
     
     UILabel *NLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 170, 230, 20)];
-    NLabel.text = @"Разбиенией по OX (N):";
+    NLabel.text = @"Разбиений по OX (N):";
     [bg addSubview:NLabel];
     NField = [[UITextField alloc] initWithFrame:CGRectMake(250, 170, 50, 20)];
     NField.delegate = self;
@@ -525,9 +542,20 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [next addTarget:self action:@selector(nextScreen:) forControlEvents:UIControlEventTouchUpInside];
     [bg addSubview:next];
 //bg 2
-    bg2 = [[UIView alloc] initWithFrame:CGRectMake(320, 160, 320, self.view.frame.size.height - 160)];
+    bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 320, self.view.frame.size.height - 180)];
     bg2.backgroundColor = [UIColor lightGrayColor];
+    
+    CALayer * imgLayer2 = bg2.layer;
+    [imgLayer2 setBorderColor: [[UIColor blackColor] CGColor]];
+    [imgLayer2 setBorderWidth:0.5f];
+    [imgLayer2 setShadowColor: [[UIColor blackColor] CGColor]];
+    [imgLayer2 setShadowOpacity:0.9f];
+    [imgLayer2 setShadowOffset: CGSizeMake(0, 1)];
+    [imgLayer2 setShadowRadius:3.0];
+    imgLayer2.shouldRasterize = NO;
+    
     [self.view addSubview:bg2];
+
     
     orderPicker = [[UIPIckerViewOrder alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     schemePicker = [[UIPickerViewScheme alloc] initWithFrame:CGRectMake(0, 140, 320, 100)];
@@ -549,18 +577,23 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [backButton addTarget:self action:@selector(backScreen:) forControlEvents:UIControlEventTouchUpInside];
     [bg2 addSubview:backButton];
     
-//bg3
-    bg3 = [[UIView alloc] initWithFrame:CGRectMake(0, -1000, 320, self.view.frame.size.height)];
-    bg3.backgroundColor = [UIColor grayColor];
-    [self.view addSubview:bg3];
-    
-    UIButton *bb = [[UIButton alloc] initWithFrame:CGRectMake(40, 520, 60, 40)];
-    UILabel *blab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    blab4.text = @"Назад";
-    [bb addSubview:blab4];
-    [bb addTarget:self action:@selector(backFromGraph:) forControlEvents:UIControlEventTouchUpInside];
-    [bg3 addSubview:bb];
+////bg3
+//    bg3 = [[UIView alloc] initWithFrame:CGRectMake(0, -1000, 320, self.view.frame.size.height)];
+//    bg3.backgroundColor = [UIColor grayColor];
+//    
+//    UIButton *bb = [[UIButton alloc] initWithFrame:CGRectMake(40, 520, 60, 40)];
+//    UILabel *blab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+//    blab4.text = @"Назад";
+//    [bb addSubview:blab4];
+//    [bb addTarget:self action:@selector(backFromGraph:) forControlEvents:UIControlEventTouchUpInside];
+//    [bg3 addSubview:bb];
 
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - TextField delegate
@@ -577,14 +610,5 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     return (([string isEqualToString:filtered])&&(newLength <= CHARACTER_LIMIT));
 }
 
-#pragma mark - PickerView delegate
-
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end
