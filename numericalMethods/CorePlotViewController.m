@@ -1,16 +1,6 @@
-//
-//  CorePlotExampleViewController.m
-//  CorePlotExample
-//
-//  Created by Sylvain Marcotte on 11-02-16.
-//  14 Oranges Software - http://www.14oranges.com
-//
-//  Original code obtained from http://www.switchonthecode.com/tutorials/using-core-plot-in-an-iphone-application
-//
+#import "CorePlotViewController.h"
 
-#import "CorePlotExampleViewController.h"
-
-@implementation CorePlotExampleViewController
+@implementation CorePlotViewController
 
 @synthesize dataForPlot;
 

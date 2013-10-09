@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "CorePlotExampleViewController.h"
+#import "CorePlotViewController.h"
 
 
 @interface ViewController ()
@@ -103,7 +103,7 @@ double **explicitScheme(int K, int N, double a, double b, double c, double tau, 
 
 -(void)drawPlot:(id)sender{
  
-    CorePlotExampleViewController *viewControllerToPresent = [[CorePlotExampleViewController alloc] initWithNibName:@"CorePlotExampleViewController" bundle:nil];
+    CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
     [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
 }
 

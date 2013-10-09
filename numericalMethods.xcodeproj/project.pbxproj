@@ -23,11 +23,8 @@
 		52367CDC17FC329100C1DA60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52367CDA17FC329100C1DA60 /* InfoPlist.strings */; };
 		52367CDE17FC329100C1DA60 /* numericalMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */; };
 		A8A2238E794F49DC87207666 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6FEF4F8C84435840A6078 /* libPods.a */; };
-		FAC7C72418037F07008F50D1 /* PlotGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC7C72318037F07008F50D1 /* PlotGallery.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FAD3DD601803778B00A1DD6D /* CorePlotExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3DD5E1803778B00A1DD6D /* CorePlotExampleViewController.m */; };
-		FAD3DD611803778B00A1DD6D /* CorePlotExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD3DD5F1803778B00A1DD6D /* CorePlotExampleViewController.xib */; };
-		FAD3DD6518037CD900A1DD6D /* PlotItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3DD6418037CD900A1DD6D /* PlotItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FAD3DD6818037CF000A1DD6D /* CurvedScatterPlot.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3DD6718037CF000A1DD6D /* CurvedScatterPlot.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FAD3DD601803778B00A1DD6D /* CorePlotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3DD5E1803778B00A1DD6D /* CorePlotViewController.m */; };
+		FAD3DD611803778B00A1DD6D /* CorePlotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD3DD5F1803778B00A1DD6D /* CorePlotViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,15 +60,9 @@
 		52367CDB17FC329100C1DA60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = numericalMethodsTests.m; sourceTree = "<group>"; };
 		6DED4331CEF94783A0970CA1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		FAC7C72218037F07008F50D1 /* PlotGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotGallery.h; sourceTree = "<group>"; };
-		FAC7C72318037F07008F50D1 /* PlotGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlotGallery.m; sourceTree = "<group>"; };
-		FAD3DD5D1803778B00A1DD6D /* CorePlotExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorePlotExampleViewController.h; sourceTree = "<group>"; };
-		FAD3DD5E1803778B00A1DD6D /* CorePlotExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CorePlotExampleViewController.m; sourceTree = "<group>"; };
-		FAD3DD5F1803778B00A1DD6D /* CorePlotExampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CorePlotExampleViewController.xib; sourceTree = "<group>"; };
-		FAD3DD6318037CD900A1DD6D /* PlotItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotItem.h; sourceTree = "<group>"; };
-		FAD3DD6418037CD900A1DD6D /* PlotItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlotItem.m; sourceTree = "<group>"; };
-		FAD3DD6618037CF000A1DD6D /* CurvedScatterPlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurvedScatterPlot.h; sourceTree = "<group>"; };
-		FAD3DD6718037CF000A1DD6D /* CurvedScatterPlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurvedScatterPlot.m; sourceTree = "<group>"; };
+		FAD3DD5D1803778B00A1DD6D /* CorePlotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorePlotViewController.h; sourceTree = "<group>"; };
+		FAD3DD5E1803778B00A1DD6D /* CorePlotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CorePlotViewController.m; sourceTree = "<group>"; };
+		FAD3DD5F1803778B00A1DD6D /* CorePlotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CorePlotViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,15 +170,9 @@
 		FA7CF36B1802B29E00C4E9DF /* Plot */ = {
 			isa = PBXGroup;
 			children = (
-				FAD3DD6618037CF000A1DD6D /* CurvedScatterPlot.h */,
-				FAD3DD6718037CF000A1DD6D /* CurvedScatterPlot.m */,
-				FAD3DD6318037CD900A1DD6D /* PlotItem.h */,
-				FAD3DD6418037CD900A1DD6D /* PlotItem.m */,
-				FAC7C72218037F07008F50D1 /* PlotGallery.h */,
-				FAC7C72318037F07008F50D1 /* PlotGallery.m */,
-				FAD3DD5D1803778B00A1DD6D /* CorePlotExampleViewController.h */,
-				FAD3DD5E1803778B00A1DD6D /* CorePlotExampleViewController.m */,
-				FAD3DD5F1803778B00A1DD6D /* CorePlotExampleViewController.xib */,
+				FAD3DD5D1803778B00A1DD6D /* CorePlotViewController.h */,
+				FAD3DD5E1803778B00A1DD6D /* CorePlotViewController.m */,
+				FAD3DD5F1803778B00A1DD6D /* CorePlotViewController.xib */,
 			);
 			name = Plot;
 			sourceTree = "<group>";
@@ -273,7 +258,7 @@
 				52367CC617FC329100C1DA60 /* Main_iPad.storyboard in Resources */,
 				52367CCB17FC329100C1DA60 /* Images.xcassets in Resources */,
 				52367CC317FC329100C1DA60 /* Main_iPhone.storyboard in Resources */,
-				FAD3DD611803778B00A1DD6D /* CorePlotExampleViewController.xib in Resources */,
+				FAD3DD611803778B00A1DD6D /* CorePlotViewController.xib in Resources */,
 				52367CBA17FC329100C1DA60 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,11 +312,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				52367CC917FC329100C1DA60 /* ViewController.m in Sources */,
-				FAC7C72418037F07008F50D1 /* PlotGallery.m in Sources */,
-				FAD3DD601803778B00A1DD6D /* CorePlotExampleViewController.m in Sources */,
+				FAD3DD601803778B00A1DD6D /* CorePlotViewController.m in Sources */,
 				52367CC017FC329100C1DA60 /* AppDelegate.m in Sources */,
-				FAD3DD6518037CD900A1DD6D /* PlotItem.m in Sources */,
-				FAD3DD6818037CF000A1DD6D /* CurvedScatterPlot.m in Sources */,
 				52367CBC17FC329100C1DA60 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
