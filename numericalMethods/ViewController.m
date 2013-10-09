@@ -387,7 +387,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     
         //printf for grapher
     
-    NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
     
     for (int i = 0; i < K; ++i) {
 //        printf("K = %f\n", i*tau);

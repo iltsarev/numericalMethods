@@ -118,7 +118,7 @@
 //        id y = [NSNumber numberWithFloat:1.2 * rand() / (float)RAND_MAX + 1.2];
 //        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
 //    }
-   self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:3.0]];
+   self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:0.0]];
     
     graph.plotAreaFrame.paddingLeft   += 55.0;
 //    graph.plotAreaFrame.paddingTop    += 40.0;
@@ -291,10 +291,14 @@
 }
 
 -(void)turnOffPoints{
-    CPTScatterPlot * newplot = (CPTScatterPlot *)[graph plotAtIndex:0];
     
-    newplot.plotSymbol = nil;
+    self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:9.0]];
+    [graph reloadData];
     
+    //CPTScatterPlot * newplot = (CPTScatterPlot *)[graph plotAtIndex:0];
+//    
+//    newplot.plotSymbol = nil;
+//    
 //    [graph removePlot:[graph plotAtIndex:0]];
 //    
 //    CPTMutableLineStyle *symbolLineStyle = [CPTMutableLineStyle lineStyle];
@@ -305,7 +309,7 @@
 //    plotSymbol.size               = CGSizeMake(10.0, 10.0);
 //    
 //    newplot.
-    //dataSourceLinePlot.plotSymbol = plotSymbol;
+   // dataSourceLinePlot.plotSymbol = plotSymbol;
    //[[graph plotAtIndex:0] display];
    // interpolation = CPTScatterPlotInterpolationCurved;
 }
