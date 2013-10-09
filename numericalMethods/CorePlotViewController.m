@@ -255,7 +255,7 @@
     CPTPlotSymbol *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
     plotSymbol.fill               = [CPTFill fillWithColor:[[CPTColor blueColor] colorWithAlphaComponent:0.5]];
     plotSymbol.lineStyle          = symbolLineStyle;
-    plotSymbol.size               = CGSizeMake(3.0, 3.0);
+    plotSymbol.size               = CGSizeMake(7.0, 7.0);
     
     dataSourceLinePlot.plotSymbol = plotSymbol;
     firstPlot.plotSymbol = plotSymbol;
@@ -287,20 +287,15 @@
     [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(changePlotRange) userInfo:nil repeats:YES];
 #endif
     
-    UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height, 40, 30)];
+    UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height + 40, 70, 30)];
     [back setTitle:@"Назад" forState:UIControlStateNormal];
     back.titleLabel.textColor = [UIColor blackColor];
     //back.backgroundColor = [UIColor blackColor];
     [back  addTarget:self action:@selector(Back) forControlEvents:UIControlEventTouchUpInside];
+    back.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
     [self.view addSubview:back];
     
     
-    UIButton *points = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height- 40, 40, 30)];
-    [points setTitle:@"Points" forState:UIControlStateNormal];
-    points.titleLabel.textColor = [UIColor blackColor];
-    //back.backgroundColor = [UIColor blackColor];
-    [points  addTarget:self action:@selector(turnOffPoints) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:points];
     
     NSMutableArray *keys_m = [NSMutableArray arrayWithArray:[dictForPlot allKeys]];
     NSSortDescriptor *sortDescriptor;
