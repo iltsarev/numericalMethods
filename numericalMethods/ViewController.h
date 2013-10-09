@@ -29,6 +29,6 @@
     UIView *bg2;    
 }
 
-@property (nonatomic,retain)MBProgressHUD *HUDError;
+@property (nonatomic,retain)MBProgressHUD *HUD;
 
 @end

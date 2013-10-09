@@ -21,10 +21,10 @@ double a,b,c,alpha,betta,gama,delta,l;
 
 @implementation ViewController
 
-@synthesize HUDError;
+@synthesize HUD;
 
 double * processTridiagonalMatrix(double *x, const size_t N, const double *a, const double *b, double *c) {
-
+    
     size_t i;
     c[0] = c[0] / b[0];
     x[0] = x[0] / b[0];
@@ -214,7 +214,7 @@ double **explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
             U[k+1][i] = U[k][i] + a*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau/2/h*(U[k][i+1] - U[k][i-1]) + c*tau*U[k][i] + tau*f(i * h, k * tau);
         }
         
-      //  двухточечная первого
+        //  двухточечная первого
         U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + phi_0((k + 1) * tau)/(betta - alpha/h);
         U[k+1][N] = gama/h/(delta + gama/h)*U[k+1][N-1] + phi_l((k + 1) * tau)/(delta + gama/h);
     }
@@ -236,8 +236,8 @@ double **explicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b,
         }
         
         //  трехточечная второго
-          U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + phi_0((k+1) * tau)/(betta - 3*alpha/2/h);
-          U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + phi_l((k+1) * tau)/(delta - 3*gama/2/h);
+        U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + phi_0((k+1) * tau)/(betta - 3*alpha/2/h);
+        U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + phi_l((k+1) * tau)/(delta - 3*gama/2/h);
     }
     return U;
 }
@@ -256,8 +256,8 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
             U[k+1][i] = U[k][i] + a*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau/2/h*(U[k][i+1] - U[k][i-1]) + c*tau*U[k][i] + tau*f(i * h, k * tau);
         }
         //  Двухточечная второго
-            U[k+1][0] = 1/(2*a*alpha/h + h*alpha/tau - c*h*alpha - betta*(2*a - b*h))*(U[k+1][1]*2*a*alpha/h + U[k][0]*h*alpha/tau - phi_0((k+1) * tau)*(2*a-b*h)+f(0, (k+1)*tau)*h*alpha);
-           U[k+1][N] = 1/(2*a*gama/h + h*gama/tau - c*h*gama + delta*(2*a + b*h))*(U[k+1][N-1]*2*a*gama/h + U[k][N]*h*gama/tau + phi_l((k+1) * tau)*(2*a+b*h)+f(N, (k+1)*tau)*h*gama);
+        U[k+1][0] = 1/(2*a*alpha/h + h*alpha/tau - c*h*alpha - betta*(2*a - b*h))*(U[k+1][1]*2*a*alpha/h + U[k][0]*h*alpha/tau - phi_0((k+1) * tau)*(2*a-b*h)+f(0, (k+1)*tau)*h*alpha);
+        U[k+1][N] = 1/(2*a*gama/h + h*gama/tau - c*h*gama + delta*(2*a + b*h))*(U[k+1][N-1]*2*a*gama/h + U[k][N]*h*gama/tau + phi_l((k+1) * tau)*(2*a+b*h)+f(N, (k+1)*tau)*h*gama);
     }
     return U;
 }
@@ -293,130 +293,138 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gama = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];
     int scheme = [schemePicker selectedRowInComponent:0]; // 0 -- явная, 1 -- неявная, 2 -- Кранка
     int order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
-    double tetta = 0;
+    
+    HUD = [[MBProgressHUD alloc] initWithView:bg2];
+    HUD.mode = MBProgressHUDAnimationFade;
+    [bg2 addSubview:HUD];
+    HUD.removeFromSuperViewOnHide = YES;
     
     if(a*tau/h/h > 0.5 && scheme == 0){
-        HUDError = [[MBProgressHUD alloc] initWithView:bg2];
-        HUDError.mode = MBProgressHUDModeText;
-        [bg2 addSubview:HUDError];
-        HUDError.removeFromSuperViewOnHide = YES;
-        HUDError.labelText = @"Не устойчива! (σ > 0.5)";
-        HUDError.detailsLabelText =  @"Измените параметры сетки или схему";
-        [HUDError show:YES];
-        [HUDError hide:YES afterDelay:3];
+        HUD.labelText = @"Не устойчива! (σ > 0.5)";
+        HUD.detailsLabelText =  @"Измените параметры сетки или схему";
+        [HUD show:YES];
+        [HUD hide:YES afterDelay:3];
         return;
     }
-    double **U;
-    switch (scheme) {
-        case 0:{
-            switch (order) {
-                case 0:{
-                    U = explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
-                    break;
-                }
-                case 1:{
-                    U = explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
-                    break;
-                }
-                case 2:{
-                    U = explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-            break;
-        }
-        case 1:{
-            tetta = 1.0;
-            switch (order) {
-                case 0:{
-                    U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-                    break;
-                }
-                case 1:{
-                    U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-                    break;
-                }
-                case 2:{
-                    U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-            break;
-        }
-        case 2:{
-            tetta = 0.5;
-            switch (order) {
-                case 0:{
-                    U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-                    break;
-                }
-                case 1:{
-                    U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-                    break;
-                }
-                case 2:{
-                    U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-            break;
-        }
-        default:
-            break;
-    }
     
-    NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
-    NSMutableArray *contentArrayErr = [[NSMutableArray alloc] init];
-    NSMutableDictionary *dataDictAnalytic = [[NSMutableDictionary alloc] init];
-    
-    for (int i = 0; i < K; ++i) {
-        NSMutableArray *contentArray = [[NSMutableArray alloc] init];
-        NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
-
-        for (int j = 0; j <= N; ++j) {
+    HUD.labelText = @"Идет рассчет";
+    //HUD.detailsLabelText =  @"Измените параметры сетки или схему";
+    [HUD show:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        double tetta = 0;
+        double **U;
+        switch (scheme) {
+            case 0:{
+                switch (order) {
+                    case 0:{
+                        U = explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        break;
+                    }
+                    case 1:{
+                        U = explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        break;
+                    }
+                    case 2:{
+                        U = explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+            case 1:{
+                tetta = 1.0;
+                switch (order) {
+                    case 0:{
+                        U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 1:{
+                        U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 2:{
+                        U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+            case 2:{
+                tetta = 0.5;
+                switch (order) {
+                    case 0:{
+                        U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 1:{
+                        U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 2:{
+                        U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+            default:
+                break;
+        }
+        
+        NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
+        NSMutableArray *contentArrayErr = [[NSMutableArray alloc] init];
+        NSMutableDictionary *dataDictAnalytic = [[NSMutableDictionary alloc] init];
+        
+        for (int i = 0; i < K; ++i) {
+            NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+            NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
+            
+            for (int j = 0; j <= N; ++j) {
                 id xAnalytic = [NSNumber numberWithDouble:(j)*h];
                 id yAnalytic = [NSNumber numberWithDouble:[self function:((j)*h) withTime:i*tau]];
                 [contentArrayAnalytic addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:xAnalytic, @"x", yAnalytic, @"y", nil]];
+            }
+            //epsilon[k][n] = max_i(u[k][i] - reshenie[k][i])
+            id err = [NSNumber numberWithDouble:0.0];
+            for (int j = 0; j <= N; ++j) {
+                id x = [NSNumber numberWithDouble:j*h];
+                id y = [NSNumber numberWithDouble:U[i][j]];
+                
+                err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self function:((j)*h) withTime:i*tau] - U[i][j])) ? [err doubleValue] : fabs([self function:((j)*h) withTime:i*tau] - U[i][j])];
+                printf("%f	%f\n", [x doubleValue], [y doubleValue]);
+                [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+            }
+            id time = [NSNumber numberWithDouble:i*tau];
+            printf("K = %f\n", [time doubleValue]);
+            [dataDict setObject:contentArray forKey:time];
+            [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
+            [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
         }
-        //epsilon[k][n] = max_i(u[k][i] - reshenie[k][i])
-        id err = [NSNumber numberWithDouble:0.0];
-        for (int j = 0; j <= N; ++j) {
-            id x = [NSNumber numberWithDouble:j*h];
-            id y = [NSNumber numberWithDouble:U[i][j]];
-            
-            err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self function:((j)*h) withTime:i*tau] - U[i][j])) ? [err doubleValue] : fabs([self function:((j)*h) withTime:i*tau] - U[i][j])];
-            printf("%f	%f\n", [x doubleValue], [y doubleValue]);
-            [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
-        }
-        id time = [NSNumber numberWithDouble:i*tau];
-        printf("K = %f\n", [time doubleValue]);
-        [dataDict setObject:contentArray forKey:time];
-        [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
-        [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
-    }
-
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
-        viewControllerToPresent.dictForPlot = dataDict;
-        viewControllerToPresent.dictForPlotAnalytic = dataDictAnalytic;
-        viewControllerToPresent.dictForPlotErr = contentArrayErr;
-        [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
-        viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
-    }];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [HUD hide:YES];
+            [UIView animateWithDuration:0.3 animations:^{
+                CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
+                viewControllerToPresent.dictForPlot = dataDict;
+                viewControllerToPresent.dictForPlotAnalytic = dataDictAnalytic;
+                viewControllerToPresent.dictForPlotErr = contentArrayErr;
+                [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+                viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
+            }];
+        });
+    });
 }
-    
 
-    
+
+
 #pragma mark - viewController delegate
 - (void)viewDidLoad
 {
@@ -524,17 +532,17 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     NField.delegate = self;
     NField.text = @"30";
     [bg addSubview:NField];
-
+    
     UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
     UILabel *blab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     blab.text = @"Далее";
     [next addSubview:blab];
     [next addTarget:self action:@selector(nextScreen:) forControlEvents:UIControlEventTouchUpInside];
     [bg addSubview:next];
-//bg 2
+    //bg 2
     bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 320, self.view.frame.size.height - 180)];
     bg2.backgroundColor = [UIColor lightGrayColor];
-
+    
     CALayer * imgLayer2 = bg2.layer;
     [imgLayer2 setBorderColor: [[UIColor blackColor] CGColor]];
     [imgLayer2 setBorderWidth:0.5f];
@@ -545,7 +553,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     imgLayer2.shouldRasterize = NO;
     
     [self.view addSubview:bg2];
-
+    
     UILabel *order = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 320, 15)];
     order.text = @"Аппроксимация:";
     order.textAlignment = NSTextAlignmentCenter;
@@ -556,12 +564,12 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     
     orderPicker = [[UIPIckerViewOrder alloc] initWithFrame:CGRectMake(0, 10, 320, 60)];
     schemePicker = [[UIPickerViewScheme alloc] initWithFrame:CGRectMake(0, 160, 320, 60)];
-   
+    
     [bg2 addSubview:order];
     [bg2 addSubview:scheme];
     [bg2 addSubview:orderPicker];
     [bg2 addSubview:schemePicker];
-
+    
     UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
     UILabel *blab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     blab2.text = @"Далее";
