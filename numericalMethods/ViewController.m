@@ -18,6 +18,7 @@
 
 @implementation ViewController
 
+@synthesize HUDdone;
 //tridiagonal algo usage
 //    double x[5] = {-14, -55, 49, 86,8};
 //    double a[5] = {0, 7, -4, 7, 4};
@@ -303,7 +304,23 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         bg3.frame = frame;
     }];
 }
-
+-(void)HUDDone{
+    
+    self.HUDdone = [[MBProgressHUD alloc] initWithView:bg2];
+    [bg2 addSubview:self.HUDdone];
+    self.HUDdone.mode = MBProgressHUDAnimationFade;
+    self.HUDdone.delegate = self;
+    self.HUDdone.labelText = @"done";
+    
+    
+}
+- (void)hudWasHidden {
+    // Remove HUD from screen
+    [HUDdone removeFromSuperview];
+    
+    // add here the code you may need
+    
+}
 -(void)proceedScheme:(id)sender{
     int K = [KField.text intValue];//1000;
     int N = [NField.text intValue];//10;
@@ -322,7 +339,25 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     
     if(a*tau/h/h > 0.5 && scheme == 0){
         printf("bad sigma");
-        exit(0);
+//        [self.HUDdone show:YES];
+//        [self.HUDdone hide:YES afterDelay:1];
+        HUDdone = [[MBProgressHUD alloc] initWithView:bg2];
+        HUDdone.mode = MBProgressHUDModeText;
+
+        // Add HUD to screen
+        [bg2 addSubview:HUDdone];
+        
+        // Register for HUD callbacks so we can remove it from the window at the right time
+        HUDdone.delegate = self;
+        HUDdone.removeFromSuperViewOnHide = YES;
+
+        HUDdone.labelText = @"Не устойчива! (σ > 0.5)";
+        HUDdone.detailsLabelText =  @"Измените параметры сетки или схему";
+        [HUDdone show:YES];
+        // Show the HUD while the provided method executes in a new thread
+        [HUDdone hide:YES afterDelay:3];
+        return;
+        //exit(0);
     }
     double **U;
     switch (scheme) {
@@ -544,7 +579,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
 //bg 2
     bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 320, self.view.frame.size.height - 180)];
     bg2.backgroundColor = [UIColor lightGrayColor];
-    
+
     CALayer * imgLayer2 = bg2.layer;
     [imgLayer2 setBorderColor: [[UIColor blackColor] CGColor]];
     [imgLayer2 setBorderWidth:0.5f];

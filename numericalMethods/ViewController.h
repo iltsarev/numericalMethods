@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "UIPickerViewScheme.h"
 #import "UIPIckerViewOrder.h"
-@interface ViewController : UIViewController<UITextFieldDelegate, UIPickerViewDelegate>{
+#import "MBProgressHUD.h"
+
+@interface ViewController : UIViewController<UITextFieldDelegate, UIPickerViewDelegate,MBProgressHUDDelegate>{
     IBOutlet UITextField *aField;
     IBOutlet UITextField *bField;
     IBOutlet UITextField *cField;
@@ -27,6 +29,8 @@
     UIView *bg2;
     UIView *bg3;
     double a,b,c,alpha,betta,gamma,delta,l;
+    
 }
+@property (nonatomic,retain)MBProgressHUD *HUDdone;
 
 @end
