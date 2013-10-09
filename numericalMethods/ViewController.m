@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "CorePlotViewController.h"
 
 #define NUMBERS_ONLY @"1234567890."
 #define CHARACTER_LIMIT 5
@@ -386,9 +386,13 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        CGRect frame = bg3.frame;
-        frame.origin.y = 0;
-        bg3.frame = frame;
+//        CGRect frame = bg3.frame;
+//        frame.origin.y = 0;
+//        bg3.frame = frame;
+        CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
+        [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+        //viewControllerToPresent.view.frame = CGRectMake(0, 0, 320, 400);
+
     }];
     //printf for grapher
     for (int i = 0; i < K; ++i) {
