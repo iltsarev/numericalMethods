@@ -23,42 +23,18 @@ double a,b,c,alpha,betta,gama,delta,l;
 
 @synthesize HUDError;
 
-//tridiagonal algo usage
-//    double x[5] = {-14, -55, 49, 86,8};
-//    double a[5] = {0, 7, -4, 7, 4};
-//    double b[5] = {8, -19, 21, -23, -7};
-//    double c[5] = {-2, 9, -8, 9, 0};
-//    size_t N = 5;
-//    solve_tridiagonal_in_place_destructive(x, N, a, b, c);
-//    //should be -1.0000	3.0000	1.0000	-5.0000	-4.0000
-//    NSLog(@"answer: %f %f %f %f %f", x[0], x[1], x[2], x[3], x[4]);
-
-
-double * solve_tridiagonal_in_place_destructive(double *x, const size_t N, const double *a, const double *b, double *c) {
+double * processTridiagonalMatrix(double *x, const size_t N, const double *a, const double *b, double *c) {
 
     size_t i;
-    
-    /*
-     solves Ax = v where A is a tridiagonal matrix consisting of vectors a, b, c
-     note that contents of input vector c will be modified, making this a one-time-use function
-     x[] - initially contains the input vector v, and returns the solution x. indexed from [0, ..., N - 1]
-     N — number of equations
-     a[] - subdiagonal (means it is the diagonal below the main diagonal) -- indexed from [1, ..., N - 1]
-     b[] - the main diagonal, indexed from [0, ..., N - 1]
-     c[] - superdiagonal (means it is the diagonal above the main diagonal) -- indexed from [0, ..., N - 2]
-     */
-    
     c[0] = c[0] / b[0];
     x[0] = x[0] / b[0];
     
-    /* loop from 1 to N - 1 inclusive */
     for (i = 1; i < N; i++) {
         double m = 1.0 / (b[i] - a[i] * c[i - 1]);
         c[i] = c[i] * m;
         x[i] = (x[i] - a[i] * x[i - 1]) * m;
     }
     
-    /* loop from N - 2 to 0 inclusive, safely testing loop end condition */
     
     for (i = N - 1; i-- > 0; )
         x[i] = x[i] - c[i] * x[i + 1];
@@ -126,7 +102,7 @@ double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
         upper[N] = 0.0;
         answer[N] = phi_l((k+1)*tau);
         
-        U[k+1] = solve_tridiagonal_in_place_destructive(answer, N+1, lower, mid, upper);
+        U[k+1] = processTridiagonalMatrix(answer, N+1, lower, mid, upper);
     }
     return U;
 }
@@ -171,7 +147,7 @@ double **implicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b,
         upper[N] = 0.0;
         answer[N] = phi_l((k+1)*tau) - answer[N-1]/lower[N-1]*gama/2/h;
         
-        U[k+1] = solve_tridiagonal_in_place_destructive(answer, N+1, lower, mid, upper);
+        U[k+1] = processTridiagonalMatrix(answer, N+1, lower, mid, upper);
     }
     return U;
 }
@@ -215,7 +191,7 @@ double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         upper[N] = 0.0;
         answer[N] = U[k][N]*h*gama/tau + phi_l((k + 1) * tau) * (2*a + b*h) + f(N, (k+1)*tau)*h*alpha;
         
-        U[k+1] = solve_tridiagonal_in_place_destructive(answer, N+1, lower, mid, upper);
+        U[k+1] = processTridiagonalMatrix(answer, N+1, lower, mid, upper);
     }
     return U;
 }
