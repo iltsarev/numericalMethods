@@ -383,19 +383,34 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         //printf for grapher
     
     NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
+    NSMutableDictionary *dataDictAnalytic = [[NSMutableDictionary alloc] init];
     
     for (int i = 0; i < K; ++i) {
 //        printf("K = %f\n", i*tau);
         NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+        NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
+        
+        for (int j = 0; j <= N; ++j) {
+            //for (double k = 0.0; k < 0.9; k += 0.2) {
+                id xAnalytic = [NSNumber numberWithDouble:(j)*h];
+                id yAnalytic = [NSNumber numberWithDouble:[self function:((j)*h) withTime:i*tau]];
+                [contentArrayAnalytic addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:xAnalytic, @"x", yAnalytic, @"y", nil]];
+          //  }
+        }
+        //epsilon[k][n] = max_i(u[k][i] - reshenie[k][i])
+        
         for (int j = 0; j <= N; ++j) {
             id x = [NSNumber numberWithDouble:j*h];
+
             id y = [NSNumber numberWithDouble:U[i][j]];
+
             printf("%f	%f\n", [x doubleValue], [y doubleValue]);
             [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
         }
         id time = [NSNumber numberWithDouble:i*tau];
         printf("K = %f\n", [time doubleValue]);
         [dataDict setObject:contentArray forKey:time];
+        [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
 //        printf("\n\n\n");
     }
 
@@ -407,7 +422,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
         //viewControllerToPresent.dataForPlot = contentArray;
         viewControllerToPresent.dictForPlot = dataDict;
-        
+        viewControllerToPresent.dictForPlotAnalytic = dataDictAnalytic;
         [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
         viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
         
@@ -415,6 +430,11 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
 
     
 }
+    
+- (double)function: (double)x withTime:(double)t  {
+    return exp(-a*t)*sin(x);
+}
+    
 #pragma mark - viewController delegate
 - (void)viewDidLoad
 {

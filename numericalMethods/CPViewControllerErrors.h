@@ -5,7 +5,7 @@
 #import "CPTDefinitions.h"
 #import "CPTNumericDataType.h"
 
-@interface CorePlotViewController : UIViewController <CPTPlotDataSource,CPTAxisDelegate,CPTScatterPlotDelegate,CPTPlotSpaceDelegate, UIPickerViewDelegate>
+@interface CorePlotViewControllerErrors : UIViewController <CPTPlotDataSource,CPTAxisDelegate,CPTScatterPlotDelegate,CPTPlotSpaceDelegate, UIPickerViewDelegate>
 {
     CPTXYGraph *graph;
     CPTPlotSpaceAnnotation *symbolTextAnnotation;

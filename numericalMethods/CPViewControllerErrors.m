@@ -1,6 +1,6 @@
-#import "CorePlotViewController.h"
+#import "CPViewControllerErrors.h"
 
-@implementation CorePlotViewController
+@implementation CorePlotViewControllerErrors
 
 @synthesize dataForPlot;
 @synthesize dictForPlot;
@@ -203,7 +203,7 @@
     
     CPTMutableLineStyle *lineStyle = [dataSourceLinePlot.dataLineStyle mutableCopy] ;
     lineStyle.lineWidth              = 2.0;
-    lineStyle.lineColor              = [CPTColor redColor];
+    lineStyle.lineColor              = [CPTColor greenColor];
     dataSourceLinePlot.dataLineStyle = lineStyle;
     
     dataSourceLinePlot.dataSource = self;
@@ -213,7 +213,7 @@
     CPTScatterPlot *firstPlot = [[CPTScatterPlot alloc] init] ;
     firstPlot.identifier    = @"2nd time";
     lineStyle.lineWidth     = 2.0;
-    lineStyle.lineColor     = [CPTColor blueColor];
+    lineStyle.lineColor     = [CPTColor redColor];
     firstPlot.dataLineStyle = lineStyle;
     firstPlot.dataSource    = self;
     
@@ -222,7 +222,7 @@
     // Second derivative
     CPTScatterPlot *secondPlot = [[CPTScatterPlot alloc] init] ;
     secondPlot.identifier    = @"Analytic plot";
-    lineStyle.lineColor      = [CPTColor whiteColor];
+    lineStyle.lineColor      = [CPTColor blueColor];
     secondPlot.dataLineStyle = lineStyle;
     secondPlot.dataSource    = self;
     

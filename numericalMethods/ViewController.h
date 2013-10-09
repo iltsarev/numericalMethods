@@ -30,6 +30,7 @@
     UIView *bg3;
     
 }
+
 @property (nonatomic,retain)MBProgressHUD *HUDError;
 
 @end

@@ -29,6 +29,8 @@
 		6D49ECEEBAC940DDB1EC75BD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B617F598F7D4D9B8709E27B /* libPods.a */; };
 		FA10106918051F500095F25F /* CorePlotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA10106718051F500095F25F /* CorePlotViewController.m */; };
 		FA10106A18051F500095F25F /* CorePlotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA10106818051F500095F25F /* CorePlotViewController.xib */; };
+		FA1E13DD1805C97F008FC47E /* CPViewControllerErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1E13DA1805C97F008FC47E /* CPViewControllerErrors.m */; };
+		FA1E13DE1805C97F008FC47E /* CPViewControllerErrors.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1E13DB1805C97F008FC47E /* CPViewControllerErrors.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,9 @@
 		FA10106618051F500095F25F /* CorePlotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorePlotViewController.h; sourceTree = "<group>"; };
 		FA10106718051F500095F25F /* CorePlotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CorePlotViewController.m; sourceTree = "<group>"; };
 		FA10106818051F500095F25F /* CorePlotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CorePlotViewController.xib; sourceTree = "<group>"; };
+		FA1E13DA1805C97F008FC47E /* CPViewControllerErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPViewControllerErrors.m; sourceTree = "<group>"; };
+		FA1E13DB1805C97F008FC47E /* CPViewControllerErrors.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CPViewControllerErrors.xib; sourceTree = "<group>"; };
+		FA1E13DC1805C97F008FC47E /* CPViewControllerErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPViewControllerErrors.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +193,9 @@
 		FA10106B18051F5E0095F25F /* Plot */ = {
 			isa = PBXGroup;
 			children = (
+				FA1E13DC1805C97F008FC47E /* CPViewControllerErrors.h */,
+				FA1E13DA1805C97F008FC47E /* CPViewControllerErrors.m */,
+				FA1E13DB1805C97F008FC47E /* CPViewControllerErrors.xib */,
 				FA10106618051F500095F25F /* CorePlotViewController.h */,
 				FA10106718051F500095F25F /* CorePlotViewController.m */,
 				FA10106818051F500095F25F /* CorePlotViewController.xib */,
@@ -278,6 +286,7 @@
 				FA10106A18051F500095F25F /* CorePlotViewController.xib in Resources */,
 				52F73A5818043E4700ED8BF7 /* NM_sys1.png in Resources */,
 				52367CC317FC329100C1DA60 /* Main_iPhone.storyboard in Resources */,
+				FA1E13DE1805C97F008FC47E /* CPViewControllerErrors.xib in Resources */,
 				52367CBA17FC329100C1DA60 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +345,7 @@
 				52367CC017FC329100C1DA60 /* AppDelegate.m in Sources */,
 				52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */,
 				52367CBC17FC329100C1DA60 /* main.m in Sources */,
+				FA1E13DD1805C97F008FC47E /* CPViewControllerErrors.m in Sources */,
 				5293162D18057B6B004DD633 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
