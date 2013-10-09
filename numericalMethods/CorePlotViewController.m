@@ -118,7 +118,7 @@
 //        id y = [NSNumber numberWithFloat:1.2 * rand() / (float)RAND_MAX + 1.2];
 //        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
 //    }
-    self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:0.0]];
+   self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:3.0]];
     
     graph.plotAreaFrame.paddingLeft   += 55.0;
 //    graph.plotAreaFrame.paddingTop    += 40.0;

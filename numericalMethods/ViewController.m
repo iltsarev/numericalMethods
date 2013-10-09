@@ -388,11 +388,10 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         //printf for grapher
     
     NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] init];
-    NSMutableArray *contentArray = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < K; ++i) {
 //        printf("K = %f\n", i*tau);
-        
+        NSMutableArray *contentArray = [[NSMutableArray alloc] init];
         for (int j = 0; j <= N; ++j) {
             id x = [NSNumber numberWithDouble:j*h];
             id y = [NSNumber numberWithDouble:U[i][j]];
@@ -411,6 +410,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         //        frame.origin.y = 0;
         //        bg3.frame = frame;
         CorePlotViewController *viewControllerToPresent = [[CorePlotViewController alloc] initWithNibName:@"CorePlotViewController" bundle:nil];
+        //viewControllerToPresent.dataForPlot = contentArray;
         viewControllerToPresent.dictForPlot = dataDict;
         
         [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
