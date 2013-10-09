@@ -4,6 +4,11 @@
 
 @synthesize dataForPlot;
 @synthesize dictForPlot;
+@synthesize keys;
+@synthesize size;
+@synthesize time1;
+@synthesize time2;
+@synthesize time3;
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
@@ -76,9 +81,13 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     // Create graph from theme
+    
+    time1 = time2 = time3 = 0;
     
     CPTTheme *theme = [CPTTheme themeNamed:kCPTDarkGradientTheme];
     [graph applyTheme:theme];
@@ -186,13 +195,13 @@
     
     // Create a plot that uses the data source method
     CPTScatterPlot *dataSourceLinePlot = [[CPTScatterPlot alloc] init];
-    dataSourceLinePlot.identifier = @" data1";
+    dataSourceLinePlot.identifier = @"1st time";
     
     // Make the data source line use curved interpolation
     //dataSourceLinePlot.interpolation = CPTScatterPlotInterpolationCurved;
     
     CPTMutableLineStyle *lineStyle = [dataSourceLinePlot.dataLineStyle mutableCopy] ;
-    lineStyle.lineWidth              = 3.0;
+    lineStyle.lineWidth              = 2.0;
     lineStyle.lineColor              = [CPTColor greenColor];
     dataSourceLinePlot.dataLineStyle = lineStyle;
     
@@ -201,22 +210,22 @@
     
     // First derivative
     CPTScatterPlot *firstPlot = [[CPTScatterPlot alloc] init] ;
-    firstPlot.identifier    = @"1";
+    firstPlot.identifier    = @"2nd time";
     lineStyle.lineWidth     = 2.0;
     lineStyle.lineColor     = [CPTColor redColor];
     firstPlot.dataLineStyle = lineStyle;
     firstPlot.dataSource    = self;
     
-    //    [graph addPlot:firstPlot];
+    [graph addPlot:firstPlot];
     
     // Second derivative
     CPTScatterPlot *secondPlot = [[CPTScatterPlot alloc] init] ;
-    secondPlot.identifier    = @"2";
+    secondPlot.identifier    = @"3rd time";
     lineStyle.lineColor      = [CPTColor blueColor];
     secondPlot.dataLineStyle = lineStyle;
     secondPlot.dataSource    = self;
     
-       // [graph addPlot:secondPlot];
+    [graph addPlot:secondPlot];
     
     // Auto scale the plot space to fit the plot data
     [plotSpace scaleToFitPlots:[graph allPlots]];
@@ -246,13 +255,22 @@
     CPTPlotSymbol *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
     plotSymbol.fill               = [CPTFill fillWithColor:[[CPTColor blueColor] colorWithAlphaComponent:0.5]];
     plotSymbol.lineStyle          = symbolLineStyle;
-    plotSymbol.size               = CGSizeMake(10.0, 10.0);
-    dataSourceLinePlot.plotSymbol = plotSymbol;
+    plotSymbol.size               = CGSizeMake(3.0, 3.0);
     
+    dataSourceLinePlot.plotSymbol = plotSymbol;
+    firstPlot.plotSymbol = plotSymbol;
+    secondPlot.plotSymbol = plotSymbol;
+
     // Set plot delegate, to know when symbols have been touched
     // We will display an annotation when a symbol is touched
-    dataSourceLinePlot.delegate                        = self;
-    dataSourceLinePlot.plotSymbolMarginForHitDetection = 5.0f;
+//    dataSourceLinePlot.delegate                        = self;
+//    dataSourceLinePlot.plotSymbolMarginForHitDetection = 5.0f;
+//    
+//    firstPlot.delegate                        = self;
+//    firstPlot.plotSymbolMarginForHitDetection = 5.0f;
+//    
+//    secondPlot.delegate                        = self;
+//    secondPlot.plotSymbolMarginForHitDetection = 5.0f;
     
     // Add legend
     graph.legend                 = [CPTLegend legendWithGraph:graph];
@@ -284,6 +302,24 @@
     [points  addTarget:self action:@selector(turnOffPoints) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:points];
     
+    NSMutableArray *keys_m = [NSMutableArray arrayWithArray:[dictForPlot allKeys]];
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    [keys_m sortUsingDescriptors:sortDescriptors];
+    
+    keys = [[NSArray alloc] initWithArray:keys_m];
+    size = keys.count;
+    //UIPickerViewThreeTimes *picker = [[UIPickerViewThreeTimes alloc] initWithFrame:CGRectMake(0, 200, 320, 100) ];// andArray:[NSArray arrayWithArray:keys]];
+    //picker.timesArray = [NSArray arrayWithArray:keys];
+    //[self.view addSubview:picker];
+    
+    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 25, 320, 100)];
+    picker.showsSelectionIndicator = YES;
+    picker.delegate = self;
+    picker.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
+    [self.view addSubview:picker];
+
 }
 
 -(void)Back{
@@ -333,16 +369,18 @@
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
-    NSString *key = (fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y");
-    NSNumber *num = [[dataForPlot objectAtIndex:index] valueForKey:key];
+    NSArray *contentArray = nil;
     
-    // Green plot gets shifted above the blue
-    if ( [(NSString *)plot.identifier isEqualToString : @"Green Plot"] ) {
-        if ( fieldEnum == CPTScatterPlotFieldY ) {
-            num = [NSNumber numberWithDouble:[num doubleValue] + 1.0];
-        }
+    if ( [(NSString *)plot.identifier isEqualToString:@"1st time"] ) {
+        contentArray = dictForPlot[[NSNumber numberWithDouble:time1]];
     }
-    return num;
+    else if ( [(NSString *)plot.identifier isEqualToString:@"2nd time"] ) {
+        contentArray = dictForPlot[[NSNumber numberWithDouble:time2]];
+    }
+    else if ( [(NSString *)plot.identifier isEqualToString:@"3rd time"] ) {
+        contentArray = dictForPlot[[NSNumber numberWithDouble:time3]];
+    }
+    return [[contentArray objectAtIndex:index] valueForKey:(fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y")];
 }
 
 #pragma mark -
@@ -393,5 +431,49 @@
     
     return NO;
 }
+
+#pragma mark - picker
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
+    switch (component) {
+        case 0:{
+            time1 = [[keys objectAtIndex:row] doubleValue];
+            break;
+        }
+        case 1:{
+            time2 = [[keys objectAtIndex:row] doubleValue];
+            break;
+        }
+        case 2:{
+            time3 = [[keys objectAtIndex:row] doubleValue];
+            break;
+        }
+        default:
+            break;
+    }
+    [graph reloadData];
+}
+
+// tell the picker how many rows are available for a given component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [keys count];
+}
+
+// tell the picker how many components it will have
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 3;
+}
+
+// tell the picker the title for a given component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [NSString stringWithFormat:@"%.4f", [[keys objectAtIndex:row] doubleValue]];
+}
+
+// tell the picker the width of each row for a given component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    int sectionWidth = 100;
+    
+    return sectionWidth;
+}
+
 
 @end
