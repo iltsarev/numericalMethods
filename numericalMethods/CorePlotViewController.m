@@ -1,15 +1,18 @@
 #import "CorePlotViewController.h"
-
+#import "CPViewControllerErrors.h"
 @implementation CorePlotViewController
 
 @synthesize dataForPlot;
 @synthesize dictForPlot;
+@synthesize dictForPlotErr;
 @synthesize dictForPlotAnalytic;
 @synthesize keys;
 @synthesize size;
 @synthesize time1;
 @synthesize time2;
 @synthesize time3;
+@synthesize time4;
+
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
@@ -88,7 +91,7 @@
     
     // Create graph from theme
     
-    time1 = time2 = time3 = 0;
+    time1 = time2 = time3 = time4 = 0;
     
     CPTTheme *theme = [CPTTheme themeNamed:kCPTDarkGradientTheme];
     [graph applyTheme:theme];
@@ -170,7 +173,7 @@
     lineCap.fill      = [CPTFill fillWithColor:lineCap.lineStyle.lineColor];
     x.axisLineCapMax  = lineCap;
     
-    x.title       = @"X Axis";
+    x.title       = @"x";
     x.titleOffset = 30.0;
     
     // Label y with an automatic label policy.
@@ -188,7 +191,7 @@
     y.axisLineCapMax  = lineCap;
     y.axisLineCapMin  = lineCap;
     
-    y.title       = @"Y Axis";
+    y.title       = @"U(x,t)";
     y.titleOffset = 32.0;
     
     // Set axes
@@ -219,9 +222,21 @@
     
     [graph addPlot:firstPlot];
     
+    
+    // First derivative
+    CPTScatterPlot *firstPlot2 = [[CPTScatterPlot alloc] init] ;
+    firstPlot2.identifier    = @"3nd time";
+    lineStyle.lineWidth     = 2.0;
+    lineStyle.lineColor     = [CPTColor yellowColor];
+    firstPlot2.dataLineStyle = lineStyle;
+    firstPlot2.dataSource    = self;
+    
+    [graph addPlot:firstPlot2];
+    
+    
     // Second derivative
     CPTScatterPlot *secondPlot = [[CPTScatterPlot alloc] init] ;
-    secondPlot.identifier    = @"Analytic plot";
+    secondPlot.identifier    = @"funct";
     lineStyle.lineColor      = [CPTColor whiteColor];
     secondPlot.dataLineStyle = lineStyle;
     secondPlot.dataSource    = self;
@@ -260,6 +275,7 @@
     
     dataSourceLinePlot.plotSymbol = plotSymbol;
     firstPlot.plotSymbol = plotSymbol;
+    firstPlot2.plotSymbol = plotSymbol;
     secondPlot.plotSymbol = plotSymbol;
 
     // Set plot delegate, to know when symbols have been touched
@@ -296,7 +312,13 @@
     back.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
     [self.view addSubview:back];
     
-    
+    UIButton *err = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height + 40, 70, 30)];
+    [err setTitle:@"Ошибки" forState:UIControlStateNormal];
+    err.titleLabel.textColor = [UIColor blackColor];
+    //back.backgroundColor = [UIColor blackColor];
+    [err  addTarget:self action:@selector(Errors) forControlEvents:UIControlEventTouchUpInside];
+    err.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
+    [self.view addSubview:err];
     
     NSMutableArray *keys_m = [NSMutableArray arrayWithArray:[dictForPlot allKeys]];
     NSSortDescriptor *sortDescriptor;
@@ -322,29 +344,18 @@
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
--(void)turnOffPoints{
-    
-    self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:9.0]];
-    [graph reloadData];
-    
-    //CPTScatterPlot * newplot = (CPTScatterPlot *)[graph plotAtIndex:0];
-//    
-//    newplot.plotSymbol = nil;
-//    
-//    [graph removePlot:[graph plotAtIndex:0]];
-//    
-//    CPTMutableLineStyle *symbolLineStyle = [CPTMutableLineStyle lineStyle];
-//    symbolLineStyle.lineColor = [[CPTColor blackColor] colorWithAlphaComponent:0.5];
-//    CPTPlotSymbol *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
-//    plotSymbol.fill               = [CPTFill fillWithColor:[[CPTColor blueColor] colorWithAlphaComponent:0.5]];
-//    plotSymbol.lineStyle          = symbolLineStyle;
-//    plotSymbol.size               = CGSizeMake(10.0, 10.0);
-//    
-//    newplot.
-   // dataSourceLinePlot.plotSymbol = plotSymbol;
-   //[[graph plotAtIndex:0] display];
-   // interpolation = CPTScatterPlotInterpolationCurved;
+
+-(void)Errors{
+    CorePlotViewControllerErrors *viewControllerToPresent = [[CorePlotViewControllerErrors alloc] initWithNibName:@"CPViewControllerErrors" bundle:nil];
+    //viewControllerToPresent.dataForPlot = contentArray;
+    viewControllerToPresent.dataForPlot = self.dictForPlotErr;
+    NSLog(@"%@",self.dictForPlotErr);
+    [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
+    viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
+
 }
+
+
 
 -(void)changePlotRange
 {
@@ -373,8 +384,11 @@
     else if ( [(NSString *)plot.identifier isEqualToString:@"2nd time"] ) {
         contentArray = dictForPlot[[NSNumber numberWithDouble:time2]];
     }
-    else if ( [(NSString *)plot.identifier isEqualToString:@"Analytic plot"] ) {
-        contentArray = dictForPlotAnalytic[[NSNumber numberWithDouble:time3]];
+    else if ( [(NSString *)plot.identifier isEqualToString:@"3nd time"] ) {
+        contentArray = dictForPlot[[NSNumber numberWithDouble:time3]];
+    }
+    else if ( [(NSString *)plot.identifier isEqualToString:@"funct"] ) {
+        contentArray = dictForPlotAnalytic[[NSNumber numberWithDouble:time4]];
     }
     return [[contentArray objectAtIndex:index] valueForKey:(fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y")];
 }
@@ -443,6 +457,10 @@
             time3 = [[keys objectAtIndex:row] doubleValue];
             break;
         }
+        case 3:{
+            time4 = [[keys objectAtIndex:row] doubleValue];
+            break;
+        }
         default:
             break;
     }
@@ -456,17 +474,17 @@
 
 // tell the picker how many components it will have
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 3;
+    return 4;
 }
 
 // tell the picker the title for a given component
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [NSString stringWithFormat:@"%.4f", [[keys objectAtIndex:row] doubleValue]];
+    return [NSString stringWithFormat:@"%.3f", [[keys objectAtIndex:row] doubleValue]];
 }
 
 // tell the picker the width of each row for a given component
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    int sectionWidth = 100;
+    int sectionWidth = 75;
     
     return sectionWidth;
 }

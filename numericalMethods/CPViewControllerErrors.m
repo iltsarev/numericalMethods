@@ -3,8 +3,6 @@
 @implementation CorePlotViewControllerErrors
 
 @synthesize dataForPlot;
-@synthesize dictForPlot;
-@synthesize dictForPlotAnalytic;
 @synthesize keys;
 @synthesize size;
 @synthesize time1;
@@ -42,7 +40,7 @@
     // Add annotation
     // First make a string for the y value
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init] ;
-    [formatter setMaximumFractionDigits:2];
+    [formatter setMinimumFractionDigits:6];
     NSString *yString = [formatter stringFromNumber:y];
     
     // Now add the annotation to the plot area
@@ -88,7 +86,7 @@
     
     // Create graph from theme
     
-    time1 = time2 = time3 = 0;
+    time1 = 0;
     
     CPTTheme *theme = [CPTTheme themeNamed:kCPTDarkGradientTheme];
     [graph applyTheme:theme];
@@ -119,7 +117,7 @@
     
     graph.paddingRight  = boundsPadding;
     graph.paddingBottom = boundsPadding;
-    
+
     // Add some initial data
 //    NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:100];
 //    NSUInteger i;
@@ -128,7 +126,6 @@
 //        id y = [NSNumber numberWithFloat:1.2 * rand() / (float)RAND_MAX + 1.2];
 //        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
 //    }
-   self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:0.0]];
     
     graph.plotAreaFrame.paddingLeft   += 55.0;
 //    graph.plotAreaFrame.paddingTop    += 40.0;
@@ -160,7 +157,7 @@
     // Label x axis with a fixed interval policy
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
     CPTXYAxis *x          = axisSet.xAxis;
-    x.majorIntervalLength   = CPTDecimalFromDouble(1);
+    x.majorIntervalLength   = CPTDecimalFromDouble(2);
     x.minorTicksPerInterval = 4;
     x.majorGridLineStyle    = majorGridLineStyle;
     x.minorGridLineStyle    = minorGridLineStyle;
@@ -196,7 +193,7 @@
     
     // Create a plot that uses the data source method
     CPTScatterPlot *dataSourceLinePlot = [[CPTScatterPlot alloc] init];
-    dataSourceLinePlot.identifier = @"1st time";
+    dataSourceLinePlot.identifier = @"Error at time";
     
     // Make the data source line use curved interpolation
     //dataSourceLinePlot.interpolation = CPTScatterPlotInterpolationCurved;
@@ -217,7 +214,7 @@
     firstPlot.dataLineStyle = lineStyle;
     firstPlot.dataSource    = self;
     
-    [graph addPlot:firstPlot];
+    //[graph addPlot:firstPlot];
     
     // Second derivative
     CPTScatterPlot *secondPlot = [[CPTScatterPlot alloc] init] ;
@@ -226,7 +223,7 @@
     secondPlot.dataLineStyle = lineStyle;
     secondPlot.dataSource    = self;
     
-    [graph addPlot:secondPlot];
+    //[graph addPlot:secondPlot];
     
     // Auto scale the plot space to fit the plot data
     [plotSpace scaleToFitPlots:[graph allPlots]];
@@ -264,8 +261,8 @@
 
     // Set plot delegate, to know when symbols have been touched
     // We will display an annotation when a symbol is touched
-//    dataSourceLinePlot.delegate                        = self;
-//    dataSourceLinePlot.plotSymbolMarginForHitDetection = 5.0f;
+   dataSourceLinePlot.delegate                        = self;
+   dataSourceLinePlot.plotSymbolMarginForHitDetection = 5.0f;
 //    
 //    firstPlot.delegate                        = self;
 //    firstPlot.plotSymbolMarginForHitDetection = 5.0f;
@@ -298,23 +295,23 @@
     
     
     
-    NSMutableArray *keys_m = [NSMutableArray arrayWithArray:[dictForPlot allKeys]];
-    NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    [keys_m sortUsingDescriptors:sortDescriptors];
-    
-    keys = [[NSArray alloc] initWithArray:keys_m];
-    size = keys.count;
-    //UIPickerViewThreeTimes *picker = [[UIPickerViewThreeTimes alloc] initWithFrame:CGRectMake(0, 200, 320, 100) ];// andArray:[NSArray arrayWithArray:keys]];
-    //picker.timesArray = [NSArray arrayWithArray:keys];
-    //[self.view addSubview:picker];
-    
-    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 25, 320, 100)];
-    picker.showsSelectionIndicator = YES;
-    picker.delegate = self;
-    picker.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
-    [self.view addSubview:picker];
+//    NSMutableArray *keys_m = [NSMutableArray arrayWithArray:[dictForPlotErr allKeys]];
+//    NSSortDescriptor *sortDescriptor;
+//    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"self" ascending:YES];
+//    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//    [keys_m sortUsingDescriptors:sortDescriptors];
+//    
+//    keys = [[NSArray alloc] initWithArray:keys_m];
+//    size = keys.count;
+//    //UIPickerViewThreeTimes *picker = [[UIPickerViewThreeTimes alloc] initWithFrame:CGRectMake(0, 200, 320, 100) ];// andArray:[NSArray arrayWithArray:keys]];
+//    //picker.timesArray = [NSArray arrayWithArray:keys];
+//    //[self.view addSubview:picker];
+//    
+//    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 25, 320, 100)];
+//    picker.showsSelectionIndicator = YES;
+//    picker.delegate = self;
+//    picker.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
+//    [self.view addSubview:picker];
 
 }
 
@@ -322,29 +319,6 @@
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
--(void)turnOffPoints{
-    
-    self.dataForPlot = self.dictForPlot[[NSNumber numberWithDouble:9.0]];
-    [graph reloadData];
-    
-    //CPTScatterPlot * newplot = (CPTScatterPlot *)[graph plotAtIndex:0];
-//    
-//    newplot.plotSymbol = nil;
-//    
-//    [graph removePlot:[graph plotAtIndex:0]];
-//    
-//    CPTMutableLineStyle *symbolLineStyle = [CPTMutableLineStyle lineStyle];
-//    symbolLineStyle.lineColor = [[CPTColor blackColor] colorWithAlphaComponent:0.5];
-//    CPTPlotSymbol *plotSymbol = [CPTPlotSymbol ellipsePlotSymbol];
-//    plotSymbol.fill               = [CPTFill fillWithColor:[[CPTColor blueColor] colorWithAlphaComponent:0.5]];
-//    plotSymbol.lineStyle          = symbolLineStyle;
-//    plotSymbol.size               = CGSizeMake(10.0, 10.0);
-//    
-//    newplot.
-   // dataSourceLinePlot.plotSymbol = plotSymbol;
-   //[[graph plotAtIndex:0] display];
-   // interpolation = CPTScatterPlotInterpolationCurved;
-}
 
 -(void)changePlotRange
 {
@@ -367,14 +341,8 @@
 {
     NSArray *contentArray = nil;
     
-    if ( [(NSString *)plot.identifier isEqualToString:@"1st time"] ) {
-        contentArray = dictForPlot[[NSNumber numberWithDouble:time1]];
-    }
-    else if ( [(NSString *)plot.identifier isEqualToString:@"2nd time"] ) {
-        contentArray = dictForPlot[[NSNumber numberWithDouble:time2]];
-    }
-    else if ( [(NSString *)plot.identifier isEqualToString:@"Analytic plot"] ) {
-        contentArray = dictForPlotAnalytic[[NSNumber numberWithDouble:time3]];
+    if ( [(NSString *)plot.identifier isEqualToString:@"Error at time"] ) {
+        contentArray = self.dataForPlot;
     }
     return [[contentArray objectAtIndex:index] valueForKey:(fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y")];
 }
@@ -435,14 +403,6 @@
             time1 = [[keys objectAtIndex:row] doubleValue];
             break;
         }
-        case 1:{
-            time2 = [[keys objectAtIndex:row] doubleValue];
-            break;
-        }
-        case 2:{
-            time3 = [[keys objectAtIndex:row] doubleValue];
-            break;
-        }
         default:
             break;
     }
@@ -456,7 +416,7 @@
 
 // tell the picker how many components it will have
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 3;
+    return 1;
 }
 
 // tell the picker the title for a given component

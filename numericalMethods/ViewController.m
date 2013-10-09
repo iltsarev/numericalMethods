@@ -383,13 +383,14 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         //printf for grapher
     
     NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
+    NSMutableArray *contentArrayErr = [[NSMutableArray alloc] init];
     NSMutableDictionary *dataDictAnalytic = [[NSMutableDictionary alloc] init];
     
     for (int i = 0; i < K; ++i) {
 //        printf("K = %f\n", i*tau);
         NSMutableArray *contentArray = [[NSMutableArray alloc] init];
         NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
-        
+
         for (int j = 0; j <= N; ++j) {
             //for (double k = 0.0; k < 0.9; k += 0.2) {
                 id xAnalytic = [NSNumber numberWithDouble:(j)*h];
@@ -399,18 +400,22 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         }
         //epsilon[k][n] = max_i(u[k][i] - reshenie[k][i])
         
+        id err = [NSNumber numberWithDouble:0.0];
         for (int j = 0; j <= N; ++j) {
             id x = [NSNumber numberWithDouble:j*h];
-
             id y = [NSNumber numberWithDouble:U[i][j]];
-
+            
+            err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self function:((j)*h) withTime:i*tau] - U[i][j])) ? [err doubleValue] : fabs([self function:((j)*h) withTime:i*tau] - U[i][j])];
             printf("%f	%f\n", [x doubleValue], [y doubleValue]);
             [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+            
         }
         id time = [NSNumber numberWithDouble:i*tau];
         printf("K = %f\n", [time doubleValue]);
         [dataDict setObject:contentArray forKey:time];
         [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
+        [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
+
 //        printf("\n\n\n");
     }
 
@@ -423,6 +428,7 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         //viewControllerToPresent.dataForPlot = contentArray;
         viewControllerToPresent.dictForPlot = dataDict;
         viewControllerToPresent.dictForPlotAnalytic = dataDictAnalytic;
+        viewControllerToPresent.dictForPlotErr = contentArrayErr;
         [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
         viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
         
