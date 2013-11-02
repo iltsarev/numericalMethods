@@ -296,7 +296,18 @@
     [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(changePlotRange) userInfo:nil repeats:YES];
 #endif
     
-    UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height + 40, 70, 30)];
+    UIButton *back;
+    UIButton *err;
+    
+    if ([[UIScreen mainScreen] bounds].size.height < 500) {
+        back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height - 50, 70, 30)];
+        err = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height - 50, 70, 30)];
+    }
+    else {
+        back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height + 40, 70, 30)];
+        err = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height + 40, 70, 30)];
+    }
+    
     [back setTitle:@"Назад" forState:UIControlStateNormal];
     back.titleLabel.textColor = [UIColor blackColor];
     //back.backgroundColor = [UIColor blackColor];
@@ -304,7 +315,6 @@
     back.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
     [self.view addSubview:back];
     
-    UIButton *err = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height + 40, 70, 30)];
     [err setTitle:@"Ошибки" forState:UIControlStateNormal];
     err.titleLabel.textColor = [UIColor blackColor];
     //back.backgroundColor = [UIColor blackColor];
@@ -320,6 +330,10 @@
     
     keys = [[NSArray alloc] initWithArray:keys_m];
     size = (int)keys.count;
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 47, 320, 120)];
+    line.backgroundColor = [UIColor grayColor];
+    [self.view addSubview:line];
     
     UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 25, 320, 100)];
     picker.showsSelectionIndicator = YES;

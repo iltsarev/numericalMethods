@@ -619,11 +619,20 @@ double **hyperbolic_explicitScheme(int K, int N, double a, double b, double c, d
     NField.text = @"30";
     [bg addSubview:NField];
     
-    UIButton *next = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
+    UIButton *next;
+    
+    if (self.view.bounds.size.height < 500) {
+        next = [[UIButton alloc] initWithFrame:CGRectMake(230, 260, 60, 40)];
+    }
+    else {
+        next = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
+    }
+    
     UILabel *blab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     blab.text = @"Далее";
     [next addSubview:blab];
     [next addTarget:self action:@selector(nextScreen:) forControlEvents:UIControlEventTouchUpInside];
+    
     [bg addSubview:next];
     //bg 2
     bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 320, self.view.frame.size.height - 180)];
@@ -656,14 +665,32 @@ double **hyperbolic_explicitScheme(int K, int N, double a, double b, double c, d
     [bg2 addSubview:orderPicker];
     [bg2 addSubview:schemePicker];
     
-    UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
+    UIButton *nextButton;
+    
+    if ([[UIScreen mainScreen] bounds].size.height < 500) {
+        nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 260, 60, 40)];
+    }
+    else {
+        nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
+    }
+    
+    
     UILabel *blab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     blab2.text = @"Далее";
     [nextButton addSubview:blab2];
     [nextButton addTarget:self action:@selector(proceedScheme:) forControlEvents:UIControlEventTouchUpInside];
+    
     [bg2 addSubview:nextButton];
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 320, 60, 40)];
+    
+    UIButton *backButton;
+    if ([[UIScreen mainScreen] bounds].size.height < 500) {
+        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 260, 60, 40)];
+    }
+    else {
+        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 320, 60, 40)];
+    }
+    
     UILabel *blab3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     blab3.text = @"Назад";
     [backButton addSubview:blab3];

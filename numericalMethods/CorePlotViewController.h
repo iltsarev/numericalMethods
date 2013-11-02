@@ -12,7 +12,7 @@
     CPTPlotSymbol *plotSymbolC;
     NSMutableArray *dataForPlot;
     NSMutableDictionary *dictForPlot;
-    NSMutableArray *dictForPlotErr;
+    NSMutableDictionary *dictForPlotErr;
     NSMutableDictionary *dictForPlotAnalytic;
 
     NSArray *keys;
@@ -20,7 +20,7 @@
 @property NSArray *keys;
 @property (readwrite, strong, nonatomic) NSMutableArray *dataForPlot;
 @property (readwrite, strong, nonatomic) NSMutableDictionary *dictForPlot;
-@property (readwrite, strong, nonatomic) NSMutableArray *dictForPlotErr;
+@property (readwrite, strong, nonatomic) NSMutableDictionary *dictForPlotErr;
 @property (readwrite, strong, nonatomic) NSMutableDictionary *dictForPlotAnalytic;
 
 @property int size;

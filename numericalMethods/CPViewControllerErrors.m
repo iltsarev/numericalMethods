@@ -285,7 +285,15 @@
     [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(changePlotRange) userInfo:nil repeats:YES];
 #endif
     
-    UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height + 40, 70, 30)];
+    UIButton *back;
+    
+    if ([[UIScreen mainScreen] bounds].size.height < 500) {
+        back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height - 50, 70, 30)];
+    }
+    else {
+        back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height + 40, 70, 30)];
+    }
+    
     [back setTitle:@"Назад" forState:UIControlStateNormal];
     back.titleLabel.textColor = [UIColor blackColor];
     //back.backgroundColor = [UIColor blackColor];
