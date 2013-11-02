@@ -282,7 +282,7 @@ double **parabolic_explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, d
 
 #pragma mark - hyperbolic_explicitScheme
 
-double **hyperbolic_explicitScheme(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
+double **hyperbolic_explicitScheme(int K, int N, double a, double b, double c, double e, double tau, double h, double alpha, double betta, double gama, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -304,7 +304,7 @@ double **hyperbolic_explicitScheme(int K, int N, double a, double b, double c, d
     
     for (int k = 1; k < K - 1; ++k) {
         for (int i = 1; i < N; ++i) {
-            U[k+1][i] = 1/(l*tau+2)*(2*a*tau*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau*tau/h*(U[k][i+1] - U[k][i-1]) + U[k][i]*(2*c*tau*tau + 4) + U[k-1][i]*(l*tau -2) + 2*tau*tau*f(i * h, k * tau));
+            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau*tau/h*(U[k][i+1] - U[k][i-1]) + U[k][i]*(2*c*tau*tau + 4) + U[k-1][i]*(e*tau -2) + 2*tau*tau*f(i * h, k * tau));
         }
         //  двухточечная первого
         U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + phi_0((k + 1) * tau)/(betta - alpha/h);
