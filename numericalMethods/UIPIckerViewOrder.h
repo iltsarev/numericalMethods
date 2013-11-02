@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIPIckerViewOrder : UIPickerView{
+@interface UIPIckerViewOrder : UIPickerView<UIPickerViewDelegate>{
     IBOutlet UIPickerView *orderPicker;
     IBOutlet NSArray *orderArray;
 }

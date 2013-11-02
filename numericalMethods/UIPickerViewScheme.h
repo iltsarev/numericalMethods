@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIPickerViewScheme : UIPickerView{
+@interface UIPickerViewScheme : UIPickerView<UIPickerViewDelegate>{
     IBOutlet UIPickerView *schemePicker;
     IBOutlet NSArray *schemeArray;
 

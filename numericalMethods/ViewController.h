@@ -30,6 +30,7 @@
     UIScrollView *scrollBg;
 }
 
-@property (nonatomic,retain)MBProgressHUD *HUD;
+@property (nonatomic,retain) MBProgressHUD *HUD;
+@property (nonatomic, strong) UIImageView *system;
 
 @end

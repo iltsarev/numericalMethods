@@ -22,6 +22,7 @@ double a,b,c,alpha,betta,gama,delta,l;
 @implementation ViewController
 
 @synthesize HUD;
+@synthesize system;
 
 double * processTridiagonalMatrix(double *x, const size_t N, const double *a, const double *b, double *c) {
     
@@ -61,13 +62,30 @@ double phi_l(double t){
     return -exp(-a*t);//1;
 }
 
+double psi_1(double x){
+    return 0;
+}
+
+double psi_1d(double x){
+    return 0;
+}
+
+double psi_1dd(double x){
+    return 0;
+}
+
+double psi_2(double x){
+    return 0;
+}
+
+
 double f(double x, double t){
     return 0;
 }
 
-#pragma mark - implicitScheme
+#pragma mark - parabolic_implicitScheme
 
-double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
+double **parabolic_implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     double *lower = (double *)malloc((N+1) * sizeof(double));
@@ -110,7 +128,7 @@ double **implicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
     return U;
 }
 
-double **implicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
+double **parabolic_implicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     double *lower = (double *)malloc((N+1) * sizeof(double));
@@ -155,7 +173,7 @@ double **implicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b,
     return U;
 }
 
-double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
+double **parabolic_implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta, double tetta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     double *lower = (double *)malloc((N+1) * sizeof(double));
@@ -199,8 +217,8 @@ double **implicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     return U;
 }
 
-#pragma mark - explicitScheme
-double **explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
+#pragma mark - parabolic_explicitScheme
+double **parabolic_explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -221,7 +239,7 @@ double **explicitScheme_TwoPoint_FirstOrder(int K, int N, double a, double b, do
     return U;
 }
 
-double **explicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
+double **parabolic_explicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -242,7 +260,7 @@ double **explicitScheme_ThreePoint_SecondOrder(int K, int N, double a, double b,
     return U;
 }
 
-double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
+double **parabolic_explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
     double **U = (double **)malloc(K * sizeof(double *));
     
     for (int i = 0; i < K; i++)
@@ -259,6 +277,44 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
         U[k+1][0] = 1/(2*a*alpha/h + h*alpha/tau - c*h*alpha - betta*(2*a - b*h))*(U[k+1][1]*2*a*alpha/h + U[k][0]*h*alpha/tau - phi_0((k+1) * tau)*(2*a-b*h)+f(0, (k+1)*tau)*h*alpha);
         U[k+1][N] = 1/(2*a*gama/h + h*gama/tau - c*h*gama + delta*(2*a + b*h))*(U[k+1][N-1]*2*a*gama/h + U[k][N]*h*gama/tau + phi_l((k+1) * tau)*(2*a+b*h)+f(N, (k+1)*tau)*h*gama);
     }
+    return U;
+}
+
+#pragma mark - hyperbolic_explicitScheme
+
+double **hyperbolic_explicitScheme(int K, int N, double a, double b, double c, double tau, double h, double alpha, double betta, double gama, double delta){
+    double **U = (double **)malloc(K * sizeof(double *));
+    
+    for (int i = 0; i < K; i++)
+        U[i] = (double *)malloc((N+1) * sizeof(double));
+    
+    //Первый порядок
+    for (int i = 0; i <= N; ++i){
+        double x_i = i * h;
+        U[0][i] = psi_1(x_i);
+        U[1][i] = psi_1(x_i) + tau*psi_2(x_i);
+    }
+
+//    //Второй порядок
+//    for (int i = 0; i <= N; ++i){
+//        double x_i = i * h;
+//        U[0][i] = psi_1(x_i);
+//        U[1][i] = psi_1(x_i) + (tau - l*tau*tau/2)*psi_2(x_i) + a*tau*tau/2*psi_1dd(x_i) + b*tau*tau/2*psi_1d(x_i) + c*tau*tau/2*psi_1(x_i) + tau*tau/2*f(x_i, 0);
+//    }
+    
+    for (int k = 1; k < K - 1; ++k) {
+        for (int i = 1; i < N; ++i) {
+            U[k+1][i] = 1/(l*tau+2)*(2*a*tau*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau*tau/h*(U[k][i+1] - U[k][i-1]) + U[k][i]*(2*c*tau*tau + 4) + U[k-1][i]*(l*tau -2) + 2*tau*tau*f(i * h, k * tau));
+        }
+        //  двухточечная первого
+        U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + phi_0((k + 1) * tau)/(betta - alpha/h);
+        U[k+1][N] = gama/h/(delta + gama/h)*U[k+1][N-1] + phi_l((k + 1) * tau)/(delta + gama/h);
+        //  Двухточечная второго
+        //  трехточечная второго
+        //U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + phi_0((k+1) * tau)/(betta - 3*alpha/2/h);
+        //U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + phi_l((k+1) * tau)/(delta - 3*gama/2/h);
+    }
+    
     return U;
 }
 
@@ -291,8 +347,8 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     
     a = [aField.text doubleValue], b = [bField.text doubleValue], c = [cField.text doubleValue];
     alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gama = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];
-    int scheme = [schemePicker selectedRowInComponent:0]; // 0 -- явная, 1 -- неявная, 2 -- Кранка
-    int order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
+    long scheme = [schemePicker selectedRowInComponent:0]; // 0 -- явная, 1 -- неявная, 2 -- Кранка
+    long order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
     
     HUD = [[MBProgressHUD alloc] initWithView:bg2];
     [bg2 addSubview:HUD];
@@ -317,15 +373,15 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
             case 0:{
                 switch (order) {
                     case 0:{
-                        U = explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        U = parabolic_explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
                         break;
                     }
                     case 1:{
-                        U = explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        U = parabolic_explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
                         break;
                     }
                     case 2:{
-                        U = explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        U = parabolic_explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
                         break;
                     }
                         
@@ -338,15 +394,15 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
                 tetta = 1.0;
                 switch (order) {
                     case 0:{
-                        U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        U = parabolic_implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                         break;
                     }
                     case 1:{
-                        U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        U = parabolic_implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                         break;
                     }
                     case 2:{
-                        U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        U = parabolic_implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                         break;
                     }
                         
@@ -359,15 +415,15 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
                 tetta = 0.5;
                 switch (order) {
                     case 0:{
-                        U = implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        U = parabolic_implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                         break;
                     }
                     case 1:{
-                        U = implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        U = parabolic_implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                         break;
                     }
                     case 2:{
-                        U = implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        U = parabolic_implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
                         break;
                     }
                         
@@ -444,6 +500,9 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
 {
     [super viewDidLoad];
  
+    system = [[UIImageView alloc] initWithFrame:CGRectMake(45, 22, 230, 129)];
+    system.image = [UIImage imageNamed:@"NM_sys1.png"];
+    [self.view addSubview:system];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     

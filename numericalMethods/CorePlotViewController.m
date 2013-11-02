@@ -319,7 +319,7 @@
     [keys_m sortUsingDescriptors:sortDescriptors];
     
     keys = [[NSArray alloc] initWithArray:keys_m];
-    size = keys.count;
+    size = (int)keys.count;
     
     UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 25, 320, 100)];
     picker.showsSelectionIndicator = YES;
