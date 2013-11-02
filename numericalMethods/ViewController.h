@@ -26,7 +26,8 @@
     UIPIckerViewOrder *orderPicker;
     UIPickerViewScheme *schemePicker;
     UIView *bg;
-    UIView *bg2;    
+    UIView *bg2;
+    UIScrollView *scrollBg;
 }
 
 @property (nonatomic,retain)MBProgressHUD *HUD;

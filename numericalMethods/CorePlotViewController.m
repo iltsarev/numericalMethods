@@ -193,7 +193,8 @@
     dataSourceLinePlot.identifier = @"1st time";
     
     // Make the data source line use curved interpolation
-    //dataSourceLinePlot.interpolation = CPTScatterPlotInterpolationCurved;
+    
+    dataSourceLinePlot.interpolation = CPTScatterPlotInterpolationCurved;
     
     CPTMutableLineStyle *lineStyle = [dataSourceLinePlot.dataLineStyle mutableCopy] ;
     lineStyle.lineWidth              = 2.0;
@@ -216,7 +217,7 @@
     
     // First derivative
     CPTScatterPlot *firstPlot2 = [[CPTScatterPlot alloc] init] ;
-    firstPlot2.identifier    = @"3nd time";
+    firstPlot2.identifier    = @"3rd time";
     lineStyle.lineWidth     = 2.0;
     lineStyle.lineColor     = [CPTColor greenColor];
     firstPlot2.dataLineStyle = lineStyle;
@@ -370,7 +371,7 @@
     else if ( [(NSString *)plot.identifier isEqualToString:@"2nd time"] ) {
         contentArray = dictForPlot[[NSNumber numberWithDouble:time2]];
     }
-    else if ( [(NSString *)plot.identifier isEqualToString:@"3nd time"] ) {
+    else if ( [(NSString *)plot.identifier isEqualToString:@"3rd time"] ) {
         contentArray = dictForPlot[[NSNumber numberWithDouble:time3]];
     }
     else if ( [(NSString *)plot.identifier isEqualToString:@"real"] ) {

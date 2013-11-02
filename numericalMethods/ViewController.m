@@ -295,19 +295,19 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     int order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
     
     HUD = [[MBProgressHUD alloc] initWithView:bg2];
-    HUD.mode = MBProgressHUDAnimationFade;
     [bg2 addSubview:HUD];
     HUD.removeFromSuperViewOnHide = YES;
     
     if(a*tau/h/h > 0.5 && scheme == 0){
+        HUD.mode = MBProgressHUDModeText;
         HUD.labelText = @"Не устойчива! (σ > 0.5)";
         HUD.detailsLabelText =  @"Измените параметры сетки или схему";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
         return;
     }
-    
-    HUD.labelText = @"Идет рассчет";
+    HUD.mode = MBProgressHUDAnimationFade;
+    HUD.labelText = @"Идет расчет";
     //HUD.detailsLabelText =  @"Измените параметры сетки или схему";
     [HUD show:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
@@ -423,12 +423,28 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     });
 }
 
+-(void)keyboardShown:(NSNotification *)note{
+    [UIView animateWithDuration:0.3 animations:^{
+        //CGRect frame = bg.frame;
+        //frame.origin.y = 30;
+        //bg.frame = frame;
+        scrollBg.contentOffset = CGPointMake(0, 100);
+    }];
+}
 
+-(void)keyboardHidden:(NSNotification *)note{
+    [UIView animateWithDuration:0.3 animations:^{
+        scrollBg.contentOffset = CGPointMake(0, 0);
+
+    }];
+}
 
 #pragma mark - viewController delegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+ 
+    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     bg = [[UIView alloc] initWithFrame:CGRectMake(10, 160, 300, self.view.frame.size.height - 180)];
@@ -443,7 +459,18 @@ double **explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, double b, d
     [imgLayer1 setShadowRadius:3.0];
     imgLayer1.shouldRasterize = NO;
     
-    [self.view addSubview:bg];
+    scrollBg = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    if(self.view.frame.size.height < 500){
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
+
+        scrollBg.contentSize = CGSizeMake(320, 600);
+    }
+    
+    [self.view addSubview:scrollBg];
+    
+    [scrollBg addSubview:bg];
     
     UILabel *aLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 30, 20)];
     aLabel.text = @"a =";
