@@ -23,6 +23,12 @@
 		52367CDC17FC329100C1DA60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52367CDA17FC329100C1DA60 /* InfoPlist.strings */; };
 		52367CDE17FC329100C1DA60 /* numericalMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */; };
 		5293162D18057B6B004DD633 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5293162C18057B6B004DD633 /* MBProgressHUD.m */; };
+		52AC65E718267E0A00695865 /* hyperbolicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC65E618267E0A00695865 /* hyperbolicViewController.m */; };
+		52AC65EA1826867A00695865 /* startViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC65E91826867A00695865 /* startViewController.m */; };
+		52AC65ED182692A700695865 /* UIPickerViewSchemeHyperbolic.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */; };
+		52AC65F0182692EF00695865 /* UIPickerViewApproximation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */; };
+		52AC65F618269EE000695865 /* NM_sys2.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC65F518269EE000695865 /* NM_sys2.png */; };
+		52AC65F81826A09000695865 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC65F71826A09000695865 /* Default-568@2x.png */; };
 		52F73A5818043E4700ED8BF7 /* NM_sys1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52F73A5718043E4700ED8BF7 /* NM_sys1.png */; };
 		52F73A5B18045A0400ED8BF7 /* UIPIckerViewOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */; };
 		52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */; };
@@ -66,6 +72,16 @@
 		52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = numericalMethodsTests.m; sourceTree = "<group>"; };
 		5293162B18057B6B004DD633 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		5293162C18057B6B004DD633 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		52AC65E518267E0A00695865 /* hyperbolicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hyperbolicViewController.h; sourceTree = "<group>"; };
+		52AC65E618267E0A00695865 /* hyperbolicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hyperbolicViewController.m; sourceTree = "<group>"; };
+		52AC65E81826867A00695865 /* startViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = startViewController.h; sourceTree = "<group>"; };
+		52AC65E91826867A00695865 /* startViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = startViewController.m; sourceTree = "<group>"; };
+		52AC65EB182692A700695865 /* UIPickerViewSchemeHyperbolic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPickerViewSchemeHyperbolic.h; sourceTree = "<group>"; };
+		52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewSchemeHyperbolic.m; sourceTree = "<group>"; };
+		52AC65EE182692EF00695865 /* UIPickerViewApproximation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPickerViewApproximation.h; sourceTree = "<group>"; };
+		52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewApproximation.m; sourceTree = "<group>"; };
+		52AC65F518269EE000695865 /* NM_sys2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys2.png; sourceTree = "<group>"; };
+		52AC65F71826A09000695865 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568@2x.png"; path = "Images.xcassets/LaunchImage.launchimage/Default-568@2x.png"; sourceTree = "<group>"; };
 		52F73A5718043E4700ED8BF7 /* NM_sys1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys1.png; sourceTree = "<group>"; };
 		52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPIckerViewOrder.h; sourceTree = "<group>"; };
 		52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPIckerViewOrder.m; sourceTree = "<group>"; };
@@ -145,12 +161,20 @@
 				52367CBF17FC329100C1DA60 /* AppDelegate.m */,
 				52367CC117FC329100C1DA60 /* Main_iPhone.storyboard */,
 				52367CC417FC329100C1DA60 /* Main_iPad.storyboard */,
+				52AC65E81826867A00695865 /* startViewController.h */,
+				52AC65E91826867A00695865 /* startViewController.m */,
 				52367CC717FC329100C1DA60 /* ViewController.h */,
 				52367CC817FC329100C1DA60 /* ViewController.m */,
+				52AC65E518267E0A00695865 /* hyperbolicViewController.h */,
+				52AC65E618267E0A00695865 /* hyperbolicViewController.m */,
 				52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */,
 				52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */,
 				52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */,
 				52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */,
+				52AC65EB182692A700695865 /* UIPickerViewSchemeHyperbolic.h */,
+				52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */,
+				52AC65EE182692EF00695865 /* UIPickerViewApproximation.h */,
+				52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */,
 				FA10106B18051F5E0095F25F /* Plot */,
 				52367CCA17FC329100C1DA60 /* Images.xcassets */,
 				52367CB617FC329100C1DA60 /* Supporting Files */,
@@ -164,6 +188,8 @@
 				5293162B18057B6B004DD633 /* MBProgressHUD.h */,
 				5293162C18057B6B004DD633 /* MBProgressHUD.m */,
 				52F73A5718043E4700ED8BF7 /* NM_sys1.png */,
+				52AC65F518269EE000695865 /* NM_sys2.png */,
+				52AC65F71826A09000695865 /* Default-568@2x.png */,
 				52367CB717FC329100C1DA60 /* numericalMethods-Info.plist */,
 				52367CB817FC329100C1DA60 /* InfoPlist.strings */,
 				52367CBB17FC329100C1DA60 /* main.m */,
@@ -284,7 +310,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52AC65F81826A09000695865 /* Default-568@2x.png in Resources */,
 				52367CC617FC329100C1DA60 /* Main_iPad.storyboard in Resources */,
+				52AC65F618269EE000695865 /* NM_sys2.png in Resources */,
 				52367CCB17FC329100C1DA60 /* Images.xcassets in Resources */,
 				FA10106A18051F500095F25F /* CorePlotViewController.xib in Resources */,
 				52F73A5818043E4700ED8BF7 /* NM_sys1.png in Resources */,
@@ -344,10 +372,14 @@
 			files = (
 				52367CC917FC329100C1DA60 /* ViewController.m in Sources */,
 				52F73A5B18045A0400ED8BF7 /* UIPIckerViewOrder.m in Sources */,
+				52AC65E718267E0A00695865 /* hyperbolicViewController.m in Sources */,
 				FA10106918051F500095F25F /* CorePlotViewController.m in Sources */,
 				52367CC017FC329100C1DA60 /* AppDelegate.m in Sources */,
+				52AC65EA1826867A00695865 /* startViewController.m in Sources */,
 				52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */,
 				52367CBC17FC329100C1DA60 /* main.m in Sources */,
+				52AC65F0182692EF00695865 /* UIPickerViewApproximation.m in Sources */,
+				52AC65ED182692A700695865 /* UIPickerViewSchemeHyperbolic.m in Sources */,
 				FA1E13DD1805C97F008FC47E /* CPViewControllerErrors.m in Sources */,
 				5293162D18057B6B004DD633 /* MBProgressHUD.m in Sources */,
 			);
@@ -492,9 +524,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "numericalMethods/numericalMethods-Prefix.pch";
 				INFOPLIST_FILE = "numericalMethods/numericalMethods-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -510,9 +543,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "numericalMethods/numericalMethods-Prefix.pch";
 				INFOPLIST_FILE = "numericalMethods/numericalMethods-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

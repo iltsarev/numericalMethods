@@ -80,7 +80,6 @@
     return newRange;
 }
 
-
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -297,7 +296,6 @@
 #endif
     
     UIButton *back;
-    UIButton *err;
     
     if ([[UIScreen mainScreen] bounds].size.height < 500) {
         back = [[UIButton alloc] initWithFrame:CGRectMake(5, self.view.frame.size.height - 50, 70, 30)];

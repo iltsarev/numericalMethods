@@ -48,8 +48,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
 
 #pragma mark - init functions
 - (double)function: (double)x withTime:(double)t  {
-    return exp(-t)*cos(x);
-    //return exp(-a*t)*sin(x);
+    return exp(-a*t)*sin(x);
 }
 
 double phi(double x){
@@ -57,36 +56,15 @@ double phi(double x){
 }
 
 double phi_0(double t){
-    return exp(-t);
-    //return exp(-a*t);//0;
+    return exp(-a*t);//0;
 }
 double phi_l(double t){
-    return -exp(-t);
-    //    return -exp(-a*t);//1;
-}
-
-double psi_1(double x){
-    return cos(x);
-    //return 0;
-}
-
-double psi_1d(double x){
-    return -sin(x);
-}
-
-double psi_1dd(double x){
-    return -cos(x);
-}
-
-double psi_2(double x){
-    return -cos(x);
-    //return 0;
+    return -exp(-a*t);//1;
 }
 
 
 double f(double x, double t){
-    return sin(x)*exp(-t);
-    //   return 0;
+       return 0;
 }
 
 #pragma mark - parabolic_implicitScheme
@@ -286,168 +264,11 @@ double **parabolic_explicitScheme_TwoPoint_SecondOrder(int K, int N, double a, d
     return U;
 }
 
-#pragma mark - hyperbolic_explicitScheme
-
-double **hyperbolic_explicitScheme(int K, int N, double a, double b, double c, double e, double tau, double h, double alpha, double betta, double gama, double delta){
-    double **U = (double **)malloc(K * sizeof(double *));
-    
-    for (int i = 0; i < K; i++)
-        U[i] = (double *)malloc((N+1) * sizeof(double));
-    
-    //Первый порядок
-//    for (int i = 0; i <= N; ++i){
-//        double x_i = i * h;
-//        U[0][i] = psi_1(x_i);
-//        U[1][i] = psi_1(x_i) + tau*psi_2(x_i);
-//    }
-
-//    //Второй порядок
-    for (int i = 0; i <= N; ++i){
-        double x_i = i * h;
-        U[0][i] = psi_1(x_i);
-        U[1][i] = psi_1(x_i) + (tau - e*tau*tau/2)*psi_2(x_i) + a*tau*tau/2*psi_1dd(x_i) + b*tau*tau/2*psi_1d(x_i) + c*tau*tau/2*psi_1(x_i) + tau*tau/2*f(x_i, 0);
-    }
-    
-    for (int k = 1; k < K - 1; ++k) {
-        for (int i = 1; i < N; ++i) {
-            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau*tau/h*(U[k][i+1] - U[k][i-1]) + U[k][i]*(2*c*tau*tau + 4) + U[k-1][i]*(e*tau -2) + 2*tau*tau*f(i * h, k * tau));
-        }
-        //  двухточечная первого
-//        U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + phi_0((k + 1) * tau)/(betta - alpha/h);
-//        U[k+1][N] = gama/h/(delta + gama/h)*U[k+1][N-1] + phi_l((k + 1) * tau)/(delta + gama/h);
-        //  трехточечная второго
-//        U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + phi_0((k+1) * tau)/(betta - 3*alpha/2/h);
-//        U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + phi_l((k+1) * tau)/(delta - 3*gama/2/h);
-        
-        //  Двухточечная второго
-        U[k+1][0] = (2*h*alpha/tau/tau * U[k][0] - h*alpha/tau/tau*U[k-1][0] + h*e*alpha/2/tau*U[k-1][0] + h*alpha*f(0, (k + 1)*tau) - phi_0((k+1)*tau)*(2*a-b*h) + 2*a*alpha/h*U[k+1][1]) / (2*a*alpha/h + h*alpha/tau/tau + h*e*alpha/2/tau - c*h*alpha - betta*(2*a-b*h));
-        U[k+1][N] = (2*h*gama/tau/tau*U[k][N] - h*gama/tau/tau*U[k-1][N] + h*e*gama/2/tau*U[k-1][N] + h*gama*f(N, (k + 1)*tau) + phi_l((k+1)*tau)*(2*a + b*h)  + 2*a*gama/h*U[k+1][N-1]) / (2*a*gama/h + h*gama/tau/tau + h*e*gama/2/tau - c*h*gama + delta*(2*a+b*h));
-    }
-    
-    return U;
-}
-
-#pragma mark - hyperbolic_unstableScheme
-
-double **hyperbolic_unstableScheme(int K, int N, double a, double b, double c, double e, double tau, double h, double alpha, double betta, double gama, double delta){
-    double **U = (double **)malloc(K * sizeof(double *));
-    
-    for (int i = 0; i < K; i++)
-        U[i] = (double *)malloc((N+1) * sizeof(double));
-    
-    //Первый порядок
-    //    for (int i = 0; i <= N; ++i){
-    //        double x_i = i * h;
-    //        U[0][i] = psi_1(x_i);
-    //        U[1][i] = psi_1(x_i) + tau*psi_2(x_i);
-    //    }
-    
-    //    //Второй порядок
-    for (int i = 0; i <= N; ++i){
-        double x_i = i * h;
-        U[0][i] = psi_1(x_i);
-        U[1][i] = psi_1(x_i) + (tau - e*tau*tau/2)*psi_2(x_i) + a*tau*tau/2*psi_1dd(x_i) + b*tau*tau/2*psi_1d(x_i) + c*tau*tau/2*psi_1(x_i) + tau*tau/2*f(x_i, 0);
-    }
-    
-    for (int k = 1; k < K - 1; ++k) {
-        for (int i = 1; i < N; ++i) {
-            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k-1][i+1]- 2*U[k-1][i] + U[k-1][i-1]) + b*tau*tau/h*(U[k-1][i+1] - U[k-1][i-1]) + U[k-1][i]*(2*c*tau*tau + e*tau - 2) + 4*U[k][i] + 2*tau*tau*f(i * h, (k - 1) * tau));
-        }
-        //  двухточечная первого
-        //        U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + phi_0((k + 1) * tau)/(betta - alpha/h);
-        //        U[k+1][N] = gama/h/(delta + gama/h)*U[k+1][N-1] + phi_l((k + 1) * tau)/(delta + gama/h);
-        //  трехточечная второго
-//        U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + phi_0((k+1) * tau)/(betta - 3*alpha/2/h);
-//        U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + phi_l((k+1) * tau)/(delta - 3*gama/2/h);
-        //  Двухточечная второго
-        U[k+1][0] = (2*h*alpha/tau/tau * U[k][0] - h*alpha/tau/tau*U[k-1][0] + h*e*alpha/2/tau*U[k-1][0] + h*alpha*f(0, (k + 1)*tau) - phi_0((k+1)*tau)*(2*a-b*h) + 2*a*alpha/h*U[k+1][1]) / (2*a*alpha/h + h*alpha/tau/tau + h*e*alpha/2/tau - c*h*alpha - betta*(2*a-b*h));
-        U[k+1][N] = (2*h*gama/tau/tau*U[k][N] - h*gama/tau/tau*U[k-1][N] + h*e*gama/2/tau*U[k-1][N] + h*gama*f(N, (k + 1)*tau) + phi_l((k+1)*tau)*(2*a + b*h)  + 2*a*gama/h*U[k+1][N-1]) / (2*a*gama/h + h*gama/tau/tau + h*e*gama/2/tau - c*h*gama + delta*(2*a+b*h));
-    }
-    
-    return U;
-}
-
-#pragma mark - hyperbolic_implicitScheme
-
-double **hyperbolic_implicitScheme(int K, int N, double a, double b, double c, double e, double tau, double h, double alpha, double betta, double gama, double delta){
-    double **U = (double **)malloc(K * sizeof(double *));
-    
-    double *lower = (double *)malloc((N+1) * sizeof(double));
-    double *mid = (double *)malloc((N+1) * sizeof(double));
-    double *upper = (double *)malloc((N+1) * sizeof(double));
-    double *answer = (double *)malloc((N+1) * sizeof(double));
-    
-    memset(lower, 0, (N+1) * sizeof(double));
-    memset(upper, 0, (N+1) * sizeof(double));
-    memset(mid, 0, (N+1) * sizeof(double));
-    memset(answer, 0, (N+1) * sizeof(double));
-
-    
-    for (int i = 0; i < K; i++)
-        U[i] = (double *)malloc((N+1) * sizeof(double));
-    
-    //Первый порядок
-//        for (int i = 0; i <= N; ++i){
-//            double x_i = i * h;
-//            U[0][i] = psi_1(x_i);
-//            U[1][i] = psi_1(x_i) + tau*psi_2(x_i);
-//        }
-    
-    //    //Второй порядок
-    for (int i = 0; i <= N; ++i){
-        double x_i = i * h;
-        U[0][i] = psi_1(x_i);
-        U[1][i] = psi_1(x_i) + (tau - e*tau*tau/2)*psi_2(x_i) + a*tau*tau/2*psi_1dd(x_i) + b*tau*tau/2*psi_1d(x_i) + c*tau*tau/2*psi_1(x_i) + tau*tau/2*f(x_i, 0);
-    }
-    
-    for (int k = 1; k < K - 1; ++k) {
-        for (int i = 1; i < N; ++i) {
-            lower[i] = 2*a*tau*tau/h/h - b*tau*tau/h;
-            mid[i] = -2 - e*tau - 4*a*tau*tau/h/h + 2*c*tau*tau;
-            upper[i] = 2*a*tau*tau/h/h + b*tau*tau/h;
-            answer[i] = -4*U[k][i] + U[k-1][i]*(2-e*tau) - 2*tau*tau*f(i * h, (k+1) * tau);
-        }
-//        //Двухточечная первого порядка
-//        lower[0] = 0.0;
-//        mid[0] = (betta - alpha/h);
-//        upper[0] = alpha/h;
-//        answer[0] = phi_0((k+1)*tau);
-//        
-//        lower[N] = -gama/h;
-//        mid[N] = delta + gama/h;
-//        upper[N] = 0.0;
-//        answer[N] = phi_l((k+1)*tau);
-        
-//        //Трехточечная второго порядка
-//        lower[0] = 0.0;
-//        mid[0] = (betta - 3*alpha/2/h +lower[1]/upper[1]*alpha/2/h);
-//        upper[0] = 2*alpha/h + mid[1]/upper[1]*alpha/2/h;
-//        answer[0] = phi_0((k+1)*tau) + answer[1]/upper[1]*alpha/2/h;
-//        
-//        lower[N] = -2*gama/h - mid[N-1]/lower[N-1]*gama/2/h;
-//        mid[N] = delta + 3*gama/2/h - upper[N-1]/lower[N-1]*gama/2/h;
-//        upper[N] = 0.0;
-//        answer[N] = phi_l((k+1)*tau) - answer[N-1]/lower[N-1]*gama/2/h;
-        
-        //Двухточечная второго порядка
-        lower[0] = 0.0;
-        mid[0] = 2*a*alpha/h + h*alpha/tau/tau + h*e*alpha/2/tau - c*h*alpha - betta*(2*a-b*h);
-        upper[0] = -2*a*alpha/h;
-        answer[0] = 2*h*alpha/tau/tau * U[k][0] - h*alpha/tau/tau*U[k-1][0] + h*e*alpha/2/tau*U[k-1][0] + h*alpha*f(0, (k + 1)*tau) - phi_0((k+1)*tau)*(2*a-b*h);
-        
-        lower[N] = -2*a*gama/h;
-        mid[N] = 2*a*gama/h + h*gama/tau/tau + h*e*gama/2/tau - c*h*gama + delta*(2*a+b*h);
-        upper[N] = 0.0;
-        answer[N] = 2*h*gama/tau/tau*U[k][N] - h*gama/tau/tau*U[k-1][N] + h*e*gama/2/tau*U[k-1][N] + h*gama*f(N, (k + 1)*tau) + phi_l((k+1)*tau)*(2*a + b*h);
-
-        
-        U[k+1] = processTridiagonalMatrix(answer, N+1, lower, mid, upper);
-    }
-    
-    return U;
-}
-
 #pragma mark - navigation functions
+
+-(void)mainMenu:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
 
 -(void)nextScreen:(id)sender{
     [UIView animateWithDuration:0.3 animations:^{
@@ -484,26 +305,15 @@ double **hyperbolic_implicitScheme(int K, int N, double a, double b, double c, d
     HUD.removeFromSuperViewOnHide = YES;
     
     //Для параболических
-//    float sigma = a*tau/h/h;
-//    if(sigma > 0.5 && scheme == 0){
-//        HUD.mode = MBProgressHUDModeText;
-//        HUD.labelText = [NSString stringWithFormat:@"Не устойчива! σ = %f (σ > 0.5)", sigma];
-//        HUD.detailsLabelText =  @"Измените параметры сетки или схему";
-//        [HUD show:YES];
-//        [HUD hide:YES afterDelay:3];
-//        return;
-//    }
-    //Для гиперболических
-    float sigma = a*tau/h;
-    if(sigma > 1.0 && scheme == 0){
+    float sigma = a*tau/h/h;
+    if(sigma > 0.5 && scheme == 0){
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = [NSString stringWithFormat:@"Не устойчива! σ = %f (σ > 1.0)", sigma];
+        HUD.labelText = [NSString stringWithFormat:@"Не устойчива! σ = %.1f (σ > 0.5)", sigma];
         HUD.detailsLabelText =  @"Измените параметры сетки или схему";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
         return;
     }
-
     
     HUD.mode = MBProgressHUDAnimationFade;
     HUD.labelText = @"Идет расчет";
@@ -512,75 +322,72 @@ double **hyperbolic_implicitScheme(int K, int N, double a, double b, double c, d
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         double tetta = 0;
         double **U;
-        U = hyperbolic_explicitScheme(K, N, a, b, c, 3, tau, h, 0, 1, 0, 1);
-//        U = hyperbolic_unstableScheme(K, N, a, b, c, 3, tau, h, 0, 1, 0, 1);
-//        U = hyperbolic_implicitScheme(K, N, a, b, c, 3, tau, h, 0, 1, 0, 1);
-        //        switch (scheme) {
-//            case 0:{
-//                switch (order) {
-//                    case 0:{
-//                        U = parabolic_explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
-//                        break;
-//                    }
-//                    case 1:{
-//                        U = parabolic_explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
-//                        break;
-//                    }
-//                    case 2:{
-//                        U = parabolic_explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
-//                        break;
-//                    }
-//                        
-//                    default:
-//                        break;
-//                }
-//                break;
-//            }
-//            case 1:{
-//                tetta = 1.0;
-//                switch (order) {
-//                    case 0:{
-//                        U = parabolic_implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-//                        break;
-//                    }
-//                    case 1:{
-//                        U = parabolic_implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-//                        break;
-//                    }
-//                    case 2:{
-//                        U = parabolic_implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-//                        break;
-//                    }
-//                        
-//                    default:
-//                        break;
-//                }
-//                break;
-//            }
-//            case 2:{
-//                tetta = 0.5;
-//                switch (order) {
-//                    case 0:{
-//                        U = parabolic_implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-//                        break;
-//                    }
-//                    case 1:{
-//                        U = parabolic_implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-//                        break;
-//                    }
-//                    case 2:{
-//                        U = parabolic_implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
-//                        break;
-//                    }
-//                        
-//                    default:
-//                        break;
-//                }
-//                break;
-//            }
-//            default:
-//                break;
-//        }
+        switch (scheme) {
+            case 0:{
+                switch (order) {
+                    case 0:{
+                        U = parabolic_explicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        break;
+                    }
+                    case 1:{
+                        U = parabolic_explicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        break;
+                    }
+                    case 2:{
+                        U = parabolic_explicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+            case 1:{
+                tetta = 1.0;
+                switch (order) {
+                    case 0:{
+                        U = parabolic_implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 1:{
+                        U = parabolic_implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 2:{
+                        U = parabolic_implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+            case 2:{
+                tetta = 0.5;
+                switch (order) {
+                    case 0:{
+                        U = parabolic_implicitScheme_TwoPoint_FirstOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 1:{
+                        U = parabolic_implicitScheme_ThreePoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                    case 2:{
+                        U = parabolic_implicitScheme_TwoPoint_SecondOrder(K, N, a, b, c, tau, h, alpha, betta, gama, delta, tetta);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+            default:
+                break;
+        }
         
         NSMutableDictionary *dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
         NSMutableArray *contentArrayErr = [[NSMutableArray alloc] init];
@@ -653,7 +460,8 @@ double **hyperbolic_implicitScheme(int K, int N, double a, double b, double c, d
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     bg = [[UIView alloc] initWithFrame:CGRectMake(10, 160, 300, self.view.frame.size.height - 180)];
-    bg.backgroundColor = [UIColor orangeColor];
+    bg.backgroundColor = [UIColor colorWithRed:141./255. green:158./255. blue:143./255. alpha:1.0f];
+
     
     CALayer * imgLayer1 = bg.layer;
     [imgLayer1 setBorderColor: [[UIColor blackColor] CGColor]];
@@ -780,9 +588,25 @@ double **hyperbolic_implicitScheme(int K, int N, double a, double b, double c, d
     [next addTarget:self action:@selector(nextScreen:) forControlEvents:UIControlEventTouchUpInside];
     
     [bg addSubview:next];
+    
+    UIButton *mainMenu;
+    if ([[UIScreen mainScreen] bounds].size.height < 500) {
+        mainMenu = [[UIButton alloc] initWithFrame:CGRectMake(40, 260, 60, 40)];
+    }
+    else {
+        mainMenu = [[UIButton alloc] initWithFrame:CGRectMake(40, 320, 60, 40)];
+    }
+    
+    UILabel *blab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    blab4.text = @"Назад";
+    [mainMenu addSubview:blab4];
+    [mainMenu addTarget:self action:@selector(mainMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [bg addSubview:mainMenu];
+    
+    
     //bg 2
     bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 320, self.view.frame.size.height - 180)];
-    bg2.backgroundColor = [UIColor lightGrayColor];
+    bg2.backgroundColor = [UIColor colorWithRed:136./255. green:135./255. blue:148./255. alpha:1.0];
     
     CALayer * imgLayer2 = bg2.layer;
     [imgLayer2 setBorderColor: [[UIColor blackColor] CGColor]];
