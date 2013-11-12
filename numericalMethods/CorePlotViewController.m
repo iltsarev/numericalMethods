@@ -206,6 +206,7 @@
     // First derivative
     CPTScatterPlot *firstPlot = [[CPTScatterPlot alloc] init] ;
     firstPlot.identifier    = @"2nd time";
+    firstPlot.interpolation = CPTScatterPlotInterpolationCurved;
     lineStyle.lineWidth     = 2.0;
     lineStyle.lineColor     = [CPTColor blueColor];
     firstPlot.dataLineStyle = lineStyle;
@@ -217,6 +218,7 @@
     // First derivative
     CPTScatterPlot *firstPlot2 = [[CPTScatterPlot alloc] init] ;
     firstPlot2.identifier    = @"3rd time";
+    firstPlot2.interpolation = CPTScatterPlotInterpolationCurved;
     lineStyle.lineWidth     = 2.0;
     lineStyle.lineColor     = [CPTColor greenColor];
     firstPlot2.dataLineStyle = lineStyle;
@@ -227,6 +229,7 @@
     
     // Second derivative
     CPTScatterPlot *secondPlot = [[CPTScatterPlot alloc] init] ;
+    secondPlot.interpolation = CPTScatterPlotInterpolationCurved;
     secondPlot.identifier    = @"real";
     lineStyle.lineColor      = [CPTColor whiteColor];
     secondPlot.dataLineStyle = lineStyle;
