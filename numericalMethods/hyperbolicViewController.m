@@ -731,13 +731,19 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     int K = [KField.text intValue];
     int N = [NField.text intValue];
     
-    l = [lField.text doubleValue];
-    double T = [TField.text doubleValue];
+    l = [[lField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    double T = [[TField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     
     double tau = T / K, h = l / N;
     
-    a = [aField.text doubleValue], b = [bField.text doubleValue], c = [cField.text doubleValue], e = [eField.text doubleValue];
-    alpha = [alphaField.text doubleValue], betta = [bettaField.text doubleValue], gama = [gammaField.text doubleValue], delta = [deltaField.text doubleValue];
+    a = [[aField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    b = [[bField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    c = [[cField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    e = [[eField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    alpha = [[alphaField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    betta = [[bettaField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    gama = [[gammaField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    delta = [[deltaField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     long scheme = [schemePicker selectedRowInComponent:0]; // 0 -- явная, 1 -- неявная, 2 -- нестабильная
     long order = [orderPicker selectedRowInComponent:0];   // 0 -- 2-1, 1 -- 3-2, 2 -- 2-2
     startApproximation = [approxPicker selectedRowInComponent:0]; // 0 -- первого порядка, 2 -- второго порядка
@@ -756,7 +762,6 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     
     HUD.mode = MBProgressHUDAnimationFade;
     HUD.labelText = @"Идет расчет";
-    //HUD.detailsLabelText =  @"Измените параметры сетки или схему";
     [HUD show:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         double **U;
