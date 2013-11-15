@@ -323,6 +323,45 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
 }
 
 
+-(NSString *)proceedString:(NSString*)string {
+    
+    const char *cstring = [string UTF8String];
+    [string getCString:(char *)cstring maxLength:string.length encoding:NSUTF8StringEncoding];
+    
+    
+    NSArray * letter = @[@"q",@"w",@"e",@"r",@"t",@"y",@"u",@"i",@"o",@"p",@"a",@"s",@"d",@"f",@"g",@"h",@"j",@"k",@"l",@"z",@"x",@"c",@"v",@"b",@"n",@"m"];
+    
+    
+    NSMutableSet * letters = [[NSMutableSet alloc] init];
+    [letters addObjectsFromArray:letter];
+    
+    
+    NSMutableSet * positions = [[NSMutableSet alloc] init];
+    
+    for (int i = 0; i < string.length; ++i) {
+        
+        if ( ([letters containsObject:[NSString stringWithFormat:@"%c",cstring[i]]]) && (![letters containsObject:[NSString stringWithFormat:@"%c",cstring[i+1]]]) && (cstring[i+1] != '(') ) {
+            [positions addObject:[NSNumber numberWithInt:i]];
+        }
+        
+    }
+    
+    char * newcstr = (char*)malloc(sizeof(char)*(string.length+positions.count+1));
+    
+    int j = 0;
+    
+    for (int i = 0; i < string.length ; ++i) {
+        if ([positions containsObject:[NSNumber numberWithInt:i]]) {
+            newcstr[j++] = '$';
+        }
+        newcstr[j++] = cstring[i];
+    }
+    newcstr[j++] = '\0';
+    
+    NSString * res = [NSString stringWithUTF8String:newcstr];
+    return res;
+}
+
 -(void)proceedScheme:(id)sender{
     
     HUD = [[MBProgressHUD alloc] initWithView:bg2];
@@ -333,11 +372,12 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     evaluator = [[DDMathEvaluator alloc] init];
     NSError *error = nil;
     
-    NSString* realFunc = UField.text;
-    NSString* phi = PhiField.text;
-    NSString* phi0 = Phi0Field.text;
-    NSString* phil = PhilField.text;
-    NSString* f = FField.text;
+    NSString* realFunc = [self proceedString:UField.text];
+    NSString* phi = [self proceedString:PhiField.text];
+    NSString* phi0 = [self proceedString:Phi0Field.text];
+    NSString* phil = [self proceedString:PhilField.text];
+    NSString* f = [self proceedString:FField.text];
+    
     expressionRealFunc = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:realFunc error:&error] error:&error] parsedExpressionWithError:&error];
     expressionPhi = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phi error:&error] error:&error] parsedExpressionWithError:&error];
     expressionPhi_0 = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phi0 error:&error] error:&error] parsedExpressionWithError:&error];
@@ -747,7 +787,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     PhiLabel.text = @"φ(x) =";
     [bg1 addSubview:PhiLabel];
     PhiField = [[UITextField alloc] initWithFrame:CGRectMake(70, 42, 230, 20)];
-    PhiField.text = @"sin($x)";
+    PhiField.text = @"sin(x)";
     PhiField.delegate = self;
     [bg1 addSubview:PhiField];
     
@@ -755,7 +795,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     Phi0Label.text = @"φ0(t) =";
     [bg1 addSubview:Phi0Label];
     Phi0Field = [[UITextField alloc] initWithFrame:CGRectMake(70, 72, 230, 20)];
-    Phi0Field.text = @"exp(-$a$t)";
+    Phi0Field.text = @"exp(-a*t)";
     Phi0Field.delegate = self;
     [bg1 addSubview:Phi0Field];
     
@@ -763,7 +803,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     PhilLabel.text = @"φl(t) =";
     [bg1 addSubview:PhilLabel];
     PhilField = [[UITextField alloc] initWithFrame:CGRectMake(70, 102, 230, 20)];
-    PhilField.text = @"-exp(-$a$t)";
+    PhilField.text = @"-exp(-a*t)";
     PhilField.delegate = self;
     [bg1 addSubview:PhilField];
     
@@ -771,7 +811,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     ULabel.text = @"U(x,t) =";
     [bg1 addSubview:ULabel];
     UField = [[UITextField alloc] initWithFrame:CGRectMake(70, 132, 230, 20)];
-    UField.text = @"exp(-$a$t)sin($x)";
+    UField.text = @"exp(-a*t)sin(x)";
     UField.delegate = self;
     [bg1 addSubview:UField];
 

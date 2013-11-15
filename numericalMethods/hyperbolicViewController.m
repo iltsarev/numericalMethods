@@ -632,6 +632,45 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     }];
 }
 
+-(NSString *)proceedString:(NSString*)string {
+    
+    const char *cstring = [string UTF8String];
+    [string getCString:(char *)cstring maxLength:string.length encoding:NSUTF8StringEncoding];
+    
+
+    NSArray * letter = @[@"q",@"w",@"e",@"r",@"t",@"y",@"u",@"i",@"o",@"p",@"a",@"s",@"d",@"f",@"g",@"h",@"j",@"k",@"l",@"z",@"x",@"c",@"v",@"b",@"n",@"m"];
+    
+    
+    NSMutableSet * letters = [[NSMutableSet alloc] init];
+    [letters addObjectsFromArray:letter];
+
+    
+    NSMutableSet * positions = [[NSMutableSet alloc] init];
+    
+    for (int i = 0; i < string.length; ++i) {
+        
+        if ( ([letters containsObject:[NSString stringWithFormat:@"%c",cstring[i]]]) && (![letters containsObject:[NSString stringWithFormat:@"%c",cstring[i+1]]]) && (cstring[i+1] != '(') ) {
+                [positions addObject:[NSNumber numberWithInt:i]];
+        }
+        
+    }
+
+    char * newcstr = (char*)malloc(sizeof(char)*(string.length+positions.count+1));
+    
+    int j = 0;
+    
+    for (int i = 0; i < string.length ; ++i) {
+        if ([positions containsObject:[NSNumber numberWithInt:i]]) {
+            newcstr[j++] = '$';
+        }
+        newcstr[j++] = cstring[i];
+    }
+    newcstr[j++] = '\0';
+    
+    NSString * res = [NSString stringWithUTF8String:newcstr];
+    return res;
+}
+
 -(void)proceedScheme:(id)sender{
     
     HUD = [[MBProgressHUD alloc] initWithView:bg2];
@@ -642,14 +681,15 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     evaluator = [[DDMathEvaluator alloc] init];
     NSError *error = nil;
     
-    NSString* realFunc = UField.text;
-    NSString* phi0 = Phi0Field.text;
-    NSString* phil = PhilField.text;
-    NSString* psi1 = Psi1Field.text;
-    NSString* psi2 = Psi2Field.text;
-    NSString* psi1d = Psi1dField.text;
-    NSString* psi1dd = Psi1ddField.text;
-    NSString* f = FField.text;
+    NSString* realFunc = [self proceedString:UField.text];
+    NSString* phi0 = [self proceedString:Phi0Field.text];
+    NSString* phil = [self proceedString:PhilField.text];
+    NSString* psi1 = [self proceedString:Psi1Field.text];
+    NSString* psi2 = [self proceedString:Psi2Field.text];
+    NSString* psi1d = [self proceedString:Psi1dField.text];
+    NSString* psi1dd = [self proceedString:Psi1ddField.text];
+    NSString* f = [self proceedString:FField.text];
+    
     expressionRealFunc = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:realFunc error:&error] error:&error] parsedExpressionWithError:&error];
     expressionPhi_0 = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phi0 error:&error] error:&error] parsedExpressionWithError:&error];
     expressionPhi_l = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phil error:&error] error:&error] parsedExpressionWithError:&error];
@@ -1079,7 +1119,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     FLabel.text = @"f(x,t) =";
     [bg1 addSubview:FLabel];
     FField = [[UITextField alloc] initWithFrame:CGRectMake(84, 12, 230, 20)];
-    FField.text = @"sin($x)exp(-$t)";
+    FField.text = @"sin(x)exp(-t)";
     FField.delegate = self;
     [bg1 addSubview:FField];
     
@@ -1087,7 +1127,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     Phi0Label.text = @"φ0(t) =";
     [bg1 addSubview:Phi0Label];
     Phi0Field = [[UITextField alloc] initWithFrame:CGRectMake(84, 32, 230, 20)];
-    Phi0Field.text = @"exp(-$t)";
+    Phi0Field.text = @"exp(-t)";
     Phi0Field.delegate = self;
     [bg1 addSubview:Phi0Field];
     
@@ -1095,7 +1135,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     PhilLabel.text = @"φl(t) =";
     [bg1 addSubview:PhilLabel];
     PhilField = [[UITextField alloc] initWithFrame:CGRectMake(84, 52, 230, 20)];
-    PhilField.text = @"-exp(-$t)";
+    PhilField.text = @"-exp(-t)";
     PhilField.delegate = self;
     [bg1 addSubview:PhilField];
     
@@ -1103,7 +1143,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     Psi1Label.text = @"ψ1(x) =";
     [bg1 addSubview:Psi1Label];
     Psi1Field = [[UITextField alloc] initWithFrame:CGRectMake(84, 72, 230, 20)];
-    Psi1Field.text = @"cos($x)";
+    Psi1Field.text = @"cos(x)";
     Psi1Field.delegate = self;
     [bg1 addSubview:Psi1Field];
     
@@ -1111,7 +1151,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     Psi2Label.text = @"ψ2(x) =";
     [bg1 addSubview:Psi2Label];
     Psi2Field = [[UITextField alloc] initWithFrame:CGRectMake(84, 92, 230, 20)];
-    Psi2Field.text = @"-cos($x)";
+    Psi2Field.text = @"-cos(x)";
     Psi2Field.delegate = self;
     [bg1 addSubview:Psi2Field];
     
@@ -1119,7 +1159,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     Psi1dLabel.text = @"ψ1'(x) =";
     [bg1 addSubview:Psi1dLabel];
     Psi1dField = [[UITextField alloc] initWithFrame:CGRectMake(84, 122, 230, 20)];
-    Psi1dField.text = @"-sin($x)";
+    Psi1dField.text = @"-sin(x)";
     Psi1dField.delegate = self;
     [bg1 addSubview:Psi1dField];
     
@@ -1127,7 +1167,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     Psi1ddLabel.text = @"ψ1''(x) =";
     [bg1 addSubview:Psi1ddLabel];
     Psi1ddField = [[UITextField alloc] initWithFrame:CGRectMake(84, 142, 230, 20)];
-    Psi1ddField.text = @"-cos($x)";
+    Psi1ddField.text = @"-cos(x)";
     Psi1ddField.delegate = self;
     [bg1 addSubview:Psi1ddField];
     
@@ -1135,7 +1175,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     ULabel.text = @"U(x,t) =";
     [bg1 addSubview:ULabel];
     UField = [[UITextField alloc] initWithFrame:CGRectMake(84, 162, 230, 20)];
-    UField.text = @"exp(-$t)cos($x)";
+    UField.text = @"exp(-t)cos(x)";
     UField.delegate = self;
     [bg1 addSubview:UField];
     
