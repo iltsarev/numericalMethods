@@ -635,8 +635,6 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
 -(NSString *)proceedString:(NSString*)string {
     
     const char *cstring = [string UTF8String];
-    [string getCString:(char *)cstring maxLength:string.length encoding:NSUTF8StringEncoding];
-    
 
     NSArray * letter = @[@"q",@"w",@"e",@"r",@"t",@"y",@"u",@"i",@"o",@"p",@"a",@"s",@"d",@"f",@"g",@"h",@"j",@"k",@"l",@"z",@"x",@"c",@"v",@"b",@"n",@"m"];
     
@@ -668,6 +666,8 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     newcstr[j++] = '\0';
     
     NSString * res = [NSString stringWithUTF8String:newcstr];
+    
+    free(newcstr);
     return res;
 }
 
