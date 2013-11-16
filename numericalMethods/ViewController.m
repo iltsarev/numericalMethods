@@ -129,6 +129,10 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
         
         U[k+1] = processTridiagonalMatrix(answer, N+1, lower, mid, upper);
     }
+    
+    free(lower);
+    free(mid);
+    free(upper);
     return U;
 }
 
@@ -174,6 +178,9 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
         
         U[k+1] = processTridiagonalMatrix(answer, N+1, lower, mid, upper);
     }
+    free(lower);
+    free(mid);
+    free(upper);
     return U;
 }
 
@@ -218,6 +225,9 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
         
         U[k+1] = processTridiagonalMatrix(answer, N+1, lower, mid, upper);
     }
+    free(lower);
+    free(mid);
+    free(upper);
     return U;
 }
 
@@ -324,41 +334,20 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
 
 
 -(NSString *)proceedString:(NSString*)string {
-    
-    const char *cstring = [string UTF8String];    
-    
-    NSArray * letter = @[@"q",@"w",@"e",@"r",@"t",@"y",@"u",@"i",@"o",@"p",@"a",@"s",@"d",@"f",@"g",@"h",@"j",@"k",@"l",@"z",@"x",@"c",@"v",@"b",@"n",@"m"];
-    
-    
-    NSMutableSet * letters = [[NSMutableSet alloc] init];
-    [letters addObjectsFromArray:letter];
-    
-    NSMutableSet * positions = [[NSMutableSet alloc] init];
-    
-    for (int i = 0; i < string.length; ++i) {
-        
-        if ( ([letters containsObject:[NSString stringWithFormat:@"%c",cstring[i]]]) && (![letters containsObject:[NSString stringWithFormat:@"%c",cstring[i+1]]]) && (cstring[i+1] != '(') ) {
-            [positions addObject:[NSNumber numberWithInt:i]];
-        }
-        
-    }
-    
-    char * newcstr = (char*)malloc(sizeof(char)*(string.length+positions.count+1));
+    const char *cstring = [string UTF8String];
+    char *newcstr = (char*)malloc(2*sizeof(char)*(string.length));
     
     int j = 0;
-    
-    for (int i = 0; i < string.length ; ++i) {
-        if ([positions containsObject:[NSNumber numberWithInt:i]]) {
+    for (int i = 0; i < string.length; ++i) {
+        if (islower(cstring[i]) && !islower(cstring[i+1]) && (cstring[i+1] != '(')){
             newcstr[j++] = '$';
         }
         newcstr[j++] = cstring[i];
     }
     newcstr[j++] = '\0';
     
-    NSString * res = [NSString stringWithUTF8String:newcstr];
-    
+    NSString *res = [NSString stringWithUTF8String:newcstr];
     free(newcstr);
-    
     return res;
 }
 
@@ -377,6 +366,9 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     NSString* phi0 = [self proceedString:Phi0Field.text];
     NSString* phil = [self proceedString:PhilField.text];
     NSString* f = [self proceedString:FField.text];
+    
+    
+    NSLog(@"%@", realFunc);
     
     expressionRealFunc = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:realFunc error:&error] error:&error] parsedExpressionWithError:&error];
     expressionPhi = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phi error:&error] error:&error] parsedExpressionWithError:&error];
@@ -572,6 +564,10 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
                 viewControllerToPresent.dictForPlotErr = contentArrayErr;
                 [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
                 viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
+            } completion:^(BOOL finished) {
+                for (int i = 0; i < K; i++)
+                    free(U[i]);
+                free(U);
             }];
         });
     });
