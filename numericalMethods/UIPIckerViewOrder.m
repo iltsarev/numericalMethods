@@ -16,7 +16,7 @@
     if (self) {
         // Initialization code
         orderArray = [[NSArray alloc] init];
-        orderArray = @[@"2-ух точечная 1-го порядка", @"3-ех точечная 2-го порядка", @"2-ух точечная 2-го порядка"];
+        orderArray = @[@"двухточечная 1 порядка", @"трёхточечная 2 порядка", @"двухточечная 2 порядка"];
         self.showsSelectionIndicator = YES;
         self.delegate = self;
     }
@@ -44,7 +44,7 @@
 
 // tell the picker the width of each row for a given component
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    int sectionWidth = 320;
+    int sectionWidth = 300;
     
     return sectionWidth;
 }

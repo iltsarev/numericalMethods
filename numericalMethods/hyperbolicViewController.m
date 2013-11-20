@@ -609,7 +609,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
 -(void)nextScreenFuncs:(id)sender{
     [UIView animateWithDuration:0.3 animations:^{
         CGRect frame = bg1.frame;
-        frame.origin.x = 0;
+        frame.origin.x = 10;
         bg1.frame = frame;
     }];
 }
@@ -625,7 +625,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
 -(void)nextScreen:(id)sender{
     [UIView animateWithDuration:0.3 animations:^{
         CGRect frame = bg2.frame;
-        frame.origin.x = 0;
+        frame.origin.x = 10;
         bg2.frame = frame;
     }];
 }
@@ -927,7 +927,8 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     bg = [[UIView alloc] initWithFrame:CGRectMake(10, 160, 300, self.view.frame.size.height - 180)];
-    bg.backgroundColor = [UIColor colorWithRed:141./255. green:158./255. blue:143./255. alpha:1.0f];
+    //bg.backgroundColor = [UIColor colorWithRed:141./255. green:158./255. blue:143./255. alpha:1.0f];
+    bg.backgroundColor = [UIColor whiteColor];
     
     CALayer * imgLayer = bg.layer;
     [imgLayer setBorderColor: [[UIColor blackColor] CGColor]];
@@ -1045,29 +1046,34 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
         next = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
     }
     
-    UILabel *blab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    blab.text = @"Далее";
-    [next addSubview:blab];
+
+    [next setTitle:@"Далее" forState:UIControlStateNormal];
+    [next setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [next setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
     [next addTarget:self action:@selector(nextScreenFuncs:) forControlEvents:UIControlEventTouchUpInside];
     
     [bg addSubview:next];
     
     UIButton *mainMenu;
     if ([[UIScreen mainScreen] bounds].size.height < 500) {
-        mainMenu = [[UIButton alloc] initWithFrame:CGRectMake(40, 260, 60, 40)];
+        mainMenu = [[UIButton alloc] initWithFrame:CGRectMake(20, 260, 60, 40)];
     }
     else {
-        mainMenu = [[UIButton alloc] initWithFrame:CGRectMake(40, 320, 60, 40)];
+        mainMenu = [[UIButton alloc] initWithFrame:CGRectMake(20, 320, 60, 40)];
     }
     
-    UILabel *blab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    blab4.text = @"Назад";
-    [mainMenu addSubview:blab4];
+    [mainMenu setTitle:@"Назад" forState:UIControlStateNormal];
+    [mainMenu  setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [mainMenu setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
     [mainMenu addTarget:self action:@selector(mainMenu:) forControlEvents:UIControlEventTouchUpInside];
     [bg addSubview:mainMenu];
     //bg1
-    bg1 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 320, self.view.frame.size.height - 180)];
-    bg1.backgroundColor = [UIColor colorWithRed:136./255. green:135./255. blue:148./255. alpha:1.0];
+    bg1 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 300, self.view.frame.size.height - 180)];
+    //bg1.backgroundColor = [UIColor colorWithRed:136./255. green:135./255. blue:148./255. alpha:1.0];
+    bg1.backgroundColor = [UIColor whiteColor];
+    
     CALayer * imgLayer1 = bg1.layer;
     [imgLayer1 setBorderColor: [[UIColor blackColor] CGColor]];
     [imgLayer1 setBorderWidth:0.5f];
@@ -1076,28 +1082,31 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     [imgLayer1 setShadowOffset: CGSizeMake(0, 1)];
     [imgLayer1 setShadowRadius:3.0];
     imgLayer1.shouldRasterize = NO;
-    [self.view addSubview:bg1];
+    [scrollBg addSubview:bg1];
     
     UIButton *nextFuncs;
     if (self.view.bounds.size.height < 500)
         nextFuncs = [[UIButton alloc] initWithFrame:CGRectMake(230, 260, 60, 40)];
     else
         nextFuncs = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
-    UILabel *blabFuncs = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    blabFuncs.text = @"Далее";
-    [nextFuncs addSubview:blabFuncs];
+    
+    [nextFuncs setTitle:@"Далее" forState:UIControlStateNormal];
+    [nextFuncs setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [nextFuncs setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
     [nextFuncs addTarget:self action:@selector(nextScreen:) forControlEvents:UIControlEventTouchUpInside];
     [bg1 addSubview:nextFuncs];
     
     UIButton *backFuncs;
     if ([[UIScreen mainScreen] bounds].size.height < 500)
-        backFuncs = [[UIButton alloc] initWithFrame:CGRectMake(40, 260, 60, 40)];
+        backFuncs = [[UIButton alloc] initWithFrame:CGRectMake(20, 260, 60, 40)];
     else
-        backFuncs = [[UIButton alloc] initWithFrame:CGRectMake(40, 320, 60, 40)];
+        backFuncs = [[UIButton alloc] initWithFrame:CGRectMake(20, 320, 60, 40)];
     
-    UILabel *blabFuncsBack = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    blabFuncsBack.text = @"Назад";
-    [backFuncs addSubview:blabFuncsBack];
+    [backFuncs setTitle:@"Назад" forState:UIControlStateNormal];
+    [backFuncs setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [backFuncs setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
     [backFuncs addTarget:self action:@selector(backScreenFuncs:) forControlEvents:UIControlEventTouchUpInside];
     [bg1 addSubview:backFuncs];
     
@@ -1166,17 +1175,20 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     [bg1 addSubview:UField];
     
     //bg 2
-    bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 22, 320, self.view.frame.size.height - 42)];
-    bg2.backgroundColor = [UIColor colorWithRed:136./255. green:135./255. blue:148./255. alpha:1.0];
+    bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 22, 300, self.view.frame.size.height - 42)];
+    //bg2.backgroundColor = [UIColor colorWithRed:136./255. green:135./255. blue:148./255. alpha:1.0];
+    bg2.backgroundColor = [UIColor whiteColor];
     
-    CALayer * imgLayer2 = bg2.layer;
-    [imgLayer2 setBorderColor: [[UIColor blackColor] CGColor]];
-    [imgLayer2 setBorderWidth:0.5f];
-    [imgLayer2 setShadowColor: [[UIColor blackColor] CGColor]];
-    [imgLayer2 setShadowOpacity:0.9f];
-    [imgLayer2 setShadowOffset: CGSizeMake(0, 1)];
-    [imgLayer2 setShadowRadius:3.0];
-    imgLayer2.shouldRasterize = NO;
+    bg2.layer.borderColor = [UIColor blackColor].CGColor;
+    bg2.layer.borderWidth = 0.5;
+//    CALayer * imgLayer2 = bg2.layer;
+//    [imgLayer2 setBorderColor: [[UIColor blackColor] CGColor]];
+//    [imgLayer2 setBorderWidth:0.5f];
+//    [imgLayer2 setShadowColor: [[UIColor blackColor] CGColor]];
+//    [imgLayer2 setShadowOpacity:0.9f];
+//    [imgLayer2 setShadowOffset: CGSizeMake(0, 1)];
+//    [imgLayer2 setShadowRadius:3.0];
+//    imgLayer2.shouldRasterize = NO;
     
     [self.view addSubview:bg2];
     
@@ -1192,9 +1204,9 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
     approximation.text = @"Аппрокс. начальных значений:";
     approximation.textAlignment = NSTextAlignmentCenter;
     
-    orderPicker = [[UIPIckerViewOrder alloc] initWithFrame:CGRectMake(0, 10, 320, 60)];
-    schemePicker = [[UIPickerViewSchemeHyperbolic alloc] initWithFrame:CGRectMake(0, 160, 320, 60)];
-    approxPicker = [[UIPickerViewApproximation alloc] initWithFrame:CGRectMake(0, 285, 320, 40)];
+    orderPicker = [[UIPIckerViewOrder alloc] initWithFrame:CGRectMake(0, 10, 300, 60)];
+    schemePicker = [[UIPickerViewSchemeHyperbolic alloc] initWithFrame:CGRectMake(0, 160, 300, 60)];
+    approxPicker = [[UIPickerViewApproximation alloc] initWithFrame:CGRectMake(0, 285, 300, 40)];
     
     [bg2 addSubview:order];
     [bg2 addSubview:scheme];
@@ -1212,26 +1224,28 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
         nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 450, 60, 40)];
     }
     
+    [nextButton setTitle:@"Далее" forState:UIControlStateNormal];
     
-    UILabel *blab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    blab2.text = @"Далее";
-    [nextButton addSubview:blab2];
     [nextButton addTarget:self action:@selector(proceedScheme:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [nextButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
     [bg2 addSubview:nextButton];
     
     
     UIButton *backButton;
     if ([[UIScreen mainScreen] bounds].size.height < 500) {
-        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 390, 60, 40)];
+        backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 390, 60, 40)];
     }
     else {
-        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 450, 60, 40)];
+        backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 450, 60, 40)];
     }
     
-    UILabel *blab3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    blab3.text = @"Назад";
-    [backButton addSubview:blab3];
+    [backButton setTitle:@"Назад" forState:UIControlStateNormal];
+
+    [backButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
     [backButton addTarget:self action:@selector(backScreen:) forControlEvents:UIControlEventTouchUpInside];
     [bg2 addSubview:backButton];
 }

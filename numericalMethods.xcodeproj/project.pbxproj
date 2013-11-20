@@ -232,8 +232,7 @@
 				52367CC417FC329100C1DA60 /* Main_iPad.storyboard */,
 				52AC65E81826867A00695865 /* startViewController.h */,
 				52AC65E91826867A00695865 /* startViewController.m */,
-				52648A06183251C100EDB49F /* NMFTextField.h */,
-				52648A07183251C100EDB49F /* NMFTextField.m */,
+				FA8C120D183C9E330048CB82 /* Text Field */,
 				FA8C120C183C9C550048CB82 /* Parabolic */,
 				FA8C120B183C9C490048CB82 /* Hyperbolic */,
 				FA8C120A183C9C230048CB82 /* Pickers */,
@@ -375,6 +374,15 @@
 				52367CC817FC329100C1DA60 /* ViewController.m */,
 			);
 			name = Parabolic;
+			sourceTree = "<group>";
+		};
+		FA8C120D183C9E330048CB82 /* Text Field */ = {
+			isa = PBXGroup;
+			children = (
+				52648A06183251C100EDB49F /* NMFTextField.h */,
+				52648A07183251C100EDB49F /* NMFTextField.m */,
+			);
+			name = "Text Field";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -51,31 +51,6 @@
     [graph.plotAreaFrame.plotArea addAnnotation:symbolTextAnnotation];
 }
 
--(CPTPlotRange *)plotSpace:(CPTPlotSpace *)space willChangePlotRangeTo:(CPTPlotRange *)newRange forCoordinate:(CPTCoordinate)coordinate
-{
-    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)space.graph.axisSet;
-    
-    CPTMutablePlotRange *changedRange = [newRange mutableCopy];
-    
-    switch ( coordinate ) {
-        case CPTCoordinateX:
-            [changedRange expandRangeByFactor:CPTDecimalFromDouble(1.025)];
-            changedRange.location          = newRange.location;
-            axisSet.xAxis.visibleAxisRange = changedRange;
-            break;
-            
-        case CPTCoordinateY:
-            [changedRange expandRangeByFactor:CPTDecimalFromDouble(1.05)];
-            axisSet.yAxis.visibleAxisRange = changedRange;
-            break;
-            
-        default:
-            break;
-    }
-    
-    return newRange;
-}
-
 
 -(void)viewDidLoad
 {
@@ -127,10 +102,10 @@
 //        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
 //    }
     
-    graph.plotAreaFrame.paddingLeft   += 55.0;
+    graph.plotAreaFrame.paddingLeft   += 45.0;
 //    graph.plotAreaFrame.paddingTop    += 40.0;
 //    graph.plotAreaFrame.paddingRight  += 55.0;
-    graph.plotAreaFrame.paddingBottom += 160.0;
+    graph.plotAreaFrame.paddingBottom += 40.0;
    //graph.plotAreaFrame.masksToBorder  = NO;
     
     // Setup scatter plot space
@@ -167,7 +142,7 @@
     lineCap.fill      = [CPTFill fillWithColor:lineCap.lineStyle.lineColor];
     x.axisLineCapMax  = lineCap;
     
-    x.title       = @"X Axis";
+    x.title       = @"Time";
     x.titleOffset = 30.0;
     
     // Label y with an automatic label policy.
@@ -185,7 +160,7 @@
     y.axisLineCapMax  = lineCap;
     y.axisLineCapMin  = lineCap;
     
-    y.title       = @"Y Axis";
+    y.title       = @"Error";
     y.titleOffset = 32.0;
     
     // Set axes
@@ -227,25 +202,7 @@
     
     // Auto scale the plot space to fit the plot data
     [plotSpace scaleToFitPlots:[graph allPlots]];
-    CPTMutablePlotRange *xRange = [plotSpace.xRange mutableCopy] ;
-    CPTMutablePlotRange *yRange = [plotSpace.yRange mutableCopy] ;
-    
-    // Expand the ranges to put some space around the plot
-    [xRange expandRangeByFactor:CPTDecimalFromDouble(1.2)];
-    [yRange expandRangeByFactor:CPTDecimalFromDouble(1.2)];
-    plotSpace.xRange = xRange;
-    plotSpace.yRange = yRange;
-    
-    [xRange expandRangeByFactor:CPTDecimalFromDouble(1.025)];
-    xRange.location = plotSpace.xRange.location;
-    [yRange expandRangeByFactor:CPTDecimalFromDouble(1.05)];
-    x.visibleAxisRange = xRange;
-    y.visibleAxisRange = yRange;
-    
-    [xRange expandRangeByFactor:CPTDecimalFromDouble(3.0)];
-    [yRange expandRangeByFactor:CPTDecimalFromDouble(3.0)];
-    plotSpace.globalXRange = xRange;
-    plotSpace.globalYRange = yRange;
+
     
     // Add plot symbols
     CPTMutableLineStyle *symbolLineStyle = [CPTMutableLineStyle lineStyle];
@@ -295,8 +252,8 @@
     }
     
     [back setTitle:@"Назад" forState:UIControlStateNormal];
-    back.titleLabel.textColor = [UIColor blackColor];
-    //back.backgroundColor = [UIColor blackColor];
+    [back setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [back setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [back  addTarget:self action:@selector(Back) forControlEvents:UIControlEventTouchUpInside];
     back.layer.transform = CATransform3DMakeRotation (M_PI, 1, 0, 0.f);
     [self.view addSubview:back];
