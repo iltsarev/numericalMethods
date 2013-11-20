@@ -234,18 +234,9 @@
 				52AC65E91826867A00695865 /* startViewController.m */,
 				52648A06183251C100EDB49F /* NMFTextField.h */,
 				52648A07183251C100EDB49F /* NMFTextField.m */,
-				52367CC717FC329100C1DA60 /* ViewController.h */,
-				52367CC817FC329100C1DA60 /* ViewController.m */,
-				52AC65E518267E0A00695865 /* hyperbolicViewController.h */,
-				52AC65E618267E0A00695865 /* hyperbolicViewController.m */,
-				52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */,
-				52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */,
-				52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */,
-				52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */,
-				52AC65EB182692A700695865 /* UIPickerViewSchemeHyperbolic.h */,
-				52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */,
-				52AC65EE182692EF00695865 /* UIPickerViewApproximation.h */,
-				52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */,
+				FA8C120C183C9C550048CB82 /* Parabolic */,
+				FA8C120B183C9C490048CB82 /* Hyperbolic */,
+				FA8C120A183C9C230048CB82 /* Pickers */,
 				52857EBF1831705100C9C091 /* DDMathParser */,
 				FA10106B18051F5E0095F25F /* Plot */,
 				52367CCA17FC329100C1DA60 /* Images.xcassets */,
@@ -351,6 +342,39 @@
 				FA10106818051F500095F25F /* CorePlotViewController.xib */,
 			);
 			name = Plot;
+			sourceTree = "<group>";
+		};
+		FA8C120A183C9C230048CB82 /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */,
+				52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */,
+				52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */,
+				52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */,
+				52AC65EB182692A700695865 /* UIPickerViewSchemeHyperbolic.h */,
+				52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */,
+				52AC65EE182692EF00695865 /* UIPickerViewApproximation.h */,
+				52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */,
+			);
+			name = Pickers;
+			sourceTree = "<group>";
+		};
+		FA8C120B183C9C490048CB82 /* Hyperbolic */ = {
+			isa = PBXGroup;
+			children = (
+				52AC65E518267E0A00695865 /* hyperbolicViewController.h */,
+				52AC65E618267E0A00695865 /* hyperbolicViewController.m */,
+			);
+			name = Hyperbolic;
+			sourceTree = "<group>";
+		};
+		FA8C120C183C9C550048CB82 /* Parabolic */ = {
+			isa = PBXGroup;
+			children = (
+				52367CC717FC329100C1DA60 /* ViewController.h */,
+				52367CC817FC329100C1DA60 /* ViewController.m */,
+			);
+			name = Parabolic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
