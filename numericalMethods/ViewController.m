@@ -563,7 +563,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
                 viewControllerToPresent.dictForPlotAnalytic = dataDictAnalytic;
                 viewControllerToPresent.dictForPlotErr = contentArrayErr;
                 [self presentViewController:viewControllerToPresent animated:YES completion:^{}];
-                viewControllerToPresent.view.backgroundColor = [UIColor grayColor];
+                viewControllerToPresent.view.backgroundColor = [UIColor lightGrayColor];
             } completion:^(BOOL finished) {
                 for (int i = 0; i < K; i++)
                     free(U[i]);
@@ -715,7 +715,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     }
     
     [next setTitle:@"Далее" forState:UIControlStateNormal];
-    [next setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [next setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [next setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     [next addTarget:self action:@selector(nextScreenFuncs:) forControlEvents:UIControlEventTouchUpInside];
@@ -732,7 +732,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     
 
     [mainMenu setTitle:@"Назад" forState:UIControlStateNormal];
-    [mainMenu setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [mainMenu setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [mainMenu setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
     [mainMenu addTarget:self action:@selector(mainMenu:) forControlEvents:UIControlEventTouchUpInside];
@@ -760,7 +760,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     
 
     [nextFuncs setTitle:@"Далее" forState:UIControlStateNormal];
-    [nextFuncs setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [nextFuncs setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [nextFuncs setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
     [nextFuncs addTarget:self action:@selector(nextScreen:) forControlEvents:UIControlEventTouchUpInside];
@@ -774,7 +774,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     
 
     [backFuncs setTitle:@"Назад" forState:UIControlStateNormal];
-    [backFuncs setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [backFuncs setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [backFuncs setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
     
@@ -867,7 +867,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     
 
     [nextButton setTitle:@"Далее" forState:UIControlStateNormal];
-    [nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [nextButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [nextButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
     [nextButton addTarget:self action:@selector(proceedScheme:) forControlEvents:UIControlEventTouchUpInside];
@@ -885,7 +885,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
     }
     [backButton setTitle:@"Назад" forState:UIControlStateNormal];
     
-    [backButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [backButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     [backButton addTarget:self action:@selector(backScreen:) forControlEvents:UIControlEventTouchUpInside];
