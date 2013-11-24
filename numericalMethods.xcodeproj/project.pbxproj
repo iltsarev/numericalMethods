@@ -51,6 +51,7 @@
 		52AC65F0182692EF00695865 /* UIPickerViewApproximation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */; };
 		52AC65F618269EE000695865 /* NM_sys2.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC65F518269EE000695865 /* NM_sys2.png */; };
 		52AC65F81826A09000695865 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC65F71826A09000695865 /* Default-568@2x.png */; };
+		52F0457B1840E3D5000FCFD6 /* ellipticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F0457A1840E3D5000FCFD6 /* ellipticViewController.m */; };
 		52F73A5818043E4700ED8BF7 /* NM_sys1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52F73A5718043E4700ED8BF7 /* NM_sys1.png */; };
 		52F73A5B18045A0400ED8BF7 /* UIPIckerViewOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */; };
 		52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */; };
@@ -151,6 +152,8 @@
 		52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewApproximation.m; sourceTree = "<group>"; };
 		52AC65F518269EE000695865 /* NM_sys2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys2.png; sourceTree = "<group>"; };
 		52AC65F71826A09000695865 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568@2x.png"; path = "Images.xcassets/LaunchImage.launchimage/Default-568@2x.png"; sourceTree = "<group>"; };
+		52F045791840E3D5000FCFD6 /* ellipticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ellipticViewController.h; sourceTree = "<group>"; };
+		52F0457A1840E3D5000FCFD6 /* ellipticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ellipticViewController.m; sourceTree = "<group>"; };
 		52F73A5718043E4700ED8BF7 /* NM_sys1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys1.png; sourceTree = "<group>"; };
 		52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPIckerViewOrder.h; sourceTree = "<group>"; };
 		52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPIckerViewOrder.m; sourceTree = "<group>"; };
@@ -234,18 +237,8 @@
 				52AC65E91826867A00695865 /* startViewController.m */,
 				52648A06183251C100EDB49F /* NMFTextField.h */,
 				52648A07183251C100EDB49F /* NMFTextField.m */,
-				52367CC717FC329100C1DA60 /* ViewController.h */,
-				52367CC817FC329100C1DA60 /* ViewController.m */,
-				52AC65E518267E0A00695865 /* hyperbolicViewController.h */,
-				52AC65E618267E0A00695865 /* hyperbolicViewController.m */,
-				52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */,
-				52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */,
-				52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */,
-				52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */,
-				52AC65EB182692A700695865 /* UIPickerViewSchemeHyperbolic.h */,
-				52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */,
-				52AC65EE182692EF00695865 /* UIPickerViewApproximation.h */,
-				52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */,
+				52F0457C1840E844000FCFD6 /* Methods */,
+				52F0457D1840E851000FCFD6 /* UIPickers */,
 				52857EBF1831705100C9C091 /* DDMathParser */,
 				FA10106B18051F5E0095F25F /* Plot */,
 				52367CCA17FC329100C1DA60 /* Images.xcassets */,
@@ -338,6 +331,34 @@
 				52857EEC1831705100C9C091 /* NSString+DDMathParsing.m */,
 			);
 			path = DDMathParser;
+			sourceTree = "<group>";
+		};
+		52F0457C1840E844000FCFD6 /* Methods */ = {
+			isa = PBXGroup;
+			children = (
+				52367CC717FC329100C1DA60 /* ViewController.h */,
+				52367CC817FC329100C1DA60 /* ViewController.m */,
+				52AC65E518267E0A00695865 /* hyperbolicViewController.h */,
+				52AC65E618267E0A00695865 /* hyperbolicViewController.m */,
+				52F045791840E3D5000FCFD6 /* ellipticViewController.h */,
+				52F0457A1840E3D5000FCFD6 /* ellipticViewController.m */,
+			);
+			name = Methods;
+			sourceTree = "<group>";
+		};
+		52F0457D1840E851000FCFD6 /* UIPickers */ = {
+			isa = PBXGroup;
+			children = (
+				52F73A5918045A0400ED8BF7 /* UIPIckerViewOrder.h */,
+				52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */,
+				52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */,
+				52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */,
+				52AC65EB182692A700695865 /* UIPickerViewSchemeHyperbolic.h */,
+				52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */,
+				52AC65EE182692EF00695865 /* UIPickerViewApproximation.h */,
+				52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */,
+			);
+			name = UIPickers;
 			sourceTree = "<group>";
 		};
 		FA10106B18051F5E0095F25F /* Plot */ = {
@@ -515,6 +536,7 @@
 				52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */,
 				52857EF11831705100C9C091 /* _DDGroupTerm.m in Sources */,
 				52857EF61831705100C9C091 /* _DDParserTerm.m in Sources */,
+				52F0457B1840E3D5000FCFD6 /* ellipticViewController.m in Sources */,
 				52857EF81831705100C9C091 /* _DDVariableExpression.m in Sources */,
 				52857EF01831705100C9C091 /* _DDFunctionUtilities.m in Sources */,
 				52367CBC17FC329100C1DA60 /* main.m in Sources */,

@@ -21,6 +21,18 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fNB-Ka-kMS">
+                                <rect key="frame" x="24" y="320" width="272" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <state key="normal" title="Эллиптический тип">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="tXz-w6-VSq" kind="modal" id="fl8-Lb-TLf"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5u-qD-Vkk">
                                 <rect key="frame" x="43" y="156" width="235" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -70,7 +82,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hQI-M7-Vmy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1096" y="117"/>
+            <point key="canvasLocation" x="1094" y="-223"/>
         </scene>
         <!--Hyperbolic View Controller-->
         <scene sceneID="h3i-5x-AZV">
@@ -89,7 +101,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iNS-YL-asf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1096" y="788"/>
+            <point key="canvasLocation" x="1094" y="440"/>
+        </scene>
+        <!--Elliptic View Controller-->
+        <scene sceneID="Vst-4z-Kum">
+            <objects>
+                <viewController id="tXz-w6-VSq" customClass="ellipticViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kU2-xD-nz9"/>
+                        <viewControllerLayoutGuide type="bottom" id="oHT-WN-kkg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kZg-5p-4ig">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CFF-bY-gpw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1094" y="1132"/>
         </scene>
     </scenes>
     <resources>
