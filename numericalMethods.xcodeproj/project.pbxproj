@@ -51,6 +51,9 @@
 		52AC65F0182692EF00695865 /* UIPickerViewApproximation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */; };
 		52AC65F618269EE000695865 /* NM_sys2.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC65F518269EE000695865 /* NM_sys2.png */; };
 		52AC65F81826A09000695865 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AC65F71826A09000695865 /* Default-568@2x.png */; };
+		52B8D2BB1843CDF7009AD1AE /* UiPickerViewSchemeElliptic.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B8D2BA1843CDF7009AD1AE /* UiPickerViewSchemeElliptic.m */; };
+		52B8D2BE1843CE54009AD1AE /* UIPickerViewVariableElliptic.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B8D2BD1843CE54009AD1AE /* UIPickerViewVariableElliptic.m */; };
+		52B8D2C01843D431009AD1AE /* NM_sys3.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B8D2BF1843D431009AD1AE /* NM_sys3.png */; };
 		52F0457B1840E3D5000FCFD6 /* ellipticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F0457A1840E3D5000FCFD6 /* ellipticViewController.m */; };
 		52F73A5818043E4700ED8BF7 /* NM_sys1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52F73A5718043E4700ED8BF7 /* NM_sys1.png */; };
 		52F73A5B18045A0400ED8BF7 /* UIPIckerViewOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */; };
@@ -152,6 +155,11 @@
 		52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewApproximation.m; sourceTree = "<group>"; };
 		52AC65F518269EE000695865 /* NM_sys2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys2.png; sourceTree = "<group>"; };
 		52AC65F71826A09000695865 /* Default-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568@2x.png"; path = "Images.xcassets/LaunchImage.launchimage/Default-568@2x.png"; sourceTree = "<group>"; };
+		52B8D2B91843CDF7009AD1AE /* UiPickerViewSchemeElliptic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UiPickerViewSchemeElliptic.h; sourceTree = "<group>"; };
+		52B8D2BA1843CDF7009AD1AE /* UiPickerViewSchemeElliptic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UiPickerViewSchemeElliptic.m; sourceTree = "<group>"; };
+		52B8D2BC1843CE54009AD1AE /* UIPickerViewVariableElliptic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPickerViewVariableElliptic.h; sourceTree = "<group>"; };
+		52B8D2BD1843CE54009AD1AE /* UIPickerViewVariableElliptic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewVariableElliptic.m; sourceTree = "<group>"; };
+		52B8D2BF1843D431009AD1AE /* NM_sys3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys3.png; sourceTree = "<group>"; };
 		52F045791840E3D5000FCFD6 /* ellipticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ellipticViewController.h; sourceTree = "<group>"; };
 		52F0457A1840E3D5000FCFD6 /* ellipticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ellipticViewController.m; sourceTree = "<group>"; };
 		52F73A5718043E4700ED8BF7 /* NM_sys1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys1.png; sourceTree = "<group>"; };
@@ -254,6 +262,7 @@
 				5293162C18057B6B004DD633 /* MBProgressHUD.m */,
 				52F73A5718043E4700ED8BF7 /* NM_sys1.png */,
 				52AC65F518269EE000695865 /* NM_sys2.png */,
+				52B8D2BF1843D431009AD1AE /* NM_sys3.png */,
 				52AC65F71826A09000695865 /* Default-568@2x.png */,
 				52367CB717FC329100C1DA60 /* numericalMethods-Info.plist */,
 				52367CB817FC329100C1DA60 /* InfoPlist.strings */,
@@ -357,6 +366,10 @@
 				52AC65EC182692A700695865 /* UIPickerViewSchemeHyperbolic.m */,
 				52AC65EE182692EF00695865 /* UIPickerViewApproximation.h */,
 				52AC65EF182692EF00695865 /* UIPickerViewApproximation.m */,
+				52B8D2B91843CDF7009AD1AE /* UiPickerViewSchemeElliptic.h */,
+				52B8D2BA1843CDF7009AD1AE /* UiPickerViewSchemeElliptic.m */,
+				52B8D2BC1843CE54009AD1AE /* UIPickerViewVariableElliptic.h */,
+				52B8D2BD1843CE54009AD1AE /* UIPickerViewVariableElliptic.m */,
 			);
 			name = UIPickers;
 			sourceTree = "<group>";
@@ -455,6 +468,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B8D2C01843D431009AD1AE /* NM_sys3.png in Resources */,
 				52AC65F81826A09000695865 /* Default-568@2x.png in Resources */,
 				52367CC617FC329100C1DA60 /* Main_iPad.storyboard in Resources */,
 				52AC65F618269EE000695865 /* NM_sys2.png in Resources */,
@@ -544,7 +558,9 @@
 				52648A08183251C100EDB49F /* NMFTextField.m in Sources */,
 				52857EF71831705100C9C091 /* _DDRewriteRule.m in Sources */,
 				52AC65F0182692EF00695865 /* UIPickerViewApproximation.m in Sources */,
+				52B8D2BB1843CDF7009AD1AE /* UiPickerViewSchemeElliptic.m in Sources */,
 				52857EFC1831705100C9C091 /* DDMathStringToken.m in Sources */,
+				52B8D2BE1843CE54009AD1AE /* UIPickerViewVariableElliptic.m in Sources */,
 				52857EFD1831705100C9C091 /* DDMathStringTokenizer.m in Sources */,
 				52AC65ED182692A700695865 /* UIPickerViewSchemeHyperbolic.m in Sources */,
 				FA1E13DD1805C97F008FC47E /* CPViewControllerErrors.m in Sources */,
