@@ -12,7 +12,7 @@
 #define ALPHABET2 @"qwertyuiopasdfghjklzxcvbnm1234567890-+*/()$"
 
 
-double a,b,bx,by,c,e,alpha,betta,gama,delta,l,lx,ly;
+double a,b,c,e,alpha,betta,gama,delta,l,lx,ly;
 long startApproximation;
 
 @interface ellipticViewController ()
@@ -47,6 +47,8 @@ double * processTridiagonalMatrixE(double *x, const size_t N, const double *a, c
 
 #pragma mark - init funcs
 - (double)functionH: (double)x withTime:(double)t  {
+    return exp(-x-t)*cos(x)*cos(t);
+
     //return exp(-t)*cos(x);
     NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
     NSArray *keys = @[@"x", @"t", @"a", @"b", @"c"];
@@ -55,616 +57,136 @@ double * processTridiagonalMatrixE(double *x, const size_t N, const double *a, c
     return [[expressionRealFunc evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
--(double) phiH_0:(double)t{
-    //    return exp(-t);
-    NSArray *values = @[ [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"t", @"a", @"b", @"c"];
-    
-    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    return [[expressionPhi_0 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
-}
--(double) phiH_l:(double)t{
-    //return -exp(-t);
-    NSArray *values = @[ [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"t", @"a", @"b", @"c"];
-    
-    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    return [[expressionPhi_l evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
-    
+-(double) fH:(double) x :(double) y{
+    return 0;
+//    //return sin(x)*exp(-t);
+//    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+//    NSArray *keys = @[@"x", @"t", @"a", @"b", @"c"];
+//    
+//    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
+//    return [[expressionF evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
--(double) psiH_1:(double)x{
-    // return cos(x);
-    NSArray *values = @[ [NSNumber numberWithDouble:x], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"a", @"b", @"c"];
-    
-    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    return [[expressionPsi_1 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
-    
+-(double) phi1:(double) y{
+    return exp(-y)*cos(y);
 }
 
--(double) psiH_1d:(double) x{
-    //return -sin(x);
-    NSArray *values = @[ [NSNumber numberWithDouble:x], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"a", @"b", @"c"];
-    
-    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    return [[expressionPsi_1d evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
+-(double) phi2:(double) y{
+    return 0;
 }
 
--(double) psiH_1dd:(double) x{
-    //return -cos(x);
-    NSArray *values = @[ [NSNumber numberWithDouble:x], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"a", @"b", @"c"];
-    
-    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    return [[expressionPsi_1dd evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
+-(double) phi3:(double) x{
+    return exp(-x)*cos(x);
 }
-
--(double) psiH_2:(double) x{
-    //return -cos(x);
-    NSArray *values = @[ [NSNumber numberWithDouble:x], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"a", @"b", @"c"];
-    
-    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    return [[expressionPsi_2 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
+-(double) phi4:(double) x{
+    return 0;
 }
-
-
--(double) fH:(double) x :(double) t{
-    //return sin(x)*exp(-t);
-    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"t", @"a", @"b", @"c"];
-    
-    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    return [[expressionF evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
-}
-
 #pragma mark - elliptic Liebmann
--(double **)elliptic_liebmann:(int) K :(int) Nx :(int) Ny :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) hx :(double) hy :(double) alpha1 :(double) betta1 :(double) alpha2 :(double) betta2 :(double) alpha3 :(double) betta3 :(double) alpha4 :(double) betta4{
+-(double **)elliptic_liebmann:(int) Nx :(int) Ny :(double) bx :(double) by :(double) c :(double) hx :(double) hy :(double) alpha1 :(double) betta1 :(double) alpha2 :(double) betta2 :(double) alpha3 :(double) betta3 :(double) alpha4 :(double) betta4{
     
-    double alphax, alphay, bettax, bettay, gammax,gammay, deltax, deltay;
+    double **U = (double **)malloc((Nx +1) * sizeof(double *));
+    for (int i = 0; i < (Nx +1); i++){
+        U[i] = (double *)malloc((Ny+1) * sizeof(double));
+    }
     
-    double ***U = (double ***)malloc(K * sizeof(double **));
-    for (int i = 0; i < K; i++){
-        U[i] = (double **)malloc((Nx+1) * sizeof(double *));
-        for (int j = 0; j < Nx+1; j++)
-            U[i][j] = (double *)malloc((Ny+1) * sizeof(double));
+    double **Uprev = (double **)malloc((Nx +1) * sizeof(double *));
+    for (int i = 0; i < (Nx +1); i++){
+        Uprev[i] = (double *)malloc((Ny+1) * sizeof(double));
     }
     
     for (int i = 0; i < Nx+1; i++){
         for (int j = 0; j < Ny+1; j++){
-            U[0][i][j] = 0;
+            Uprev[i][j] = 0;
         }
     }
     
-    for (int k = 1; k < K - 1; ++k) {
+    while (true){
+        for (int j = 0; j <= Ny; ++j)
+            U[0][j] = (alpha1/2/hx)/((betta1-3*alpha1)/2/hx) * (Uprev[2][j] - 4*Uprev[1][j]) + [self phi1:(hy * j)]/(betta1 - 3*alpha1/2/hx);
+        for (int i = 0; i <= Nx; ++i)
+            U[i][0] = (alpha3/2/hy)/(betta3 - 3*alpha3/2/hy) * (Uprev[i][2] - 4*Uprev[i][1]) + [self phi3:(hx * i)]/(betta3 - 3*alpha3/2/hy);
+            
         for (int i = 1; i < Nx; ++i) {
             for (int j = 1; j < Ny; ++j) {
-                U[k][i][j] = (1/(2*hx*hx - c*hx*hx*hy*hy +2*hy*hy)) * (U[k-1][i+1][j]*hy*hy*(1 + bx*hx/2) + U[k][i-1][j]*hy*hy*(1-bx*hx/2) + U[k-1][i][j+1]*hx*hx*(1+by*hy/2) + U[k][i][j-1]*hx*hx*(1 - by*hy/2) + hx*hx*hy*hy*[self fH:i*hx :j*hy]);
+                U[i][j] = (1/(2*hx*hx - c*hx*hx*hy*hy +2*hy*hy)) * (Uprev[i+1][j]*hy*hy*(1 + bx*hx/2) + Uprev[i-1][j]*hy*hy*(1-bx*hx/2) + Uprev[i][j+1]*hx*hx*(1+by*hy/2) + Uprev[i][j-1]*hx*hx*(1 - by*hy/2) + hx*hx*hy*hy*[self fH:i*hx :j*hy]);
+                
+                double w = 1.0; // 0 < w <2
+                U[i][j] = w*U[i][j] + (1-w)*Uprev[i][j];
             }
         }
-    }
-    
-//    U[0][j] = (alphax/2/hx)/((bettax-3*alphax)/2/hx) * (U[2][j] = 4*U[1][j]) + phix0(y_j)/(bettax - 3*alphax/2/hx);
-//    U[Nx][j] = (gammax/2/hx)/(deltax + 3*gammax/2/hx) * (4*U[nx-1][j] - U[nx-2][j]) + phixl(y_j)/(deltax + 3*gammax/2/hx);
-//    U[i][0] = (alphay/2/hy)/(bettay - 3*alphay/2/hy) * (U[i][2] - 4*U[i][1]) + phiy0(x_i)/(bettay - 3*alphay/2/hy)
-//    U[i][ny] = (gammay/2/hy)/(deltay + 3*gammay/2/hy) * (4*U[i][ny-1] - U[i][ny-2]) + phiyl(x_i)/(deltay + 3*gammay/2/hy);
-    
-    //relaxation
-//    U[k][i][j] = w*U[p][i][j] + (1-w)*U[k-1][i][j];
-    
-#warning U[last]
-    return U[0];
-}
-
-#pragma mark - elliptic Seidel
--(double ***)elliptic_seidel:(int) K :(int) Nx :(int) Ny :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) hx :(double) hy :(double) alpha :(double) betta :(double) gama :(double) delta{
-    
-    double ***U = (double ***)malloc(K * sizeof(double **));
-    for (int i = 0; i < K; i++){
-        U[i] = (double **)malloc((Nx+1) * sizeof(double *));
-        for (int j = 0; j < Nx+1; j++){
-            U[i][j] = (double *)malloc((Ny+1) * sizeof(double));
-        }
-    }
-    
-    for (int i = 0; i < Nx+1; i++){
-        for (int j = 0; j < Ny+1; j++){
-            U[0][i][j] = 0;
-        }
-    }
-    
-    for (int k = 1; k < K - 1; ++k) {
-        for (int i = 1; i < Nx; ++i) {
-            for (int j = 1; j < Ny; ++j) {
-                U[k][i][j] = (1/(2*hx*hx - c*hx*hx*hy*hy + 2*hy*hy)) * (U[k-1][i+1][j]*hy*hy*(1+bx*hx/2) + U[k][i-1][j]*hy*hy*(1-bx*hx/2) + U[k-1][i][j+1]*hx*hx*(1+by*hy/2) + U[k][i][j-1]*(1-by*hy/2) + hx*hx*hy*hy*[self fH:i*hx :j*hy]);
+        for (int j = 0; j <= Ny; ++j)
+            U[Nx][j] = (alpha2/2/hx)/(betta2 + 3*alpha2/2/hx) * (4*Uprev[Nx-1][j] - Uprev[Nx-2][j]) + [self phi2:(hy * j)]/(betta2 + 3*alpha2/2/hx);
+        for (int i = 0; i <= Nx; ++i)
+            U[i][Ny] = (alpha4/2/hy)/(betta4 + 3*alpha4/2/hy) * (4*Uprev[i][Ny-1] - Uprev[i][Ny-2]) + [self phi4:(hx * i)]/(betta4 + 3*alpha4/2/hy);
+        
+        double cur_eps = 0.0;
+        for (int i = 0; i <= Nx; ++i) {
+            for (int j = 0; j <= Ny; ++j) {
+                cur_eps = MAX(cur_eps, fabs(U[i][j] - Uprev[i][j]));
+                Uprev[i][j] = U[i][j];
             }
         }
+#warning epsilon
+        if(cur_eps < 0.00001)
+            break;
+#warning iters limit
     }
     
     return U;
 }
 
-//#pragma mark - hyperbolic_explicitScheme
-//
-//-(double **)hyperbolic_explicitScheme_TwoPoint_FirstOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau*tau/h*(U[k][i+1] - U[k][i-1]) + U[k][i]*(2*c*tau*tau + 4) + U[k-1][i]*(e*tau -2) + 2*tau*tau*[self fH:i*h :k*tau]);
-//        }
-//        //  двухточечная первого
-//        U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + [self phiH_0:(k+1)*tau]/(betta - alpha/h);
-//        U[k+1][N] = gama/h/(delta + gama/h)*U[k+1][N-1] + [self phiH_l:(k+1)*tau]/(delta + gama/h);
-//    }
-//    
-//    return U;
-//}
-//
-//-(double **)hyperbolic_explicitScheme_TwoPoint_SecondOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau*tau/h*(U[k][i+1] - U[k][i-1]) + U[k][i]*(2*c*tau*tau + 4) + U[k-1][i]*(e*tau -2) + 2*tau*tau*[self fH:i*h :k*tau]);
-//        }
-//        //  Двухточечная второго
-//        U[k+1][0] = (2*h*alpha/tau/tau * U[k][0] - h*alpha/tau/tau*U[k-1][0] + h*e*alpha/2/tau*U[k-1][0] + h*alpha*[self fH:0 :(k+1)*tau] - [self phiH_0:(k+1)*tau]*(2*a-b*h) + 2*a*alpha/h*U[k+1][1]) / (2*a*alpha/h + h*alpha/tau/tau + h*e*alpha/2/tau - c*h*alpha - betta*(2*a-b*h));
-//        U[k+1][N] = (2*h*gama/tau/tau*U[k][N] - h*gama/tau/tau*U[k-1][N] + h*e*gama/2/tau*U[k-1][N] + h*gama*[self fH:N :(k+1)*tau] + [self phiH_l:(k+1)*tau]*(2*a + b*h)  + 2*a*gama/h*U[k+1][N-1]) / (2*a*gama/h + h*gama/tau/tau + h*e*gama/2/tau - c*h*gama + delta*(2*a+b*h));
-//    }
-//    
-//    return U;
-//}
-//
-//
-//-(double **)hyperbolic_explicitScheme_ThreePoint_SecondOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k][i+1] - 2*U[k][i] + U[k][i-1]) + b*tau*tau/h*(U[k][i+1] - U[k][i-1]) + U[k][i]*(2*c*tau*tau + 4) + U[k-1][i]*(e*tau -2) + 2*tau*tau*[self fH:i*h :k*tau]);
-//        }
-//        //  трехточечная второго
-//        U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + [self phiH_0:(k+1)*tau]/(betta - 3*alpha/2/h);
-//        U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + [self phiH_l:(k+1)*tau]/(delta - 3*gama/2/h);
-//    }
-//    
-//    return U;
-//}
-//
-//
-//#pragma mark - hyperbolic_unstableScheme
-//
-//-(double **)hyperbolic_unstableScheme_TwoPoint_FirstOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k-1][i+1]- 2*U[k-1][i] + U[k-1][i-1]) + b*tau*tau/h*(U[k-1][i+1] - U[k-1][i-1]) + U[k-1][i]*(2*c*tau*tau + e*tau - 2) + 4*U[k][i] + 2*tau*tau*[self fH:i*h :(k-1)*tau]);
-//        }
-//        //  двухточечная первого
-//        U[k+1][0] = -alpha/h/(betta - alpha/h)*U[k+1][1]  + [self phiH_0:(k+1)*tau]/(betta - alpha/h);
-//        U[k+1][N] = gama/h/(delta + gama/h)*U[k+1][N-1] + [self phiH_l:(k+1)*tau]/(delta + gama/h);
-//    }
-//    
-//    return U;
-//}
-//
-//-(double **)hyperbolic_unstableScheme_TwoPoint_SecondOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k-1][i+1]- 2*U[k-1][i] + U[k-1][i-1]) + b*tau*tau/h*(U[k-1][i+1] - U[k-1][i-1]) + U[k-1][i]*(2*c*tau*tau + e*tau - 2) + 4*U[k][i] + 2*tau*tau*[self fH:i*h :(k-1)*tau]);
-//        }
-//        //  Двухточечная второго
-//        U[k+1][0] = (2*h*alpha/tau/tau * U[k][0] - h*alpha/tau/tau*U[k-1][0] + h*e*alpha/2/tau*U[k-1][0] + h*alpha*[self fH:0 :(k+1)*tau] - [self phiH_0:(k+1)*tau]*(2*a-b*h) + 2*a*alpha/h*U[k+1][1]) / (2*a*alpha/h + h*alpha/tau/tau + h*e*alpha/2/tau - c*h*alpha - betta*(2*a-b*h));
-//        U[k+1][N] = (2*h*gama/tau/tau*U[k][N] - h*gama/tau/tau*U[k-1][N] + h*e*gama/2/tau*U[k-1][N] + h*gama*[self fH:N :(k+1)*tau] + [self phiH_l:(k+1)*tau]*(2*a + b*h)  + 2*a*gama/h*U[k+1][N-1]) / (2*a*gama/h + h*gama/tau/tau + h*e*gama/2/tau - c*h*gama + delta*(2*a+b*h));
-//    }
-//    
-//    return U;
-//}
-//
-//
-//-(double **)hyperbolic_unstableScheme_ThreePoint_SecondOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            U[k+1][i] = 1/(e*tau+2)*(2*a*tau*tau/h/h*(U[k-1][i+1]- 2*U[k-1][i] + U[k-1][i-1]) + b*tau*tau/h*(U[k-1][i+1] - U[k-1][i-1]) + U[k-1][i]*(2*c*tau*tau + e*tau - 2) + 4*U[k][i] + 2*tau*tau*[self fH:i*h :(k-1)*tau]);
-//        }
-//        //  трехточечная второго
-//        U[k+1][0] = alpha/2/h/(betta - 3*alpha/2/h)*(U[k+1][2] - 4*U[k+1][1]) + [self phiH_0:(k+1)*tau]/(betta - 3*alpha/2/h);
-//        U[k+1][N] = gama/2/h/(delta - 3*gama/2/h)*(4*U[k+1][N-1] - U[k+1][N-2]) + [self phiH_l:(k+1)*tau]/(delta - 3*gama/2/h);
-//    }
-//    
-//    return U;
-//}
-//
-//
-//#pragma mark - hyperbolic_implicitScheme
-//
-//-(double **)hyperbolic_implicitScheme_TwoPoint_FirstOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    double *lower = (double *)malloc((N+1) * sizeof(double));
-//    double *mid = (double *)malloc((N+1) * sizeof(double));
-//    double *upper = (double *)malloc((N+1) * sizeof(double));
-//    double *answer = (double *)malloc((N+1) * sizeof(double));
-//    
-//    memset(lower, 0, (N+1) * sizeof(double));
-//    memset(upper, 0, (N+1) * sizeof(double));
-//    memset(mid, 0, (N+1) * sizeof(double));
-//    memset(answer, 0, (N+1) * sizeof(double));
-//    
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            lower[i] = 2*a*tau*tau/h/h - b*tau*tau/h;
-//            mid[i] = -2 - e*tau - 4*a*tau*tau/h/h + 2*c*tau*tau;
-//            upper[i] = 2*a*tau*tau/h/h + b*tau*tau/h;
-//            answer[i] = -4*U[k][i] + U[k-1][i]*(2-e*tau) - 2*tau*tau*[self fH:i*h :(k+1)*tau];
-//        }
-//        //Двухточечная первого порядка
-//        lower[0] = 0.0;
-//        mid[0] = (betta - alpha/h);
-//        upper[0] = alpha/h;
-//        answer[0] = [self phiH_0:(k+1)*tau];
-//        
-//        lower[N] = -gama/h;
-//        mid[N] = delta + gama/h;
-//        upper[N] = 0.0;
-//        answer[N] = [self phiH_l:(k+1)*tau];
-//        
-//        U[k+1] = processTridiagonalMatrixE(answer, N+1, lower, mid, upper);
-//    }
-//    free(lower);
-//    free(mid);
-//    free(upper);
-//    return U;
-//}
-//
-//-(double **)hyperbolic_implicitScheme_TwoPoint_SecondOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    double *lower = (double *)malloc((N+1) * sizeof(double));
-//    double *mid = (double *)malloc((N+1) * sizeof(double));
-//    double *upper = (double *)malloc((N+1) * sizeof(double));
-//    double *answer = (double *)malloc((N+1) * sizeof(double));
-//    
-//    memset(lower, 0, (N+1) * sizeof(double));
-//    memset(upper, 0, (N+1) * sizeof(double));
-//    memset(mid, 0, (N+1) * sizeof(double));
-//    memset(answer, 0, (N+1) * sizeof(double));
-//    
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            lower[i] = 2*a*tau*tau/h/h - b*tau*tau/h;
-//            mid[i] = -2 - e*tau - 4*a*tau*tau/h/h + 2*c*tau*tau;
-//            upper[i] = 2*a*tau*tau/h/h + b*tau*tau/h;
-//            answer[i] = -4*U[k][i] + U[k-1][i]*(2-e*tau) - 2*tau*tau*[self fH:i*h :(k+1)*tau];
-//        }
-//        //Двухточечная второго порядка
-//        lower[0] = 0.0;
-//        mid[0] = 2*a*alpha/h + h*alpha/tau/tau + h*e*alpha/2/tau - c*h*alpha - betta*(2*a-b*h);
-//        upper[0] = -2*a*alpha/h;
-//        answer[0] = 2*h*alpha/tau/tau * U[k][0] - h*alpha/tau/tau*U[k-1][0] + h*e*alpha/2/tau*U[k-1][0] + h*alpha*[self fH:0 :(k+1)*tau] - [self phiH_0:(k+1)*tau]*(2*a-b*h);
-//        
-//        lower[N] = -2*a*gama/h;
-//        mid[N] = 2*a*gama/h + h*gama/tau/tau + h*e*gama/2/tau - c*h*gama + delta*(2*a+b*h);
-//        upper[N] = 0.0;
-//        answer[N] = 2*h*gama/tau/tau*U[k][N] - h*gama/tau/tau*U[k-1][N] + h*e*gama/2/tau*U[k-1][N] + h*gama*[self fH:N :(k+1)*tau] + [self phiH_l:(k+1)*tau]*(2*a + b*h);
-//        
-//        
-//        U[k+1] = processTridiagonalMatrixE(answer, N+1, lower, mid, upper);
-//    }
-//    free(lower);
-//    free(mid);
-//    free(upper);
-//    return U;
-//}
-//
-//
-//-(double **)hyperbolic_implicitScheme_ThreePoint_SecondOrder:(int) K :(int) N :(double) a :(double) b :(double) c :(double) e :(double) tau :(double) h :(double) alpha :(double) betta :(double) gama :(double) delta{
-//    
-//    double **U = (double **)malloc(K * sizeof(double *));
-//    
-//    double *lower = (double *)malloc((N+1) * sizeof(double));
-//    double *mid = (double *)malloc((N+1) * sizeof(double));
-//    double *upper = (double *)malloc((N+1) * sizeof(double));
-//    double *answer = (double *)malloc((N+1) * sizeof(double));
-//    
-//    memset(lower, 0, (N+1) * sizeof(double));
-//    memset(upper, 0, (N+1) * sizeof(double));
-//    memset(mid, 0, (N+1) * sizeof(double));
-//    memset(answer, 0, (N+1) * sizeof(double));
-//    
-//    
-//    for (int i = 0; i < K; i++)
-//        U[i] = (double *)malloc((N+1) * sizeof(double));
-//    
-//    switch (startApproximation) {
-//        case 0:
-//        {
-//            //Первый порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + tau*[self psiH_2:x_i];
-//            }
-//            break;
-//        }
-//        case 1:
-//        {
-//            //Второй порядок
-//            for (int i = 0; i <= N; ++i){
-//                double x_i = i * h;
-//                U[0][i] = [self psiH_1:x_i];
-//                U[1][i] = [self psiH_1:x_i] + (tau - e*tau*tau/2)*[self psiH_2:x_i] + a*tau*tau/2*[self psiH_1dd:x_i] + b*tau*tau/2*[self psiH_1d:x_i] + c*tau*tau/2*[self psiH_1:x_i] + tau*tau/2*[self fH:x_i :0];
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    for (int k = 1; k < K - 1; ++k) {
-//        for (int i = 1; i < N; ++i) {
-//            lower[i] = 2*a*tau*tau/h/h - b*tau*tau/h;
-//            mid[i] = -2 - e*tau - 4*a*tau*tau/h/h + 2*c*tau*tau;
-//            upper[i] = 2*a*tau*tau/h/h + b*tau*tau/h;
-//            answer[i] = -4*U[k][i] + U[k-1][i]*(2-e*tau) - 2*tau*tau*[self fH:i*h :(k+1)*tau];
-//        }
-//        //Трехточечная второго порядка
-//        lower[0] = 0.0;
-//        mid[0] = (betta - 3*alpha/2/h +lower[1]/upper[1]*alpha/2/h);
-//        upper[0] = 2*alpha/h + mid[1]/upper[1]*alpha/2/h;
-//        answer[0] = [self phiH_0:(k+1)*tau] + answer[1]/upper[1]*alpha/2/h;
-//        
-//        lower[N] = -2*gama/h - mid[N-1]/lower[N-1]*gama/2/h;
-//        mid[N] = delta + 3*gama/2/h - upper[N-1]/lower[N-1]*gama/2/h;
-//        upper[N] = 0.0;
-//        answer[N] = [self phiH_l:(k+1)*tau] - answer[N-1]/lower[N-1]*gama/2/h;
-//        
-//        U[k+1] = processTridiagonalMatrixE(answer, N+1, lower, mid, upper);
-//    }
-//    free(lower);
-//    free(mid);
-//    free(upper);
-//    return U;
-//}
-
+#pragma mark - elliptic Seidel
+-(double **)elliptic_seidel:(int) Nx :(int) Ny :(double) bx :(double) by :(double) c :(double) hx :(double) hy :(double) alpha1 :(double) betta1 :(double) alpha2 :(double) betta2 :(double) alpha3 :(double) betta3 :(double) alpha4 :(double) betta4{
+    
+    double **U = (double **)malloc((Nx +1) * sizeof(double *));
+    for (int i = 0; i < (Nx +1); i++){
+        U[i] = (double *)malloc((Ny+1) * sizeof(double));
+    }
+    
+    double **Uprev = (double **)malloc((Nx +1) * sizeof(double *));
+    for (int i = 0; i < (Nx +1); i++){
+        Uprev[i] = (double *)malloc((Ny+1) * sizeof(double));
+    }
+    
+    for (int i = 0; i < Nx+1; i++){
+        for (int j = 0; j < Ny+1; j++){
+            Uprev[i][j] = 0;
+        }
+    }
+    
+    while (true){
+        for (int j = 0; j <= Ny; ++j)
+            U[0][j] = (alpha1/2/hx)/((betta1-3*alpha1)/2/hx) * (Uprev[2][j] - 4*Uprev[1][j]) + [self phi1:(hy * j)]/(betta1 - 3*alpha1/2/hx);
+        for (int i = 0; i <= Nx; ++i)
+            U[i][0] = (alpha3/2/hy)/(betta3 - 3*alpha3/2/hy) * (Uprev[i][2] - 4*Uprev[i][1]) + [self phi3:(hx * i)]/(betta3 - 3*alpha3/2/hy);
+        
+        for (int i = 1; i < Nx; ++i) {
+            for (int j = 1; j < Ny; ++j) {
+                U[i][j] = (1/(2*hx*hx - c*hx*hx*hy*hy +2*hy*hy)) * (Uprev[i+1][j]*hy*hy*(1 + bx*hx/2) + U[i-1][j]*hy*hy*(1-bx*hx/2) + Uprev[i][j+1]*hx*hx*(1+by*hy/2) + U[i][j-1]*hx*hx*(1 - by*hy/2) + hx*hx*hy*hy*[self fH:i*hx :j*hy]);
+                
+                double w = 1.0;
+                U[i][j] = w*U[i][j] + (1-w)*Uprev[i][j];
+            }
+        }
+        for (int j = 0; j <= Ny; ++j)
+            U[Nx][j] = (alpha2/2/hx)/(betta2 + 3*alpha2/2/hx) * (4*U[Nx-1][j] - U[Nx-2][j]) + [self phi2:(hy * j)]/(betta2 + 3*alpha2/2/hx);
+        for (int i = 0; i <= Nx; ++i)
+            U[i][Ny] = (alpha4/2/hy)/(betta4 + 3*alpha4/2/hy) * (4*U[i][Ny-1] - U[i][Ny-2]) + [self phi4:(hx * i)]/(betta4 + 3*alpha4/2/hy);
+        
+        double cur_eps = 0.0;
+        for (int i = 0; i <= Nx; ++i) {
+            for (int j = 0; j <= Ny; ++j) {
+                cur_eps = MAX(cur_eps, fabs(U[i][j] - Uprev[i][j]));
+                Uprev[i][j] = U[i][j];
+            }
+        }
+#warning epsilon
+        if(cur_eps < 0.00001)
+            break;
+#warning iters limit
+    }
+    return U;
+}
 
 #pragma mark - navigation funcs
 
@@ -821,16 +343,16 @@ double * processTridiagonalMatrixE(double *x, const size_t N, const double *a, c
     }
     
     int K = [KField.text intValue];
-    int Nx = [NField.text intValue];
+    int Nx = 100;//[NField.text intValue];
 #warning Ny!
-    int Ny = [NField.text intValue];
+    int Ny = 100;//[NField.text intValue];
     
     lx = [[lField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
-    double T = [[TField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+//    double T = [[TField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     
-    double tau = T / K;
-    double hx = lx / Nx;
-    double hy = ly / Ny;
+//    double tau = T / K;
+    double hx = 0.015708;//x / Nx;
+    double hy = 0.015708;//ly / Ny;
     
     a = [[aField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     b = [[bField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
@@ -860,8 +382,11 @@ double * processTridiagonalMatrixE(double *x, const size_t N, const double *a, c
     HUD.labelText = @"Идет расчет";
     [HUD show:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        double ***U;
-        
+        double **U;
+//        :(int) Nx :(int) Ny :(double) bx :(double) by :(double) c :(double) hx :(double) hy :(double) alpha1 :(double) betta1 :(double) alpha2 :(double) betta2 :(double) alpha3 :(double) betta3 :(double) alpha4 :(double) betta4{
+
+        U = [self elliptic_liebmann:Nx :Ny :2 :2 :4 :hx :hy :0 :1 :0 :1 :0 :1 :0 :1];
+//        U = [self elliptic_seidel:Nx :Ny :2 :2 :4 :hx :hy :0 :1 :0 :1 :0 :1 :0 :1];
         switch (scheme) {
             case 0:{
                 switch (order) {
@@ -929,32 +454,60 @@ double * processTridiagonalMatrixE(double *x, const size_t N, const double *a, c
         NSMutableDictionary *dataDictAnalytic = [[NSMutableDictionary alloc] init];
         
         
-#warning сейчас строит только для x ( в момент y = 0)
-        for (int i = 0; i < K; ++i) {
+#warning сейчас строит только для x
+        for (int i = 0; i <= Nx; ++i) {
             NSMutableArray *contentArray = [[NSMutableArray alloc] init];
             NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
             
-            for (int j = 0; j <= Nx; ++j) {
-                id xAnalytic = [NSNumber numberWithDouble:(j)*hx];
-                id yAnalytic = [NSNumber numberWithDouble:[self functionH:((j)*hx) withTime:i*tau]];
+            for (int j = 0; j <= Ny; ++j) {
+                id xAnalytic = [NSNumber numberWithDouble:(j)*hy];
+                id yAnalytic = [NSNumber numberWithDouble:[self functionH:((i)*hx) withTime:j*hy]];
                 [contentArrayAnalytic addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:xAnalytic, @"x", yAnalytic, @"y", nil]];
             }
             //epsiHlon[k][n] = max_i(u[k][i] - reshenie[k][i])
             id err = [NSNumber numberWithDouble:0.0];
-            for (int j = 0; j <= Nx; ++j) {
-                id x = [NSNumber numberWithDouble:j*hx];
-                id y = [NSNumber numberWithDouble:U[i][j][0]];
+            for (int j = 0; j <= Ny; ++j) {
+                id x = [NSNumber numberWithDouble:j*hy];
+                id y = [NSNumber numberWithDouble:U[i][j]];
                 
-                err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self functionH:((j)*hx) withTime:i*tau] - U[i][j][0])) ? [err doubleValue] : fabs([self functionH:((j)*hx) withTime:i*tau] - U[i][j][0])];
+                err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self functionH:((i)*hx) withTime:j*hy] - U[i][j])) ? [err doubleValue] : fabs([self functionH:((i)*hx) withTime:j*hy] - U[i][j])];
                 printf("%f	%f\n", [x doubleValue], [y doubleValue]);
                 [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
             }
-            id time = [NSNumber numberWithDouble:i*tau];
+            id time = [NSNumber numberWithDouble:i*hx];
             printf("K = %f\n", [time doubleValue]);
             [dataDict setObject:contentArray forKey:time];
             [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
             [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
         }
+        
+//#warning сейчас строит только для y
+//        for (int i = 0; i <= Ny; ++i) {
+//            NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+//            NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
+//            
+//            for (int j = 0; j <= Nx; ++j) {
+//                id xAnalytic = [NSNumber numberWithDouble:j*hx];
+//                id yAnalytic = [NSNumber numberWithDouble:[self functionH:(j*hx) withTime:i*hy]];
+//                [contentArrayAnalytic addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:xAnalytic, @"x", yAnalytic, @"y", nil]];
+//            }
+//            //epsiHlon[k][n] = max_i(u[k][i] - reshenie[k][i])
+//            id err = [NSNumber numberWithDouble:0.0];
+//            for (int j = 0; j <= Nx; ++j) {
+//                id x = [NSNumber numberWithDouble:j*hx];
+//                id y = [NSNumber numberWithDouble:U[j][i]];
+//                
+//                err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self functionH:(j*hx) withTime:i*hy] - U[j][i])) ? [err doubleValue] : fabs([self functionH:(j*hx) withTime:i*hy] - U[j][i])];
+//                printf("%f	%f\n", [x doubleValue], [y doubleValue]);
+//                [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+//            }
+//            id time = [NSNumber numberWithDouble:i*hy];
+//            printf("K = %f\n", [time doubleValue]);
+//            [dataDict setObject:contentArray forKey:time];
+//            [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
+//            [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
+//        }
+
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [HUD hide:YES];
             [UIView animateWithDuration:0.3 animations:^{
