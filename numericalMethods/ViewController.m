@@ -889,6 +889,7 @@ double * processTridiagonalMatrix(double *x, const size_t N, const double *a, co
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string  {
+    string = [string lowercaseString];
     NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:ALPHABET] invertedSet];
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
     return (([string isEqualToString:filtered]));

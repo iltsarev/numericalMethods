@@ -9,7 +9,7 @@
 #import "hyperbolicViewController.h"
 #import "CorePlotViewController.h"
 
-#define ALPHABET2 @"qwertyuiopasdfghjklzxcvbnm1234567890-+*/()$"
+#define ALPHABET2 @"qwertyuiopasdfghjklzxcvbnm1234567890-+*/()$."
 
 
 double a,b,c,e,alpha,betta,gama,delta,l;
@@ -1249,6 +1249,7 @@ double * processTridiagonalMatrixH(double *x, const size_t N, const double *a, c
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string  {
+    string = [string lowercaseString];
     NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:ALPHABET2] invertedSet];
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
     return (([string isEqualToString:filtered]));
