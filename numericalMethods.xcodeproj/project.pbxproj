@@ -59,6 +59,7 @@
 		52F73A5B18045A0400ED8BF7 /* UIPIckerViewOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5A18045A0400ED8BF7 /* UIPIckerViewOrder.m */; };
 		52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */; };
 		6D49ECEEBAC940DDB1EC75BD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B617F598F7D4D9B8709E27B /* libPods.a */; };
+		D0B8630D185094D100DB39FA /* parabol2DViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B8630C185094D100DB39FA /* parabol2DViewController.m */; };
 		FA10106918051F500095F25F /* CorePlotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA10106718051F500095F25F /* CorePlotViewController.m */; };
 		FA10106A18051F500095F25F /* CorePlotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA10106818051F500095F25F /* CorePlotViewController.xib */; };
 		FA1E13DD1805C97F008FC47E /* CPViewControllerErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1E13DA1805C97F008FC47E /* CPViewControllerErrors.m */; };
@@ -168,6 +169,8 @@
 		52F73A5C18045A1600ED8BF7 /* UIPickerViewScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPickerViewScheme.h; sourceTree = "<group>"; };
 		52F73A5D18045A1600ED8BF7 /* UIPickerViewScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewScheme.m; sourceTree = "<group>"; };
 		5B617F598F7D4D9B8709E27B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0B8630B185094D100DB39FA /* parabol2DViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parabol2DViewController.h; sourceTree = "<group>"; };
+		D0B8630C185094D100DB39FA /* parabol2DViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = parabol2DViewController.m; sourceTree = "<group>"; };
 		DBD3B744B0DB421DA1A48671 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FA10106618051F500095F25F /* CorePlotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorePlotViewController.h; sourceTree = "<group>"; };
 		FA10106718051F500095F25F /* CorePlotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CorePlotViewController.m; sourceTree = "<group>"; };
@@ -351,6 +354,8 @@
 				52AC65E618267E0A00695865 /* hyperbolicViewController.m */,
 				52F045791840E3D5000FCFD6 /* ellipticViewController.h */,
 				52F0457A1840E3D5000FCFD6 /* ellipticViewController.m */,
+				D0B8630B185094D100DB39FA /* parabol2DViewController.h */,
+				D0B8630C185094D100DB39FA /* parabol2DViewController.m */,
 			);
 			name = Methods;
 			sourceTree = "<group>";
@@ -545,6 +550,7 @@
 				52367CC017FC329100C1DA60 /* AppDelegate.m in Sources */,
 				52857EF21831705100C9C091 /* _DDNumberExpression.m in Sources */,
 				52857EEF1831705100C9C091 /* _DDFunctionTerm.m in Sources */,
+				D0B8630D185094D100DB39FA /* parabol2DViewController.m in Sources */,
 				52AC65EA1826867A00695865 /* startViewController.m in Sources */,
 				52857EED1831705100C9C091 /* _DDFunctionContainer.m in Sources */,
 				52F73A5E18045A1600ED8BF7 /* UIPickerViewScheme.m in Sources */,
