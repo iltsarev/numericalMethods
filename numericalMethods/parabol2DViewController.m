@@ -13,7 +13,7 @@
 #define ALPHABET3 @"qwertyuiopasdfghjklzxcvbnm1234567890-+*/()$"
 
 
-double bx,by,c,alpha1,alpha2,alpha3,alpha4,betta1,betta2,betta3,betta4,l,lx,ly, epsilon;
+double a,b,c,alpha1,alpha2,alpha3,alpha4,betta1,betta2,betta3,betta4,l,lx,ly;
 long startApproximation;
 
 @interface parabol2DViewController ()
@@ -51,59 +51,63 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
 
 #pragma mark - init funcs
 - (double)analyticFunction:(double)x y:(double)y t:(double) t{
-    return sin(x)*sin(y)*sin(t);
-    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:y], [NSNumber numberWithDouble:bx], [NSNumber numberWithDouble:by], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"y", @"bx", @"by", @"c"];
+//    return sin(x)*sin(y)*sin(t);
+    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:y], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"x", @"y", @"t", @"a", @"b", @"c"];
     
     NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     return [[expressionRealFunc evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
 -(double) f:(double) x y:(double) y t:(double) t{
-    return sin(x)*sin(y)*(cos(t) + 2*sin(t));
-    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:y], [NSNumber numberWithDouble:bx], [NSNumber numberWithDouble:by], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"y", @"bx", @"by", @"c"];
+//    return sin(x)*sin(y)*(cos(t) + 2*sin(t));
+    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:y], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"x", @"y", @"t", @"a", @"b", @"c"];
     
     NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     return [[expressionF evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
 -(double) psi:(double) x y:(double)y{
-    return 0;
+    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:y], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"x", @"y", @"a", @"b", @"c"];
+    
+    NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
+    return [[expressionPsi evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
 
 -(double) phi1:(double) y t:(double) t{
-    return 0;
-    NSArray *values = @[[NSNumber numberWithDouble:y], [NSNumber numberWithDouble:bx], [NSNumber numberWithDouble:by], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"y", @"bx", @"by", @"c"];
+    //return 0;
+    NSArray *values = @[[NSNumber numberWithDouble:y], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"y", @"t", @"a", @"b", @"c"];
     
     NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     return [[expressionPhi1 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
 -(double) phi2:(double) y t:(double) t{
-    return -sin(y)*sin(t);
-    NSArray *values = @[[NSNumber numberWithDouble:y], [NSNumber numberWithDouble:bx], [NSNumber numberWithDouble:by], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"y", @"bx", @"by", @"c"];
+//    return -sin(y)*sin(t);
+    NSArray *values = @[[NSNumber numberWithDouble:y], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"y", @"t", @"a", @"b", @"c"];
     
     NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     return [[expressionPhi2 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
 -(double) phi3:(double) x t:(double) t{
-    return 0;
-    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:bx], [NSNumber numberWithDouble:by], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"bx", @"by", @"c"];
+//    return 0;
+    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"x", @"t", @"a", @"b", @"c"];
     
     NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     return [[expressionPhi3 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
 }
 
 -(double) phi4:(double) x t:(double) t{
-    return -sin(x)*sin(t);
-    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:bx], [NSNumber numberWithDouble:by], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"bx", @"by", @"c"];
+//    return -sin(x)*sin(t);
+    NSArray *values = @[[NSNumber numberWithDouble:x], [NSNumber numberWithDouble:t], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"x", @"t", @"a", @"b", @"c"];
     
     NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     return [[expressionPhi4 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] doubleValue];
@@ -351,6 +355,26 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
 }
 
 -(void)nextScreen:(id)sender{
+    
+//    for (int i = 0; i <= [NxField text].intValue; ++i){
+//        NSNumber *item = [[NSNumber alloc] initWithDouble:i * ([[lxField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue] / [NxField.text intValue])];
+//        [_fixedXArray addObject:item];
+//    }
+//    for (int i = 0; i <= [NyField text].intValue; ++i){
+//        NSNumber *item = [[NSNumber alloc] initWithDouble:i * ([[lyField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue] / [NyField.text intValue])];
+//        [_fixedYArray addObject:item];
+//    }
+    for (int i = 0; i <= [KField text].intValue; ++i){
+        NSNumber *item = [[NSNumber alloc] initWithDouble:i * ([TField text].doubleValue /  [KField text].doubleValue)];
+        [_fixedTArray addObject:item];
+    }
+    
+    fixedVariablePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(100, 280, 100, 100)];
+    fixedVariablePicker.showsSelectionIndicator = YES;
+    fixedVariablePicker.delegate = self;
+    [bg2 addSubview:fixedVariablePicker];
+
+    
     [UIView animateWithDuration:0.3 animations:^{
         CGRect frame = bg2.frame;
         frame.origin.x = 0;
@@ -363,6 +387,11 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
         CGRect frame = bg2.frame;
         frame.origin.x = 330;
         bg2.frame = frame;
+    } completion:^(BOOL finished) {
+        [fixedVariablePicker removeFromSuperview];
+//        [_fixedXArray removeAllObjects];
+//        [_fixedYArray removeAllObjects];
+        [_fixedTArray removeAllObjects];
     }];
 }
 
@@ -401,6 +430,8 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     NSString* phi3 = [self proceedString:Phi3Field.text];
     NSString* phi4 = [self proceedString:Phi4Field.text];
     NSString* f = [self proceedString:FField.text];
+    NSString* psi = [self proceedString:PsiField.text];
+
     
     expressionRealFunc = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:realFunc error:&error] error:&error] parsedExpressionWithError:&error];
     expressionPhi1 = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phi1 error:&error] error:&error] parsedExpressionWithError:&error];
@@ -408,14 +439,15 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     expressionPhi3 = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phi3 error:&error] error:&error] parsedExpressionWithError:&error];
     expressionPhi4 = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:phi4 error:&error] error:&error] parsedExpressionWithError:&error];
     expressionF = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:f error:&error] error:&error] parsedExpressionWithError:&error];
+    expressionPsi = [[DDParser parserWithTokenizer:[DDMathStringTokenizer tokenizerWithString:psi error:&error] error:&error] parsedExpressionWithError:&error];
     
-    NSArray *values = @[[NSNumber numberWithDouble:1], [NSNumber numberWithDouble:1], [NSNumber numberWithDouble:bx], [NSNumber numberWithDouble:by], [NSNumber numberWithDouble:c]];
-    NSArray *keys = @[@"x", @"y", @"bx", @"by", @"c"];
+    NSArray *values = @[[NSNumber numberWithDouble:1], [NSNumber numberWithDouble:1], [NSNumber numberWithDouble:1], [NSNumber numberWithDouble:a], [NSNumber numberWithDouble:b], [NSNumber numberWithDouble:c]];
+    NSArray *keys = @[@"x", @"y", @"t", @"a", @"b", @"c"];
     NSDictionary *variableSubstitutions = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     
     if ([expressionF evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] == nil) {
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"Ошибка! Функция f(x,y).";
+        HUD.labelText = @"Ошибка! Функция f(x,y,t).";
         HUD.detailsLabelText =  @"Невозможно распознать функцию.";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
@@ -423,7 +455,7 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     }
     if ([expressionPhi1 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] == nil) {
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"Ошибка! Функция φ1(y).";
+        HUD.labelText = @"Ошибка! Функция φ1(y,t).";
         HUD.detailsLabelText =  @"Невозможно распознать функцию.";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
@@ -431,7 +463,7 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     }
     if ([expressionPhi2 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] == nil) {
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"Ошибка! Функция φ2(y).";
+        HUD.labelText = @"Ошибка! Функция φ2(y,t).";
         HUD.detailsLabelText =  @"Невозможно распознать функцию.";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
@@ -439,7 +471,7 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     }
     if ([expressionPhi3 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] == nil) {
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"Ошибка! Функция φ3(x).";
+        HUD.labelText = @"Ошибка! Функция φ3(x,t).";
         HUD.detailsLabelText =  @"Невозможно распознать функцию.";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
@@ -448,35 +480,43 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     
     if ([expressionPhi4 evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] == nil) {
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"Ошибка! Функция φ4(x).";
+        HUD.labelText = @"Ошибка! Функция φ4(x,t).";
         HUD.detailsLabelText =  @"Невозможно распознать функцию.";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
         return;
     }
-    
+    if ([expressionPsi evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] == nil) {
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = @"Ошибка! Функция ψ(x,y).";
+        HUD.detailsLabelText =  @"Невозможно распознать функцию.";
+        [HUD show:YES];
+        [HUD hide:YES afterDelay:3];
+        return;
+    }
+
     if ([expressionRealFunc evaluateWithSubstitutions:variableSubstitutions evaluator:evaluator error:nil] == nil) {
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"Ошибка! Функция U(x,t).";
+        HUD.labelText = @"Ошибка! Функция U(x,y,t).";
         HUD.detailsLabelText =  @"Невозможно распознать функцию.";
         [HUD show:YES];
         [HUD hide:YES afterDelay:3];
         return;
     }
     
-    int Nx = 10;//[NxField.text intValue];
-    int Ny = 10;//[NyField.text intValue];
-    int K = 100;
-    double T = 1.0;
-    lx = 3.14;//[[lxField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
-    ly = 3.14;//[[lxField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    int Nx = [NxField.text intValue];
+    int Ny = [NyField.text intValue];
+    int K = [KField.text intValue];
+    double T = [TField.text doubleValue];
+    lx = [[lxField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    ly = [[lyField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     
     double hx = lx / Nx;
     double hy = ly / Ny;
     double tau = T / K;
     
-    bx = [[bxField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
-    by = [[byField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    a = [[aField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
+    b = [[bField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     c = [[cField.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     alpha1 = [[alpha1Field.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     betta1 = [[betta1Field.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
@@ -486,22 +526,21 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     betta3 = [[betta3Field.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     alpha4 = [[alpha4Field.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
     betta4 = [[betta4Field.text stringByReplacingOccurrencesOfString:@"," withString:@"."] doubleValue];
-    long scheme = [schemePicker selectedRowInComponent:0]; // 0 -- либмана, 1 -- зейделя
-    long variable = [variablePicker selectedRowInComponent:0];   // 0 -- X, 1 -- Y
+    long scheme = [schemePicker selectedRowInComponent:0]; // 0 -- дробных шагов, 1 -- переменных направлений
+    long variable = [variablePicker selectedRowInComponent:0];   // 0 --  T, 1 -- X, 2 -- Y
     
     HUD.mode = MBProgressHUDAnimationFade;
     HUD.labelText = @"Идет расчет";
     [HUD show:YES];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         double ***U;
-//        U = [self fractional_step_method:Nx Ny:Ny K:K tau:tau a:1.0 b:1.0 hx:hx hy:hy alpha1:0 betta1:1 alpha2:1 betta2:0 alpha3:0 betta3:1 alpha4:1 betta4:0];
-        U = [self alternating_direction_method:Nx Ny:Ny K:K tau:tau a:1.0 b:1.0 hx:hx hy:hy alpha1:0 betta1:1 alpha2:1 betta2:0 alpha3:0 betta3:1 alpha4:1 betta4:0];
         switch (scheme) {
             case 0:{
+                U = [self fractional_step_method:Nx Ny:Ny K:K tau:tau a:a b:b hx:hx hy:hy alpha1:alpha1 betta1:betta1 alpha2:alpha2 betta2:betta2 alpha3:alpha3 betta3:betta3 alpha4:alpha4 betta4:betta4];
                 break;
             }
             case 1:{
-
+                U = [self alternating_direction_method:Nx Ny:Ny K:K tau:tau a:a b:b hx:hx hy:hy alpha1:alpha1 betta1:betta1 alpha2:alpha2 betta2:betta2 alpha3:alpha3 betta3:betta3 alpha4:alpha4 betta4:betta4];
                 break;
             }
             default:
@@ -512,10 +551,9 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
         NSMutableArray *contentArrayErr;
         NSMutableDictionary *dataDictAnalytic;
         
-        int TIME = K;
-        
         switch (variable) {
             case 0:{
+                int TIME = (int)(_fixedT / tau);
                 dataDict = [[NSMutableDictionary alloc] initWithCapacity:Nx];
                 contentArrayErr = [[NSMutableArray alloc] init];
                 dataDictAnalytic = [[NSMutableDictionary alloc] init];
@@ -546,38 +584,72 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
                 }
                 break;
             }
-//            case 1:{
-//                dataDict = [[NSMutableDictionary alloc] initWithCapacity:Ny];
+            case 1:{
+                int TIME = (int)(_fixedT / tau);
+                dataDict = [[NSMutableDictionary alloc] initWithCapacity:Ny];
+                contentArrayErr = [[NSMutableArray alloc] init];
+                dataDictAnalytic = [[NSMutableDictionary alloc] init];
+                for (int i = 0; i <= Ny; ++i) {
+                    NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+                    NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
+                    
+                    for (int j = 0; j <= Nx; ++j) {
+                        id xAnalytic = [NSNumber numberWithDouble:j*hx];
+                        id yAnalytic = [NSNumber numberWithDouble:[self analyticFunction:(j*hx) y:i*hy t:TIME*tau]];
+                        [contentArrayAnalytic addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:xAnalytic, @"x", yAnalytic, @"y", nil]];
+                    }
+                    //epsiHlon[k][n] = max_i(u[k][i] - reshenie[k][i])
+                    id err = [NSNumber numberWithDouble:0.0];
+                    for (int j = 0; j <= Nx; ++j) {
+                        id x = [NSNumber numberWithDouble:j*hx];
+                        id y = [NSNumber numberWithDouble:U[TIME][j][i]];
+                        
+                        err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self analyticFunction:(j*hx) y:i*hy t:TIME*tau] - U[TIME][j][i])) ? [err doubleValue] : fabs([self analyticFunction:(j*hx) y:i*hy t:TIME*tau] - U[TIME][j][i])];
+                        printf("%f	%f\n", [x doubleValue], [y doubleValue]);
+                        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+                    }
+                    id time = [NSNumber numberWithDouble:i*hy];
+                    printf("K = %f\n", [time doubleValue]);
+                    [dataDict setObject:contentArray forKey:time];
+                    [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
+                    [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
+                }
+//            case 2:{
+//                int X = (int)(_fixedX / (lx / [[NxField text] doubleValue]));
+//                int Y = (int)(_fixedY / (ly / [[NyField text] doubleValue]));
+//
+//                dataDict = [[NSMutableDictionary alloc] initWithCapacity:K];
 //                contentArrayErr = [[NSMutableArray alloc] init];
 //                dataDictAnalytic = [[NSMutableDictionary alloc] init];
-//                for (int i = 0; i <= Ny; ++i) {
+//                
+//                for (int i = 0; i <= K; ++i) {
 //                    NSMutableArray *contentArray = [[NSMutableArray alloc] init];
 //                    NSMutableArray *contentArrayAnalytic = [[NSMutableArray alloc] init];
 //                    
-//                    for (int j = 0; j <= Nx; ++j) {
-//                        id xAnalytic = [NSNumber numberWithDouble:j*hx];
-//                        id yAnalytic = [NSNumber numberWithDouble:[self analyticFunction:(j*hx) y:i*hy]];
+//                    for (int j = 0; j <= K; ++j) {
+//                        id xAnalytic = [NSNumber numberWithDouble:_fixedX];
+//                        id yAnalytic = [NSNumber numberWithDouble:[self analyticFunction:_fixedX y:_fixedY t:j*tau]];
 //                        [contentArrayAnalytic addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:xAnalytic, @"x", yAnalytic, @"y", nil]];
 //                    }
-//                    //epsiHlon[k][n] = max_i(u[k][i] - reshenie[k][i])
 //                    id err = [NSNumber numberWithDouble:0.0];
-//                    for (int j = 0; j <= Nx; ++j) {
-//                        id x = [NSNumber numberWithDouble:j*hx];
-//                        id y = [NSNumber numberWithDouble:U[j][i]];
+//                    for (int j = 0; j <= K; ++j) {
+//                        id x = [NSNumber numberWithDouble:_fixedX];
+//                        id y = [NSNumber numberWithDouble:U[j][X][Y]];
 //                        
-//                        err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self analyticFunction:(j*hx) y:i*hy] - U[j][i])) ? [err doubleValue] : fabs([self analyticFunction:(j*hx) y:i*hy] - U[j][i])];
-//                        printf("%f	%f\n", [x doubleValue], [y doubleValue]);
+//                        err = [NSNumber numberWithDouble:([err doubleValue] > fabs([self analyticFunction:_fixedX y:_fixedY t:j*tau] - U[j][X][Y])) ? [err doubleValue] : fabs([self analyticFunction:_fixedX y:_fixedY t:j*tau] - U[j][X][Y])];
+//                        printf("%f	%f - %f\n", [x doubleValue], [y doubleValue], [self analyticFunction:_fixedX y:_fixedY t:j*tau]);
 //                        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
 //                    }
-//                    id time = [NSNumber numberWithDouble:i*hy];
+//                    id time = [NSNumber numberWithDouble:i*tau];
 //                    printf("K = %f\n", [time doubleValue]);
 //                    [dataDict setObject:contentArray forKey:time];
 //                    [dataDictAnalytic setObject:contentArrayAnalytic forKey:time];
 //                    [contentArrayErr addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:time, @"x", err, @"y", nil]];
 //                }
-//                
 //                break;
 //            }
+                break;
+            }
             default:
                 break;
         }
@@ -600,18 +672,40 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     if (bg1.frame.origin.x > 0){
         [UIView animateWithDuration:0.3 animations:^{
             if(self.view.frame.size.height < 500)
-                scrollBg.contentOffset = CGPointMake(0, 130);
+                scrollBg.contentOffset = CGPointMake(0, 170);
             else
-                scrollBg.contentOffset = CGPointMake(0, 30);
+                scrollBg.contentOffset = CGPointMake(0, 70);
         }];
     }
+    else if (bg2.frame.origin.x == 0){
+        [UIView animateWithDuration:0.3 animations:^{
+            if(self.view.frame.size.height < 500){
+                CGRect frame = bg2.frame;
+                frame.origin.y -= 190;
+                bg2.frame = frame;
+            }
+            else{
+                CGRect frame = bg2.frame;
+                frame.origin.y -= 90;
+                bg2.frame = frame;
+            }
+        }];
+    }
+
 }
 
 -(void)keyboardHidden:(NSNotification *)note{
-    [UIView animateWithDuration:0.3 animations:^{
-        scrollBg.contentOffset = CGPointMake(0, 0);
-        
-    }];
+    if (bg1.frame.origin.x > 0){
+        [UIView animateWithDuration:0.3 animations:^{
+            scrollBg.contentOffset = CGPointMake(0, 0);
+        }];
+    }else if (bg2.frame.origin.x == 0){
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = bg2.frame;
+            frame.origin.y = 22;
+            bg2.frame = frame;
+        }];
+    }
 }
 
 #pragma mark - viewController delegate
@@ -619,8 +713,12 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
 {
     [super viewDidLoad];
     
-    system = [[UIImageView alloc] initWithFrame:CGRectMake(36, 22, 248, 134)];
-    system.image = [UIImage imageNamed:@"NM_sys3.png"];
+    _fixedXArray = [[NSMutableArray alloc] init];
+    _fixedYArray = [[NSMutableArray alloc] init];
+    _fixedTArray = [[NSMutableArray alloc] init];
+    
+    system = [[UIImageView alloc] initWithFrame:CGRectMake(63, 22, 194, 134)];
+    system.image = [UIImage imageNamed:@"NM_sys4.png"];
     [self.view addSubview:system];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -652,45 +750,38 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     [scrollBg addSubview:bg];
     
     UILabel *bxLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 35, 20)];
-    bxLabel.text = @"bx =";
+    bxLabel.text = @"a =";
     [bg addSubview:bxLabel];
-    bxField = [[NMFTextField alloc] initWithFrame:CGRectMake(55, 12, 50, 20)];
-    bxField.text = @"2";
-    [bg addSubview:bxField];
+    aField = [[NMFTextField alloc] initWithFrame:CGRectMake(55, 12, 50, 20)];
+    aField.text = @"1";
+    [bg addSubview:aField];
     
     UILabel *byLabel = [[UILabel alloc] initWithFrame:CGRectMake(130, 10, 35, 20)];
-    byLabel.text = @"by =";
+    byLabel.text = @"b =";
     [bg addSubview:byLabel];
-    byField = [[NMFTextField alloc] initWithFrame:CGRectMake(165, 12, 50, 20)];
-    byField.text = @"2";
-    [bg addSubview:byField];
+    bField = [[NMFTextField alloc] initWithFrame:CGRectMake(165, 12, 50, 20)];
+    bField.text = @"1";
+    [bg addSubview:bField];
     
     UILabel *cLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 10, 30, 20)];
     cLabel.text = @"c =";
     [bg addSubview:cLabel];
     cField = [[NMFTextField alloc] initWithFrame:CGRectMake(250, 12, 50, 20)];
-    cField.text = @"4";
+    cField.text = @"0";
     [bg addSubview:cField];
-    
-    UILabel *eLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 43, 20)];
-    eLabel.text = @"eps =";
-    [bg addSubview:eLabel];
-    epsilonField = [[NMFTextField alloc] initWithFrame:CGRectMake(63, 32, 50, 20)];
-    epsilonField.text = @"0.0001";
-    [bg addSubview:epsilonField];
     
     UILabel *lxLabel = [[UILabel alloc] initWithFrame:CGRectMake(130, 30, 30, 20)];
     lxLabel.text = @"lx =";
     [bg addSubview:lxLabel];
     lxField = [[NMFTextField alloc] initWithFrame:CGRectMake(160, 32, 50, 20)];
-    lxField.text = @"1.57";
+    lxField.text = @"3.14";
     [bg addSubview:lxField];
     
     UILabel *lyLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 30, 30, 20)];
     lyLabel.text = @"ly =";
     [bg addSubview:lyLabel];
     lyField = [[NMFTextField alloc] initWithFrame:CGRectMake(250, 32, 50, 20)];
-    lyField.text = @"1.57";
+    lyField.text = @"3.14";
     [bg addSubview:lyField];
     
     UILabel *alpha1Label = [[UILabel alloc] initWithFrame:CGRectMake(20, 60, 60, 20)];
@@ -711,14 +802,14 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     alpha2Label.text = @"α2 =";
     [bg addSubview:alpha2Label];
     alpha2Field = [[NMFTextField alloc] initWithFrame:CGRectMake(80, 82, 50, 20)];
-    alpha2Field.text = @"0";
+    alpha2Field.text = @"1";
     [bg addSubview:alpha2Field];
     
     UILabel *betta2Label = [[UILabel alloc] initWithFrame:CGRectMake(150, 80, 60, 20)];
     betta2Label.text = @"β2 =";
     [bg addSubview:betta2Label];
     betta2Field = [[NMFTextField alloc] initWithFrame:CGRectMake(210, 82, 50, 20)];
-    betta2Field.text = @"1";
+    betta2Field.text = @"0";
     [bg addSubview:betta2Field];
     
     UILabel *alpha3Label = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, 60, 20)];
@@ -739,14 +830,14 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     alpha4Label.text = @"α4 =";
     [bg addSubview:alpha4Label];
     alpha4Field = [[NMFTextField alloc] initWithFrame:CGRectMake(80, 122, 50, 20)];
-    alpha4Field.text = @"0";
+    alpha4Field.text = @"1";
     [bg addSubview:alpha4Field];
     
     UILabel *betta4Label = [[UILabel alloc] initWithFrame:CGRectMake(150, 120, 60, 20)];
     betta4Label.text = @"β4 =";
     [bg addSubview:betta4Label];
     betta4Field = [[NMFTextField alloc] initWithFrame:CGRectMake(210, 122, 50, 20)];
-    betta4Field.text = @"1";
+    betta4Field.text = @"0";
     [bg addSubview:betta4Field];
     
     UILabel *NXLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 150, 230, 20)];
@@ -762,6 +853,20 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     NyField = [[NMFTextField alloc] initWithFrame:CGRectMake(250, 170, 50, 20)];
     NyField.text = @"10";
     [bg addSubview:NyField];
+    
+    UILabel *KLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 190, 230, 20)];
+    KLabel.text = @"Разбиений по времени:";
+    [bg addSubview:KLabel];
+    KField = [[NMFTextField alloc] initWithFrame:CGRectMake(250, 190, 50, 20)];
+    KField.text = @"100";
+    [bg addSubview:KField];
+    
+    UILabel *TLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 210, 230, 20)];
+    TLabel.text = @"Финальное время T:";
+    [bg addSubview:TLabel];
+    TField = [[NMFTextField alloc] initWithFrame:CGRectMake(250, 210, 50, 20)];
+    TField.text = @"1";
+    [bg addSubview:TField];
     
     UIButton *next;
     
@@ -829,55 +934,64 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     [bg1 addSubview:backFuncs];
     
     UILabel *FLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 80, 20)];
-    FLabel.text = @"f(x,y) =";
+    FLabel.text = @"f(x,y,t) =";
     [bg1 addSubview:FLabel];
     FField = [[UITextField alloc] initWithFrame:CGRectMake(84, 12, 230, 20)];
-    FField.text = @"0";
+    FField.text = @"sin(x)*sin(y)*(cos(t) + 2*sin(t))";
     FField.delegate = self;
     [bg1 addSubview:FField];
     
     UILabel *Phi1Label = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 80, 20)];
-    Phi1Label.text = @"φ1(y) =";
+    Phi1Label.text = @"φ1(y,t) =";
     [bg1 addSubview:Phi1Label];
     Phi1Field = [[UITextField alloc] initWithFrame:CGRectMake(84, 32, 230, 20)];
-    Phi1Field.text = @"exp(-y)*cos(y)";
+    Phi1Field.text = @"0";
     Phi1Field.delegate = self;
     [bg1 addSubview:Phi1Field];
     
     UILabel *Phi2Label = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, 80, 20)];
-    Phi2Label.text = @"φ2(y) =";
+    Phi2Label.text = @"φ2(y,t) =";
     [bg1 addSubview:Phi2Label];
     Phi2Field = [[UITextField alloc] initWithFrame:CGRectMake(84, 52, 230, 20)];
-    Phi2Field.text = @"0";
+    Phi2Field.text = @"-sin(y)*sin(t)";
     Phi2Field.delegate = self;
     [bg1 addSubview:Phi2Field];
     
     UILabel *Phi3Label = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, 80, 20)];
-    Phi3Label.text = @"φ3(x) =";
+    Phi3Label.text = @"φ3(x,t) =";
     [bg1 addSubview:Phi3Label];
     Phi3Field = [[UITextField alloc] initWithFrame:CGRectMake(84, 72, 230, 20)];
-    Phi3Field.text = @"exp(-x)*cos(x)";
+    Phi3Field.text = @"0";
     Phi3Field.delegate = self;
     [bg1 addSubview:Phi3Field];
     
     UILabel *Phi4Label = [[UILabel alloc] initWithFrame:CGRectMake(10, 90, 80, 20)];
-    Phi4Label.text = @"φ4(x) =";
+    Phi4Label.text = @"φ4(x,t) =";
     [bg1 addSubview:Phi4Label];
     Phi4Field = [[UITextField alloc] initWithFrame:CGRectMake(84, 92, 230, 20)];
-    Phi4Field.text = @"0";
+    Phi4Field.text = @"-sin(x)*sin(t)";
     Phi4Field.delegate = self;
     [bg1 addSubview:Phi4Field];
     
+    UILabel *PsiLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 110, 80, 20)];
+    PsiLabel.text = @"ψ(x,y) =";
+    [bg1 addSubview:PsiLabel];
+    PsiField = [[UITextField alloc] initWithFrame:CGRectMake(84, 112, 230, 20)];
+    PsiField.text = @"0";
+    PsiField.delegate = self;
+    [bg1 addSubview:PsiField];
+
+    
     UILabel *ULabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 160, 80, 20)];
-    ULabel.text = @"U(x,t) =";
+    ULabel.text = @"U(x,y,t) =";
     [bg1 addSubview:ULabel];
     UField = [[UITextField alloc] initWithFrame:CGRectMake(84, 162, 230, 20)];
-    UField.text = @"exp(-x-y)cos(x)cos(y)";
+    UField.text = @"sin(x)*sin(y)*sin(t)";
     UField.delegate = self;
     [bg1 addSubview:UField];
     
     //bg 2
-    bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 160, 320, self.view.frame.size.height - 180)];
+    bg2 = [[UIView alloc] initWithFrame:CGRectMake(330, 22, 320, self.view.frame.size.height - 42)];
     bg2.backgroundColor = [UIColor colorWithRed:136./255. green:135./255. blue:148./255. alpha:1.0];
     
     CALayer * imgLayer2 = bg2.layer;
@@ -892,28 +1006,34 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     [self.view addSubview:bg2];
     
     UILabel *order = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 320, 15)];
-    order.text = @"Схема:";
+    order.text = @"Метод:";
     order.textAlignment = NSTextAlignmentCenter;
     
     UILabel *scheme = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, 320, 15)];
-    scheme.text = @"Зафиксировать:";
+    scheme.text = @"Варировать:";
     scheme.textAlignment = NSTextAlignmentCenter;
     
-    schemePicker = [[UiPickerViewSchemeElliptic alloc] initWithFrame:CGRectMake(0, 10, 320, 60)];
-    variablePicker = [[UIPickerViewVariableElliptic alloc] initWithFrame:CGRectMake(0, 160, 320, 60)];
+    schemePicker = [[UIPickerViewSchemeParabolic2d alloc] initWithFrame:CGRectMake(0, 10, 320, 60)];
+    variablePicker = [[UIPickerViewVariableParabolic2d alloc] initWithFrame:CGRectMake(0, 160, 320, 60)];
     
     [bg2 addSubview:order];
     [bg2 addSubview:scheme];
     [bg2 addSubview:variablePicker];
     [bg2 addSubview:schemePicker];
     
+    UILabel *fixedTLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 350, 50, 20)];
+    fixedTLabel.text = @"T:";
+    fixedTLabel.textAlignment = NSTextAlignmentCenter;
+    [bg2 addSubview:fixedTLabel];
+    
+    
     UIButton *nextButton;
     
     if ([[UIScreen mainScreen] bounds].size.height < 500) {
-        nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 260, 60, 40)];
+        nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 390, 60, 40)];
     }
     else {
-        nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 320, 60, 40)];
+        nextButton = [[UIButton alloc] initWithFrame:CGRectMake(230, 450, 60, 40)];
     }
     
     
@@ -927,10 +1047,10 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     
     UIButton *backButton;
     if ([[UIScreen mainScreen] bounds].size.height < 500) {
-        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 260, 60, 40)];
+        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 390, 60, 40)];
     }
     else {
-        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 320, 60, 40)];
+        backButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 450, 60, 40)];
     }
     
     UILabel *blab3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
@@ -957,6 +1077,86 @@ double * processTridiagonalMatrixP(double *x, const size_t N, const double *a, c
     NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:ALPHABET3] invertedSet];
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
     return (([string isEqualToString:filtered]));
+}
+
+#pragma mark - picker
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
+    _fixedT = [[_fixedTArray objectAtIndex:row] doubleValue];
+
+//    switch (component) {
+//        case 0:{
+//            _fixedX = [[_fixedXArray objectAtIndex:row] doubleValue];
+//            break;
+//        }
+//        case 1:{
+//            _fixedY = [[_fixedYArray objectAtIndex:row] doubleValue];
+//            break;
+//        }
+//        case 2:{
+//            _fixedT = [[_fixedTArray objectAtIndex:row] doubleValue];
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+}
+
+
+// tell the picker how many rows are available for a given component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [_fixedTArray count];
+//
+//    switch (component) {
+//        case 0:{
+//            return [_fixedXArray count];
+//            break;
+//        }
+//        case 1:{
+//            return [_fixedYArray count];
+//            break;
+//        }
+//        case 2:{
+//            return [_fixedTArray count];
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//    return 0;
+}
+
+// tell the picker how many components it will have
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+// tell the picker the title for a given component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [NSString stringWithFormat:@"%.3f", [[_fixedTArray objectAtIndex:row] floatValue]];
+//    switch (component) {
+//        case 0:{
+//            return [NSString stringWithFormat:@"%.3f", [[_fixedXArray objectAtIndex:row] floatValue]];
+//            break;
+//        }
+//        case 1:{
+//            return [NSString stringWithFormat:@"%.3f", [[_fixedYArray objectAtIndex:row] floatValue]];
+//            break;
+//        }
+//        case 2:{
+//            return [NSString stringWithFormat:@"%.3f", [[_fixedTArray objectAtIndex:row] floatValue]];
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//    return @"0";//[NSString stringWithFormat:@"%.3f", [[keys objectAtIndex:row] doubleValue]];
+}
+
+// tell the picker the width of each row for a given component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    int sectionWidth = 75;
+    
+    return sectionWidth;
 }
 
 

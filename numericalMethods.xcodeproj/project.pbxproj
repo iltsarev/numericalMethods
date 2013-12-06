@@ -22,6 +22,9 @@
 		52367CD417FC329100C1DA60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52367CB317FC329100C1DA60 /* UIKit.framework */; };
 		52367CDC17FC329100C1DA60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52367CDA17FC329100C1DA60 /* InfoPlist.strings */; };
 		52367CDE17FC329100C1DA60 /* numericalMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */; };
+		525F0A9D1851FBA800A14402 /* UIPickerViewSchemeParabolic2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 525F0A9C1851FBA800A14402 /* UIPickerViewSchemeParabolic2d.m */; };
+		525F0AA01851FBC000A14402 /* UIPickerViewVariableParabolic2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 525F0A9F1851FBC000A14402 /* UIPickerViewVariableParabolic2d.m */; };
+		525F0AA2185215E600A14402 /* NM_sys4.png in Resources */ = {isa = PBXBuildFile; fileRef = 525F0AA1185215E600A14402 /* NM_sys4.png */; };
 		52648A08183251C100EDB49F /* NMFTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 52648A07183251C100EDB49F /* NMFTextField.m */; };
 		52857EED1831705100C9C091 /* _DDFunctionContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 52857EC11831705100C9C091 /* _DDFunctionContainer.m */; };
 		52857EEE1831705100C9C091 /* _DDFunctionExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 52857EC31831705100C9C091 /* _DDFunctionExpression.m */; };
@@ -97,6 +100,11 @@
 		52367CD917FC329100C1DA60 /* numericalMethodsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "numericalMethodsTests-Info.plist"; sourceTree = "<group>"; };
 		52367CDB17FC329100C1DA60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52367CDD17FC329100C1DA60 /* numericalMethodsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = numericalMethodsTests.m; sourceTree = "<group>"; };
+		525F0A9B1851FBA800A14402 /* UIPickerViewSchemeParabolic2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPickerViewSchemeParabolic2d.h; sourceTree = "<group>"; };
+		525F0A9C1851FBA800A14402 /* UIPickerViewSchemeParabolic2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewSchemeParabolic2d.m; sourceTree = "<group>"; };
+		525F0A9E1851FBC000A14402 /* UIPickerViewVariableParabolic2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPickerViewVariableParabolic2d.h; sourceTree = "<group>"; };
+		525F0A9F1851FBC000A14402 /* UIPickerViewVariableParabolic2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPickerViewVariableParabolic2d.m; sourceTree = "<group>"; };
+		525F0AA1185215E600A14402 /* NM_sys4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NM_sys4.png; sourceTree = "<group>"; };
 		52648A06183251C100EDB49F /* NMFTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMFTextField.h; sourceTree = "<group>"; };
 		52648A07183251C100EDB49F /* NMFTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMFTextField.m; sourceTree = "<group>"; };
 		52857EC01831705100C9C091 /* _DDFunctionContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DDFunctionContainer.h; sourceTree = "<group>"; };
@@ -266,6 +274,7 @@
 				52F73A5718043E4700ED8BF7 /* NM_sys1.png */,
 				52AC65F518269EE000695865 /* NM_sys2.png */,
 				52B8D2BF1843D431009AD1AE /* NM_sys3.png */,
+				525F0AA1185215E600A14402 /* NM_sys4.png */,
 				52AC65F71826A09000695865 /* Default-568@2x.png */,
 				52367CB717FC329100C1DA60 /* numericalMethods-Info.plist */,
 				52367CB817FC329100C1DA60 /* InfoPlist.strings */,
@@ -375,6 +384,10 @@
 				52B8D2BA1843CDF7009AD1AE /* UiPickerViewSchemeElliptic.m */,
 				52B8D2BC1843CE54009AD1AE /* UIPickerViewVariableElliptic.h */,
 				52B8D2BD1843CE54009AD1AE /* UIPickerViewVariableElliptic.m */,
+				525F0A9B1851FBA800A14402 /* UIPickerViewSchemeParabolic2d.h */,
+				525F0A9C1851FBA800A14402 /* UIPickerViewSchemeParabolic2d.m */,
+				525F0A9E1851FBC000A14402 /* UIPickerViewVariableParabolic2d.h */,
+				525F0A9F1851FBC000A14402 /* UIPickerViewVariableParabolic2d.m */,
 			);
 			name = UIPickers;
 			sourceTree = "<group>";
@@ -483,6 +496,7 @@
 				52367CC317FC329100C1DA60 /* Main_iPhone.storyboard in Resources */,
 				FA1E13DE1805C97F008FC47E /* CPViewControllerErrors.xib in Resources */,
 				52367CBA17FC329100C1DA60 /* InfoPlist.strings in Resources */,
+				525F0AA2185215E600A14402 /* NM_sys4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +563,7 @@
 				FA10106918051F500095F25F /* CorePlotViewController.m in Sources */,
 				52367CC017FC329100C1DA60 /* AppDelegate.m in Sources */,
 				52857EF21831705100C9C091 /* _DDNumberExpression.m in Sources */,
+				525F0A9D1851FBA800A14402 /* UIPickerViewSchemeParabolic2d.m in Sources */,
 				52857EEF1831705100C9C091 /* _DDFunctionTerm.m in Sources */,
 				D0B8630D185094D100DB39FA /* parabol2DViewController.m in Sources */,
 				52AC65EA1826867A00695865 /* startViewController.m in Sources */,
@@ -561,6 +576,7 @@
 				52857EF01831705100C9C091 /* _DDFunctionUtilities.m in Sources */,
 				52367CBC17FC329100C1DA60 /* main.m in Sources */,
 				52857EF51831705100C9C091 /* _DDOperatorTerm.m in Sources */,
+				525F0AA01851FBC000A14402 /* UIPickerViewVariableParabolic2d.m in Sources */,
 				52648A08183251C100EDB49F /* NMFTextField.m in Sources */,
 				52857EF71831705100C9C091 /* _DDRewriteRule.m in Sources */,
 				52AC65F0182692EF00695865 /* UIPickerViewApproximation.m in Sources */,
